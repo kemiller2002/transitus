@@ -20,6 +20,17 @@ provenance:
         runtime: claude-code
       reason: "XRI-009..014 dispositions, capability coverage, assessment and boundary (DAF Phase III)"
       evidence: [kemiller2002/daf-landscape:research/competitive-displacement/data/registers/cross-repository-implications.csv]
+    EXE-20261126T205108633Z-a4de7b2b:
+      operations: [modified]
+      at: 2026-11-26T20:51:39.000Z
+      actor:
+        kind: agent
+        id: anthropic/claude-code
+        provider: anthropic
+        model: unknown
+        runtime: claude-code
+      reason: "Owner resolution of OD-TRN-P3-02 (2026-11-26): DEC-008 kill rule does not gate Transitus (annotation)"
+      evidence: [DF-TRN-2026-0026]
 ---
 
 # DAF Landscape Phase III: dispositions for Transitus
@@ -80,7 +91,7 @@ two citation corrections:
 | AI proposes, deterministic gates dispose (DF-0012) | Holds: DF-0012 `review`; AI is phase 3 (AI-001, AI-009) |
 | Mapping packages configuration-only (DF-**0014**); basic packages in phase 1 (DF-0019) | Holds, but DF-0014 is **superseded** by DF-0019. DF-0019 carries its rules forward, so cite DF-0019 |
 | Generic reconciliation primitives (DF-0011) | Holds: DF-0011 `review`; VR-001..013 |
-| Phase gating and kill criterion (DF-**0016**) | **Weakened.** DF-0016 is superseded by DF-0018. The replacement measurement TRN-REQ-PF-004 does **not** gate phase 1 (owner direction). The claim that Transitus has a kill criterion consistent with the gated strategy no longer holds as written. Raised as OD-TRN-P3-02 (§6) |
+| Phase gating and kill criterion (DF-**0016**) | **Weakened.** DF-0016 is superseded by DF-0018. The replacement measurement TRN-REQ-PF-004 does **not** gate phase 1 (owner direction). The claim that Transitus has a kill criterion consistent with the gated strategy no longer holds as written. Raised as OD-TRN-P3-02 (§6) **Annotation 2026-11-26:** the owner resolved OD-TRN-P3-02. The DEC-008 kill rule does not gate Transitus (DF-TRN-2026-0026) |
 | Evidence stage, rehearsal, canonical import | Holds and is strengthened: MIG-001..004, MP-009, Unbound UNB-TRN-011..014 |
 
 **XRI-014 disposition: Already satisfied.** The status note is now obsolete
@@ -259,7 +270,7 @@ None of these is resolved by this revision.
 | ID | Question | Why |
 |---|---|---|
 | OD-TRN-P3-01 | Which legal-basis and approval preconditions bind each assessment tier: Phase II revision 2 (T1 after sponsor IT approval; T2+ under MSA + DPA) or charity-network `13` / UNB-ONB-003 (T0-T1 NDA; T2 NDA/DPA)? | The sources conflict (UC-17). Transitus requires the stricter references by default; counsel and the owner decide |
-| OD-TRN-P3-02 | Does the DEC-008 kill rule (no named partner by month 6; no referenceable pilot by month 24) pause Transitus work beyond phase 1, given that PF-004 is non-gating? | DEC-008 asks for explicit termination criteria. Transitus has none that gate (§1) |
+| OD-TRN-P3-02 | Does the DEC-008 kill rule (no named partner by month 6; no referenceable pilot by month 24) pause Transitus work beyond phase 1, given that PF-004 is non-gating? | DEC-008 asks for explicit termination criteria. Transitus has none that gate (§1) | **Resolved 2026-11-26 by the owner** ("Kill rule doesn't stop Transitus"; DF-TRN-2026-0026).
 | OQ-17 | Disclosure-control thresholds for T1: minimum contributor count, minimum population (fund count), dominance share | Research proposes k = 10 (charity-network `13`). No binding default is adopted (PRF-001) |
 
 ## 7. Decision status (status ladder)

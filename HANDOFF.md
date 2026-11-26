@@ -39,7 +39,8 @@ The owner strategically approved DAF Landscape DEC-001..012 on 2026-11-26. For T
 - **Requirements:** revision `DAF-P3-2026-11-26` adds 19 proposed requirements (PRF-001..003, VR-014, MIG-005..007, MP-010, MET-001..003, ASM-001..008) and refines VR-010, MP-004, MIG-001 and ARC-009. The register now holds 171 requirements.
 - **Trigger TA:** gates the pre-contract assessment.
 - **XRI-009..014 dispositions, capability coverage and the generic/Unbound boundary:** `docs/research/03-daf-phase3-dispositions.md`.
-- **Open:** OD-TRN-P3-01/02, OQ-17 and UC-17..19 (`docs/open-questions.md`).
+- **Open:** OD-TRN-P3-01, OQ-17 and UC-17..19 (`docs/open-questions.md`).
+- **OD-TRN-P3-02 resolved by the owner (2026-11-26, WI-0004):** the DEC-008 kill rule does not stop Transitus (DF-TRN-2026-0026).
 - **Tooling:** `tools/render_requirements.py` now preserves the Praxis provenance block of `requirements/REQUIREMENTS.md` across re-renders. Previously, re-rendering dropped it.
 - **Not authorized:** expenditure, commitments, implementation. The V-4 gate is not satisfied.
 

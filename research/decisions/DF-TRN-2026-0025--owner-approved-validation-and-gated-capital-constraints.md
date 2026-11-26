@@ -27,6 +27,17 @@ provenance:
         runtime: claude-code
       reason: "Record owner strategic approval of DAF Landscape Phase II decisions (2026-11-26)"
       evidence: [kemiller2002/daf-landscape:research/competitive-displacement/data/registers/decisions.csv]
+    EXE-20261126T205108633Z-a4de7b2b:
+      operations: [modified]
+      at: 2026-11-26T20:51:38.000Z
+      actor:
+        kind: agent
+        id: anthropic/claude-code
+        provider: anthropic
+        model: unknown
+        runtime: claude-code
+      reason: "Owner resolution of OD-TRN-P3-02 (2026-11-26): DEC-008 kill rule does not gate Transitus (annotation)"
+      evidence: [DF-TRN-2026-0026]
 ---
 
 # Decision Record
@@ -66,6 +77,12 @@ Constraints on Transitus:
    month 24) should also pause Transitus work beyond phase 1 is raised as
    owner decision **OD-TRN-P3-02** (`docs/open-questions.md`); it is not
    assumed here.
+
+   > **Resolution (2026-11-26, annotation; original text above kept):** the
+   > owner resolved OD-TRN-P3-02: "Kill rule doesn't stop Transitus." The
+   > DEC-008 kill rule does not pause or gate Transitus work, including
+   > work beyond phase 1. See DF-TRN-2026-0026. This authorizes no
+   > expenditure or implementation, and the scope stays DEC-011 phase 1.
 
 ## Status
 

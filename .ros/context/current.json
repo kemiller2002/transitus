@@ -4,7 +4,7 @@
   "repository": "transitus",
   "actor": "ros-bootstrap",
   "startedAt": "2026-11-26T15:17:03.787Z",
-  "updatedAt": "2026-11-26T20:42:43.000Z",
+  "updatedAt": "2026-11-26T20:51:08.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -146,6 +146,17 @@
       },
       "completedAt": "2026-11-26T20:42:43.000Z",
       "conclusion": "Owner strategic approvals recorded; XRI-009..014 dispositioned; pre-contract assessment specified; requirements proposed only"
+    },
+    {
+      "id": "WI-0004",
+      "type": "research",
+      "state": "active",
+      "semanticState": "active",
+      "evidence": [],
+      "updatedAt": "2026-11-26T20:51:08.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20261126T205108633Z-a4de7b2b"
+      ]
     }
   ]
 }

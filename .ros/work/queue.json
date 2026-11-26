@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "transitus",
-  "nextSeq": 4,
+  "nextSeq": 5,
   "items": [
     {
       "id": "WI-0001",
@@ -55,6 +55,27 @@
       "attachments": [],
       "createdAt": "2026-11-26T20:35:01.629Z",
       "updatedAt": "2026-11-26T20:42:43.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0004",
+      "title": "Record owner resolution of OD-TRN-P3-02: DEC-008 kill rule does not gate Transitus",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "ready",
+      "attachments": [],
+      "createdAt": "2026-11-26T20:51:07.723Z",
+      "updatedAt": "2026-11-26T20:51:07.000Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",

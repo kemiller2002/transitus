@@ -1153,6 +1153,23 @@
             "created"
           ],
           "reason": "Record owner strategic approval of DAF Landscape Phase II decisions (2026-11-26)"
+        },
+        "EXE-20261126T205108633Z-a4de7b2b": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-26T20:51:38.000Z",
+          "evidence": [
+            "DF-TRN-2026-0026"
+          ],
+          "operations": [
+            "modified"
+          ],
+          "reason": "Owner resolution of OD-TRN-P3-02 (2026-11-26): DEC-008 kill rule does not gate Transitus (annotation)"
         }
       }
     },
@@ -1168,5 +1185,53 @@
     "title": "Owner strategic approval of DAF Landscape DEC-012 (commercial validation plan) and DEC-008 (gated capital deployment) as constraints on Transitus: V-4 is the Transitus evidence gate, synthetic rehearsal is a lower-cost precursor that cannot satisfy it, and Transitus effort estimates are not approved expenditure",
     "updated": "2026-11-26",
     "work_item": "WI-0003"
+  },
+  {
+    "approval_stage": "strategically-approved",
+    "confidence": "high",
+    "created": "2026-11-26",
+    "created_by_agent": "claude",
+    "decided_by": "kemiller2002 (repository owner), stated in the DAF Landscape Phase III session on 2026-11-26",
+    "decision_type": "strategy",
+    "evidence": [
+      "Owner statement 2026-11-26",
+      "relayed by the Phase III coordinator: \\\"Kill rule doesn't stop Transitus.\\\"",
+      "kemiller2002/daf-landscape:research/competitive-displacement/22-commercial-validation-plan.md (kill rule)",
+      "DF-TRN-2026-0025"
+    ],
+    "id": "DF-TRN-2026-0026",
+    "path": "research/decisions/DF-TRN-2026-0026--dec-008-kill-rule-does-not-gate-transitus.md",
+    "provenance": {
+      "contributions": {
+        "EXE-20261126T205108633Z-a4de7b2b": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-26T20:51:38.000Z",
+          "evidence": [
+            "DF-TRN-2026-0025"
+          ],
+          "operations": [
+            "created"
+          ],
+          "reason": "Owner resolution of OD-TRN-P3-02 (2026-11-26): DEC-008 kill rule does not gate Transitus"
+        }
+      }
+    },
+    "status": "accepted",
+    "superseded_by": [],
+    "supersedes": [],
+    "tags": [
+      "transitus",
+      "owner-decision",
+      "daf-landscape-phase-3"
+    ],
+    "title": "Owner resolution of OD-TRN-P3-02: the DAF Landscape DEC-008 kill rule does not pause or gate Transitus work, including work beyond phase 1",
+    "updated": "2026-11-26",
+    "work_item": "WI-0004"
   }
 ]
