@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "1.0.0",
+  "repository": "transitus",
+  "nextSeq": 3,
+  "items": [
+    {
+      "id": "WI-0001",
+      "title": "Transitus research, architecture and requirements (phase 1, no production code)",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-11-26T15:17:13.565Z",
+      "updatedAt": "2026-11-26T15:45:11.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0002",
+      "title": "Owner-directed revision of phase-1 scope (transitus#1 comment 7200249612)",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-11-26T18:17:01.457Z",
+      "updatedAt": "2026-11-26T18:27:54.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    }
+  ]
+}

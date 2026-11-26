@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "1.0.0",
+  "protocolVersion": "1.0.0",
+  "repository": "transitus",
+  "actor": "ros-bootstrap",
+  "startedAt": "2026-11-26T15:17:03.787Z",
+  "updatedAt": "2026-11-26T18:27:54.000Z",
+  "baselineDirtyPaths": [],
+  "workItems": [
+    {
+      "id": "ROS-INSTALL-3-26-0",
+      "type": "mechanical",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "installation",
+          "path": ".ros/installation.json"
+        }
+      ],
+      "updatedAt": "2026-11-26T15:17:03.787Z",
+      "completedAt": "2026-11-26T15:17:03.787Z"
+    },
+    {
+      "id": "WI-0001",
+      "type": "research",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "research-record",
+          "path": "docs/reviews/adversarial-review.md"
+        },
+        {
+          "type": "research-record",
+          "path": "requirements/REQUIREMENTS.md"
+        }
+      ],
+      "updatedAt": "2026-11-26T15:45:11.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20261126T151721856Z-671cd5b7"
+      ],
+      "latestCheckpoint": {
+        "id": "0747e9ac0b74ba6dfe55cb62",
+        "recordedAt": "2026-11-26T15:45:10.000Z",
+        "executionId": "EXE-20261126T151721856Z-671cd5b7",
+        "repository": "transitus",
+        "branch": "claude/transitus-research-architecture-42a96z",
+        "commit": "ee2cd03f5ef045c06e3a9ad86e7ebe5dbd960b04",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/transitus"
+        },
+        "remoteBranch": "claude/transitus-research-architecture-42a96z",
+        "remoteCommit": "ee2cd03f5ef045c06e3a9ad86e7ebe5dbd960b04",
+        "summary": "Phase 0 deliverables complete and revised after adversarial review",
+        "nextAction": "Owner answers OQ-13/OQ-14 and reviews DF-TRN records; then phase-1 item 1",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-11-26T15:45:11.000Z",
+      "conclusion": "Phase-0 research, architecture and requirements complete; minimal phase-1 scope established; owner questions recorded"
+    },
+    {
+      "id": "WI-0002",
+      "type": "research",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "research-record",
+          "path": "docs/roadmap.md"
+        },
+        {
+          "type": "research-record",
+          "path": "docs/open-questions.md"
+        },
+        {
+          "type": "research-record",
+          "path": "docs/reviews/agent-reviews/adv-E.md"
+        }
+      ],
+      "updatedAt": "2026-11-26T18:27:54.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20261126T181704540Z-e41ec7a0"
+      ],
+      "latestCheckpoint": {
+        "id": "92aa40774d07360db78240fe",
+        "recordedAt": "2026-11-26T18:27:54.000Z",
+        "executionId": "EXE-20261126T181704540Z-e41ec7a0",
+        "repository": "transitus",
+        "branch": "claude/transitus-research-architecture-42a96z",
+        "commit": "7afdfdad802b02fedbbea53d6a4c720b0e0c4282",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/transitus"
+        },
+        "remoteBranch": "claude/transitus-research-architecture-42a96z",
+        "remoteCommit": "7afdfdad802b02fedbbea53d6a4c720b0e0c4282",
+        "summary": "Owner-directed revision applied and validated",
+        "nextAction": "Owner review of review-status DF records and UC-1..16",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-11-26T18:27:54.000Z",
+      "conclusion": "Owner-directed phase-1 scope reconciled across requirements, schemas, decisions, roadmap and related repositories; independent challenge recorded"
+    }
+  ]
+}

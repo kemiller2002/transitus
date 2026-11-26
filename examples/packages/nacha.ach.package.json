@@ -1,0 +1,42 @@
+{
+  "kind": "transitus.mapping-package",
+  "id": "nacha.ach",
+  "version": "0.1.0",
+  "title": "NACHA ACH returns and notifications of change",
+  "description": "Fixed-width NACHA returns and NOC with file/batch control and entry-hash reconciliation.",
+  "basis": [
+    {
+      "kind": "public-specification",
+      "reference": "NACHA file record layouts (publicly circulated); NACHA Operating Rules licence to be checked",
+      "retrieved": "2026-11-26"
+    }
+  ],
+  "licence": "MIT (package configuration); format specification subject to rights field",
+  "engine": {
+    "specVersion": "1.0"
+  },
+  "scope": "basic",
+  "rights": {
+    "status": "pending",
+    "notes": "OQ-16 / TRN-REQ-MP-008: verify NACHA Operating Rules redistribution rights before publishing; internal-only until then."
+  },
+  "contents": {
+    "templates": [
+      "templates/parse-returns@1.json",
+      "templates/parse-noc@1.json"
+    ],
+    "reference": [
+      "reference/return-reason-codes@1.json",
+      "reference/change-codes@1.json"
+    ],
+    "reconciliationProfiles": [
+      "file-and-batch-controls@1.json"
+    ],
+    "fixtures": [
+      "fixtures/synthetic-returns.ach"
+    ],
+    "docs": [
+      "docs/semantics.md"
+    ]
+  }
+}

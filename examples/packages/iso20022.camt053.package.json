@@ -1,0 +1,40 @@
+{
+  "kind": "transitus.mapping-package",
+  "id": "iso20022.camt053",
+  "version": "0.1.0",
+  "title": "ISO 20022 camt.053 bank-to-customer statement",
+  "description": "Illustrative bank activity package; replaced or complemented by the first bank partner's format (OQ-06).",
+  "basis": [
+    {
+      "kind": "public-specification",
+      "reference": "https://www.iso20022.org/ (camt.053 message definition)",
+      "retrieved": "2026-11-26"
+    }
+  ],
+  "licence": "MIT (package configuration); format specification subject to rights field",
+  "engine": {
+    "specVersion": "1.0"
+  },
+  "scope": "basic",
+  "rights": {
+    "status": "pending",
+    "notes": "Confirm ISO 20022 message-definition reuse terms; bank-specific usage guidelines come from the first bank partner (OQ-06)."
+  },
+  "contents": {
+    "templates": [
+      "templates/parse@0.json"
+    ],
+    "mappings": [
+      "mappings/to-unbound-bank-activity@0.json"
+    ],
+    "validationProfiles": [
+      "validation@0.json"
+    ],
+    "fixtures": [
+      "fixtures/synthetic-statement.xml"
+    ],
+    "docs": [
+      "docs/semantics.md"
+    ]
+  }
+}

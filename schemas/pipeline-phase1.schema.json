@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://echelon-foundry.dev/transitus/pipeline/1.0/phase1.json",
+  "title": "Transitus pipeline — phase-1 profile (owner-directed minimal declarative typed pipeline)",
+  "description": "A pipeline conforming to phase 1 (DF-TRN-2026-0018, TRN-REQ-PS-005, TRN-REQ-PS-011): linear stage sequence (each stage depends on at most the single previous stage), no route/union stages, retention by policy reference. Complex DAGs are phase 2 (trigger T2).",
+  "allOf": [
+    {
+      "$ref": "pipeline.schema.json"
+    }
+  ],
+  "properties": {
+    "stages": {
+      "items": {
+        "properties": {
+          "kind": {
+            "enum": [
+              "discover",
+              "ingest",
+              "preserve",
+              "parse",
+              "stage",
+              "profile",
+              "transform",
+              "validate",
+              "reconcile",
+              "authorize",
+              "load",
+              "verify",
+              "evidence",
+              "retain"
+            ]
+          },
+          "dependsOn": {
+            "type": "array",
+            "maxItems": 1
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "validate",
+                    "reconcile"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "gate": {
+                  "const": "blocking"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "retention": {
+      "properties": {
+        "raw": {
+          "type": "string",
+          "pattern": "^policy:[A-Za-z0-9._/-]+$"
+        },
+        "staging": {
+          "type": "string",
+          "pattern": "^policy:[A-Za-z0-9._/-]+$"
+        },
+        "exceptions": {
+          "type": "string",
+          "pattern": "^policy:[A-Za-z0-9._/-]+$"
+        },
+        "lineage": {
+          "type": "string",
+          "pattern": "^policy:[A-Za-z0-9._/-]+$"
+        },
+        "evidence": {
+          "type": "string",
+          "pattern": "^policy:[A-Za-z0-9._/-]+$"
+        }
+      }
+    },
+    "allowedModes": {
+      "items": {
+        "enum": [
+          "run",
+          "dry-run",
+          "replay"
+        ]
+      }
+    }
+  },
+  "required": [
+    "allowedModes"
+  ]
+}

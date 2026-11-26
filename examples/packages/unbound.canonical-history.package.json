@@ -1,0 +1,53 @@
+{
+  "kind": "transitus.mapping-package",
+  "id": "unbound.canonical-history",
+  "version": "0.1.0",
+  "title": "Unbound canonical historical import",
+  "description": "The canonical shape a migration engineer maps any predecessor export into; reusable for every sponsor without a vendor package or signed customer (owner direction).",
+  "basis": [
+    {
+      "kind": "target-side-canonical",
+      "reference": "Unbound canonical historical import shape (to be defined with UNB-TRN-005/012); aligned where applicable to daf-landscape standards/daf-grant-record v0.1 (Echelon draft)"
+    }
+  ],
+  "licence": "MIT (package configuration); format specification subject to rights field",
+  "engine": {
+    "specVersion": "1.0"
+  },
+  "scope": "basic",
+  "rights": {
+    "status": "not-required",
+    "notes": "Target-side shape defined by Echelon; no third-party format knowledge."
+  },
+  "contents": {
+    "schemas": [
+      "schemas/fund@0.json",
+      "schemas/donor-advisor@0.json",
+      "schemas/contribution@0.json",
+      "schemas/grant@0.json",
+      "schemas/fee@0.json",
+      "schemas/control-file@0.json"
+    ],
+    "templates": [
+      "templates/parse@0.json"
+    ],
+    "mappings": [
+      "mappings/to-unbound-historical-import@0.json"
+    ],
+    "validationProfiles": [
+      "validation@0.json"
+    ],
+    "reconciliationProfiles": [
+      "fund-balance@0.json",
+      "grants-paid-by-year@0.json",
+      "record-counts@0.json"
+    ],
+    "fixtures": [
+      "fixtures/synthetic-sponsor-history/"
+    ],
+    "docs": [
+      "docs/semantics.md",
+      "docs/migration-rehearsal.md"
+    ]
+  }
+}

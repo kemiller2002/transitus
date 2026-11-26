@@ -1,0 +1,197 @@
+{
+  "$schema": "../../schemas/pipeline-phase1.schema.json",
+  "kind": "transitus.pipeline",
+  "specVersion": "1.0",
+  "id": "unbound.custodian.schwab.transactions.ingest",
+  "version": "0.1.0",
+  "title": "Custodian transaction ingestion — Schwab documented format (placeholder)",
+  "description": "Demonstration scenario 2b of 3 (TRN-REQ-MP-009). Owner direction (OQ-07): prioritize Schwab's documented format. Transitus has not obtained that documentation; no Schwab field or file layout is invented here. Package custodian.schwab is a placeholder whose schemas, mappings and control-total rules are filled only from Schwab's documentation under acceptable terms (TRN-REQ-MP-008).",
+  "tenant": "{{tenant}}",
+  "classification": "restricted-financial",
+  "packages": [
+    {
+      "id": "custodian.schwab",
+      "version": "^0.0.1"
+    }
+  ],
+  "defaults": {
+    "culture": "invariant",
+    "timeZone": "America/New_York",
+    "unicodeForm": "NFC"
+  },
+  "errorPolicy": {
+    "default": "quarantine",
+    "maxErrorRate": 0
+  },
+  "resources": {
+    "maxInputBytes": "256MiB",
+    "maxRecordBytes": "16KiB",
+    "maxNestingDepth": 64,
+    "memoryBudget": "256MiB",
+    "parallelism": 2
+  },
+  "sources": {
+    "custodian": {
+      "adapter": "sftp@1",
+      "config": {
+        "host": "{{param.custodianHost}}",
+        "port": 22,
+        "path": "{{param.custodianPath}}",
+        "egress": [
+          "{{param.custodianHost}}:22"
+        ]
+      },
+      "secrets": {
+        "key": "secretRef:unbound/{{tenant}}/custodian-sftp-key",
+        "hostKey": "secretRef:unbound/{{tenant}}/custodian-sftp-hostkey"
+      }
+    }
+  },
+  "destinations": {
+    "txns": {
+      "adapter": "unbound.domain-api@1",
+      "operation": "custodian.recordTransaction",
+      "classification": "system-of-record"
+    }
+  },
+  "parameters": {
+    "custodianHost": {
+      "type": "string"
+    },
+    "custodianPath": {
+      "type": "string"
+    }
+  },
+  "stages": [
+    {
+      "id": "ingest",
+      "kind": "ingest",
+      "source": "custodian",
+      "retry": {
+        "attempts": 5,
+        "on": [
+          "Transient"
+        ]
+      }
+    },
+    {
+      "id": "raw",
+      "kind": "preserve",
+      "dependsOn": [
+        "ingest"
+      ]
+    },
+    {
+      "id": "parse",
+      "kind": "parse",
+      "dependsOn": [
+        "raw"
+      ],
+      "template": "custodian.schwab/parse-transactions@0",
+      "onError": "fail"
+    },
+    {
+      "id": "stage",
+      "kind": "stage",
+      "dependsOn": [
+        "parse"
+      ]
+    },
+    {
+      "id": "map",
+      "kind": "transform",
+      "dependsOn": [
+        "stage"
+      ],
+      "mapping": "custodian.schwab/to-unbound-custodian-transaction@0"
+    },
+    {
+      "id": "check",
+      "kind": "validate",
+      "dependsOn": [
+        "map"
+      ],
+      "profile": "custodian.schwab/validation@0",
+      "gate": "blocking"
+    },
+    {
+      "id": "recon",
+      "kind": "reconcile",
+      "dependsOn": [
+        "check"
+      ],
+      "gate": "blocking",
+      "profile": "custodian.schwab/control-totals@0"
+    },
+    {
+      "id": "approve",
+      "kind": "authorize",
+      "dependsOn": [
+        "recon"
+      ],
+      "policy": {
+        "autoApproveIf": "recon.status = 'balanced'",
+        "else": {
+          "approvers": [
+            "role:investment-operations"
+          ],
+          "count": 1
+        }
+      }
+    },
+    {
+      "id": "load",
+      "kind": "load",
+      "dependsOn": [
+        "approve"
+      ],
+      "destination": "txns",
+      "batchSize": 1,
+      "idempotencyKey": [
+        "account",
+        "custodianTransactionId"
+      ]
+    },
+    {
+      "id": "verify",
+      "kind": "verify",
+      "dependsOn": [
+        "load"
+      ],
+      "sample": {
+        "rate": 1.0
+      }
+    },
+    {
+      "id": "evidence",
+      "kind": "evidence",
+      "dependsOn": [
+        "verify"
+      ]
+    },
+    {
+      "id": "retain",
+      "kind": "retain",
+      "dependsOn": [
+        "evidence"
+      ]
+    }
+  ],
+  "retention": {
+    "raw": "policy:sponsor-retention/financial-raw",
+    "staging": "policy:sponsor-retention/staging-temporary",
+    "exceptions": "policy:sponsor-retention/operational-exceptions",
+    "lineage": "policy:sponsor-retention/financial-lineage",
+    "evidence": "policy:sponsor-retention/financial-evidence"
+  },
+  "allowedModes": [
+    "run",
+    "dry-run",
+    "replay"
+  ],
+  "schedule": {
+    "cron": "30 7 * * 1-5",
+    "timeZone": "America/New_York",
+    "misfire": "runOnce"
+  }
+}

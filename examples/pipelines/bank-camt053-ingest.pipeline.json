@@ -1,0 +1,226 @@
+{
+  "$schema": "../../schemas/pipeline-phase1.schema.json",
+  "kind": "transitus.pipeline",
+  "specVersion": "1.0",
+  "id": "unbound.bank-activity.camt053.ingest",
+  "version": "0.1.0",
+  "title": "Bank activity statement ingestion — ISO 20022 camt.053 (illustrative)",
+  "description": "Demonstration scenario 2a of 3 (TRN-REQ-MP-009). Daily end-of-day bank statement (ISO 20022 camt.053) ingested into Unbound's bank-activity domain operation. Illustrative: the actual format is selected from the first bank partner (OQ-06); camt.053 is used because the ISO 20022 message definitions are publicly available.",
+  "tenant": "{{tenant}}",
+  "classification": "restricted-financial",
+  "packages": [
+    {
+      "id": "iso20022.camt053",
+      "version": "^0.1.0"
+    }
+  ],
+  "defaults": {
+    "culture": "invariant",
+    "timeZone": "America/New_York",
+    "unicodeForm": "NFC"
+  },
+  "errorPolicy": {
+    "default": "quarantine",
+    "maxErrorRate": 0
+  },
+  "resources": {
+    "maxInputBytes": "256MiB",
+    "maxRecordBytes": "16KiB",
+    "maxNestingDepth": 64,
+    "memoryBudget": "256MiB",
+    "parallelism": 2
+  },
+  "sources": {
+    "bank": {
+      "adapter": "sftp@1",
+      "config": {
+        "host": "{{param.bankHost}}",
+        "port": 22,
+        "path": "/outbound/statements/",
+        "egress": [
+          "{{param.bankHost}}:22"
+        ]
+      },
+      "secrets": {
+        "key": "secretRef:unbound/{{tenant}}/bank-sftp-key",
+        "hostKey": "secretRef:unbound/{{tenant}}/bank-sftp-hostkey"
+      }
+    }
+  },
+  "destinations": {
+    "activity": {
+      "adapter": "unbound.domain-api@1",
+      "operation": "bankActivity.recordStatementEntry",
+      "classification": "system-of-record"
+    }
+  },
+  "parameters": {
+    "bankHost": {
+      "type": "string"
+    }
+  },
+  "stages": [
+    {
+      "id": "ingest",
+      "kind": "ingest",
+      "source": "bank",
+      "retry": {
+        "attempts": 5,
+        "backoff": {
+          "base": "PT30S",
+          "cap": "PT15M"
+        },
+        "jitter": true,
+        "on": [
+          "Transient"
+        ]
+      }
+    },
+    {
+      "id": "raw",
+      "kind": "preserve",
+      "dependsOn": [
+        "ingest"
+      ]
+    },
+    {
+      "id": "parse",
+      "kind": "parse",
+      "dependsOn": [
+        "raw"
+      ],
+      "template": "iso20022.camt053/parse@0",
+      "onError": "fail"
+    },
+    {
+      "id": "stage",
+      "kind": "stage",
+      "dependsOn": [
+        "parse"
+      ]
+    },
+    {
+      "id": "map",
+      "kind": "transform",
+      "dependsOn": [
+        "stage"
+      ],
+      "mapping": "iso20022.camt053/to-unbound-bank-activity@0"
+    },
+    {
+      "id": "check",
+      "kind": "validate",
+      "dependsOn": [
+        "map"
+      ],
+      "profile": "iso20022.camt053/validation@0",
+      "gate": "blocking"
+    },
+    {
+      "id": "recon",
+      "kind": "reconcile",
+      "dependsOn": [
+        "check"
+      ],
+      "gate": "blocking",
+      "rules": [
+        {
+          "rule": "r.count@1",
+          "args": {
+            "compare": [
+              "statement.entryCount",
+              "parsed",
+              "staged"
+            ],
+            "tolerance": 0
+          }
+        },
+        {
+          "rule": "r.balance@1",
+          "args": {
+            "opening": "statement.openingBookedBalance",
+            "movements": "entries.amount",
+            "closing": "statement.closingBookedBalance",
+            "per": [
+              "account",
+              "currency"
+            ],
+            "tolerance": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "approve",
+      "kind": "authorize",
+      "dependsOn": [
+        "recon"
+      ],
+      "policy": {
+        "autoApproveIf": "recon.status = 'balanced' and check.errorCount = 0",
+        "else": {
+          "approvers": [
+            "role:treasury-operations"
+          ],
+          "count": 1
+        }
+      }
+    },
+    {
+      "id": "load",
+      "kind": "load",
+      "dependsOn": [
+        "approve"
+      ],
+      "destination": "activity",
+      "batchSize": 1,
+      "idempotencyKey": [
+        "account",
+        "entry.bankReference",
+        "entry.bookingDate",
+        "entry.amount"
+      ]
+    },
+    {
+      "id": "verify",
+      "kind": "verify",
+      "dependsOn": [
+        "load"
+      ],
+      "sample": {
+        "rate": 1.0
+      }
+    },
+    {
+      "id": "evidence",
+      "kind": "evidence",
+      "dependsOn": [
+        "verify"
+      ]
+    },
+    {
+      "id": "retain",
+      "kind": "retain",
+      "dependsOn": [
+        "evidence"
+      ]
+    }
+  ],
+  "retention": {
+    "raw": "policy:sponsor-retention/financial-raw",
+    "staging": "policy:sponsor-retention/staging-temporary",
+    "exceptions": "policy:sponsor-retention/operational-exceptions",
+    "lineage": "policy:sponsor-retention/financial-lineage",
+    "evidence": "policy:sponsor-retention/financial-evidence"
+  },
+  "allowedModes": [
+    "run",
+    "dry-run",
+    "replay"
+  ],
+  "schedule": {
+    "cron": "30 7 * * 1-5",
+    "timeZone": "America/New_York",
+    "misfire": "runOnce"
+  }
+}
