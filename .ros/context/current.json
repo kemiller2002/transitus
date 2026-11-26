@@ -4,7 +4,7 @@
   "repository": "transitus",
   "actor": "ros-bootstrap",
   "startedAt": "2026-11-26T15:17:03.787Z",
-  "updatedAt": "2026-11-26T15:17:21.000Z",
+  "updatedAt": "2026-11-26T15:45:11.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -24,33 +24,44 @@
     {
       "id": "WI-0001",
       "type": "research",
-      "state": "active",
-      "semanticState": "active",
-      "evidence": [],
-      "updatedAt": "2026-11-26T15:17:21.000Z",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "research-record",
+          "path": "docs/reviews/adversarial-review.md"
+        },
+        {
+          "type": "research-record",
+          "path": "requirements/REQUIREMENTS.md"
+        }
+      ],
+      "updatedAt": "2026-11-26T15:45:11.000Z",
       "telemetryExecutionIds": [
         "EXE-20261126T151721856Z-671cd5b7"
       ],
       "latestCheckpoint": {
-        "id": "52f128f9a5c2b6b9b950fe1e",
-        "recordedAt": "2026-11-26T15:25:41.000Z",
+        "id": "0747e9ac0b74ba6dfe55cb62",
+        "recordedAt": "2026-11-26T15:45:10.000Z",
         "executionId": "EXE-20261126T151721856Z-671cd5b7",
         "repository": "transitus",
         "branch": "claude/transitus-research-architecture-42a96z",
-        "commit": "c619246ba4b790f8876b6d8c8ab4426804491ff5",
+        "commit": "ee2cd03f5ef045c06e3a9ad86e7ebe5dbd960b04",
         "remote": {
           "name": "origin",
           "url": "https://github.com/kemiller2002/transitus"
         },
         "remoteBranch": "claude/transitus-research-architecture-42a96z",
-        "remoteCommit": "c619246ba4b790f8876b6d8c8ab4426804491ff5",
-        "summary": "Architecture drafts committed (TRN-ARCH-00..11, threat model, use cases)",
-        "nextAction": "Competitive research, requirements register, decisions, schemas, adversarial review",
+        "remoteCommit": "ee2cd03f5ef045c06e3a9ad86e7ebe5dbd960b04",
+        "summary": "Phase 0 deliverables complete and revised after adversarial review",
+        "nextAction": "Owner answers OQ-13/OQ-14 and reviews DF-TRN records; then phase-1 item 1",
         "verification": {
           "status": "verified",
           "mechanism": "git-remote-observation"
         }
-      }
+      },
+      "completedAt": "2026-11-26T15:45:11.000Z",
+      "conclusion": "Phase-0 research, architecture and requirements complete; minimal phase-1 scope established; owner questions recorded"
     }
   ]
 }
