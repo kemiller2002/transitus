@@ -1,6 +1,28 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "transitus",
-  "nextSeq": 1,
-  "items": []
+  "nextSeq": 2,
+  "items": [
+    {
+      "id": "WI-0001",
+      "title": "Transitus research, architecture and requirements (phase 1, no production code)",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "ready",
+      "attachments": [],
+      "createdAt": "2026-11-26T15:17:13.565Z",
+      "updatedAt": "2026-11-26T15:17:21.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    }
+  ]
 }

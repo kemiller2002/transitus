@@ -4,7 +4,7 @@
   "repository": "transitus",
   "actor": "ros-bootstrap",
   "startedAt": "2026-11-26T15:17:03.787Z",
-  "updatedAt": "2026-11-26T15:17:03.787Z",
+  "updatedAt": "2026-11-26T15:17:21.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -20,6 +20,17 @@
       ],
       "updatedAt": "2026-11-26T15:17:03.787Z",
       "completedAt": "2026-11-26T15:17:03.787Z"
+    },
+    {
+      "id": "WI-0001",
+      "type": "research",
+      "state": "active",
+      "semanticState": "active",
+      "evidence": [],
+      "updatedAt": "2026-11-26T15:17:21.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20261126T151721856Z-671cd5b7"
+      ]
     }
   ]
 }
