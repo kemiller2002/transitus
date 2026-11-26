@@ -67,6 +67,13 @@ cost from per-record processing.
 
 ## 5. Reliability expectations
 
+> **Revised after TRN-REV-01 C6.**
+> - The evaluation (TRN-REQ-AI-008) is a **P0 gate**: AI suggestions stay disabled for a pipeline class until measured precision meets recorded thresholds (AI-009).
+> - The validator also flags *semantic-critical* changes that do not widen authority: idempotency-key fields, `autoApprove` conditions, code mappings on financial fields, swapped money or date fields, and reference-data versions (PS-008).
+> - Profile statistics inherit their field's classification and are masked (AI-007).
+> - Non-semantic annotations are excluded from AI context (AI-003).
+> - AI is a phase-3 capability gated by trigger T3.
+
 AI mapping suggestions are treated as **drafts with measured precision**.
 Phase 3 includes an evaluation harness: for each mapping package with a
 human-authored ground truth, measure top-1 mapping precision/recall and
@@ -76,7 +83,7 @@ claims about AI accuracy are not made (see adversarial review C6).
 ## 6. Integration point
 
 The assistant runs in the host application, uses the host's approved model
-provider (e.g. Azure OpenAI is already used by Helix Note), and is optional:
+provider (Helix Note currently calls the OpenAI API directly, `helix-note-application/api/HelixNote.AI.OpenAI.fs:110`), and is optional:
 every capability above has a non-AI path (manual mapping in the editor or
 API). The Forma contextual AI assistance interaction patterns
 (`forma/docs/requirements/contextual-ai-assistance-interaction-patterns-2026-11-23.md`)

@@ -138,3 +138,98 @@ req("TRN-REQ-ARC-005","architecture","P1",1,"Each new third-party dependency MUS
 # --- Performance (PF)
 req("TRN-REQ-PF-001","performance","P0",2,"Every assumption in the performance model MUST be replaced by a measurement before capacity or commercial commitments are made, and theoretical estimates MUST NOT be presented as benchmarks.","Benchmark report per assumption A1-A11.","§18",["TRN-ARCH-12 §1"],[],"review")
 req("TRN-REQ-PF-002","performance","P1",2,"The engine MUST process 10^6-record executions within the host database's capacity without degrading concurrent OLTP latency beyond an agreed budget.","Load test with concurrent OLTP workload.","§18",["TRN-ARCH-12 §3"],[])
+
+# ---------------------------------------------------------------------------
+# Revision 1 (2026-11-26): adversarial review TRN-REV-01 dispositions.
+# Applied as pure transformations over R so the original proposal remains visible in history.
+# Phases after revision: 1 = Unbound R1 feed libraries (Formats, Checks, Evidence);
+# 2 = engine + declarative pipeline model (trigger T2); 3 = packages + AI (trigger T3);
+# 4 = admin UI (trigger T4). See docs/roadmap.md.
+
+PHASE = {
+ # phase-1 libraries
+ **{k: 1 for k in ["TRN-REQ-ST-001","TRN-REQ-ST-002","TRN-REQ-ST-004","TRN-REQ-TX-002","TRN-REQ-TX-003","TRN-REQ-TX-005","TRN-REQ-TX-006",
+   "TRN-REQ-AD-001","TRN-REQ-AD-002","TRN-REQ-AD-003","TRN-REQ-AD-008","TRN-REQ-EX-006","TRN-REQ-EX-007","TRN-REQ-EX-008",
+   "TRN-REQ-VR-001","TRN-REQ-VR-002","TRN-REQ-VR-003","TRN-REQ-VR-004","TRN-REQ-VR-006","TRN-REQ-VR-007","TRN-REQ-VR-009","TRN-REQ-VR-010",
+   "TRN-REQ-LN-001","TRN-REQ-LN-003","TRN-REQ-LN-006","TRN-REQ-LN-008",
+   "TRN-REQ-SEC-001","TRN-REQ-SEC-002","TRN-REQ-SEC-003","TRN-REQ-SEC-004","TRN-REQ-SEC-005","TRN-REQ-SEC-006","TRN-REQ-SEC-007",
+   "TRN-REQ-SEC-009","TRN-REQ-SEC-011","TRN-REQ-SEC-014","TRN-REQ-SEC-016","TRN-REQ-SEC-017","TRN-REQ-PF-001"]},
+ # phase 2 engine and declarative model
+ **{k: 2 for k in ["TRN-REQ-PS-001","TRN-REQ-PS-002","TRN-REQ-PS-003","TRN-REQ-PS-004","TRN-REQ-PS-005","TRN-REQ-PS-006","TRN-REQ-PS-007",
+   "TRN-REQ-PS-008","TRN-REQ-PS-009","TRN-REQ-PS-010","TRN-REQ-TX-001","TRN-REQ-TX-004","TRN-REQ-TX-007","TRN-REQ-TX-009","TRN-REQ-TX-010",
+   "TRN-REQ-AD-005","TRN-REQ-AI-005","TRN-REQ-ARC-001","TRN-REQ-ARC-002","TRN-REQ-ARC-004","TRN-REQ-ARC-005","TRN-REQ-UI-010"]},
+ # phase 3 packages and AI
+ **{k: 3 for k in ["TRN-REQ-MP-001","TRN-REQ-MP-002","TRN-REQ-MP-003","TRN-REQ-TX-008"]},
+}
+PRIORITY = {  # P0 only where Unbound R1 or regulated safety requires it
+ **{k: "P1" for k in ["TRN-REQ-PS-001","TRN-REQ-PS-002","TRN-REQ-PS-003","TRN-REQ-PS-004","TRN-REQ-PS-005","TRN-REQ-PS-007","TRN-REQ-PS-008",
+   "TRN-REQ-ST-003","TRN-REQ-ST-006","TRN-REQ-TX-001","TRN-REQ-TX-004","TRN-REQ-TX-007","TRN-REQ-TX-008","TRN-REQ-AD-004","TRN-REQ-AD-007",
+   "TRN-REQ-EX-001","TRN-REQ-EX-002","TRN-REQ-EX-003","TRN-REQ-EX-004","TRN-REQ-EX-005","TRN-REQ-EX-009","TRN-REQ-EX-010",
+   "TRN-REQ-VR-005","TRN-REQ-VR-008","TRN-REQ-LN-002","TRN-REQ-LN-005","TRN-REQ-AI-002","TRN-REQ-AI-003","TRN-REQ-AI-004","TRN-REQ-AI-007",
+   "TRN-REQ-MP-001","TRN-REQ-MP-002","TRN-REQ-MP-003","TRN-REQ-SEC-008","TRN-REQ-SEC-010","TRN-REQ-SEC-012","TRN-REQ-SEC-013","TRN-REQ-SEC-015","TRN-REQ-SEC-018",
+   "TRN-REQ-ARC-001","TRN-REQ-ARC-002"]},
+ **{k: "P2" for k in ["TRN-REQ-UI-002","TRN-REQ-UI-004","TRN-REQ-UI-010","TRN-REQ-AD-005"]},
+}
+STATEMENT = {
+ "TRN-REQ-ST-001": "Raw inputs MUST be preserved immutably and content-addressed by SHA-256 with tenant, source identifier, source locator, acquisition timestamp, source metadata, adapter version, classification, rights policy and retention class before any parsing; where the source's rights policy does not permit storing bytes, Transitus MUST store the hash, size and a lawful reference instead and record that the bytes were not retained (aligns with Unbound UNB-KNOW RawEvidence 'store raw bytes only when permitted').",
+ "TRN-REQ-AD-005": "Adapters MUST be built only for scenarios in Unbound release scope or a committed second consumer. Phase-1 formats: CSV/TSV (IRS EO BMF, Pub 78, auto-revocation, OFAC SDN, state registries), fixed-width/NACHA (returns, NOC), BAI2 or camt.053 (one bank activity feed), XLSX (read-only, cached values), one custodian file format; transports remain in the host (upload, HTTPS, SFTP) until phase 2.",
+ "TRN-REQ-LN-002": "Field-level lineage MUST be provided statically per pipeline version; per-record field values MUST NOT be stored except selection codes for fields marked lineageCaptureValue; natural keys of records classified restricted-personal or above MUST be stored as tenant-keyed HMACs, not in clear text.",
+ "TRN-REQ-PF-001": "Every assumption in the performance model (A1-A12) MUST be replaced by a measurement, including Echelon.Execution per-command storage and per-record domain-command cost on the Unbound benchmark instance, before capacity or commercial commitments are made; theoretical estimates MUST NOT be presented as benchmarks.",
+ "TRN-REQ-PF-002": "Bulk loads MUST NOT degrade the sponsor's live OLTP latency beyond an agreed budget; load rate MUST be governed by a configurable share of the sponsor's queue quota (see TRN-REQ-AD-011).",
+ "TRN-REQ-UI-010": "All configuration, execution, approval, exception and lineage operations MUST be available as documented library APIs; HTTP exposure is the host application's decision.",
+ "TRN-REQ-UI-001": "If (and only if) trigger T4 is met, the administration UI MUST be built on Forma components and Forma's portable workflow capability behind Limen; Transitus MUST NOT build its own graph editor.",
+ "TRN-REQ-MP-002": "Each package MUST declare the basis of its format knowledge (public specification, public API documentation, customer-authorized sample, synthetic representation); proprietary vendor schemas MUST NOT be invented; packages derived from a vendor export MUST record a licence/contract clearance (e.g. vendor MSA anti-competitive-use and reverse-engineering clauses) before publication.",
+ "TRN-REQ-MP-005": "Promotion of improvements from customer overlays to base packages MUST carry no customer values, MUST be supported by at least two independent customer samples, and MUST pass disclosure and vendor-licence review.",
+}
+NEW = [
+ ("TRN-REQ-ARC-006","architecture","P0",1,"Transitus MUST NOT re-implement a capability that an Echelon component or the consuming application already provides; in particular phase 1 MUST port, not duplicate, the IRS/OFAC parsing in Unbound.Replay/Sources.fs, and MUST adopt Unbound's SourceRegistry/AcquisitionRun/RawEvidence model rather than a competing one.","Duplication review per phase; Unbound.Replay consumes Transitus.Formats or the parsers move.","§2",["TRN-ARCH-11 §1","TRN-REV-01 C1"],["DF-TRN-2026-0001"],"review"),
+ ("TRN-REQ-ARC-007","architecture","P0",1,"Each phase MUST declare a maintenance budget (packages, adapters, third-party parser libraries, mapping packages) and MUST NOT exceed it without a decision record; phase 1 is limited to three packages.","Package count check in CI.","§19",["docs/roadmap.md","TRN-REV-01 C11"],["DF-TRN-2026-0016"],"review"),
+ ("TRN-REQ-ARC-008","architecture","P0",1,"Every phase-1 work item MUST trace to an Unbound release-1 requirement (release_scope initial-implementation) or to a committed second consumer.","Traceability table in roadmap.","§19, §21",["docs/roadmap.md","TRN-REV-01 C12"],["DF-TRN-2026-0016"],"review"),
+ ("TRN-REQ-ARC-009","architecture","P0",1,"Phase transitions MUST be gated by recorded triggers (T2 engine, T3 packages/AI, T4 UI) and kill criteria; absent the trigger, the deferred capability MUST NOT be built.","Decision record per phase gate.","§19",["docs/roadmap.md"],["DF-TRN-2026-0016"],"review"),
+ ("TRN-REQ-EX-013","execution","P0",1,"Durable command payloads (Echelon.Execution) MUST carry dataset/record references and hashes only, never record values classified restricted-personal or above (consistent with Unbound CNV-ARC-001 vault references).","Payload classification test.","§11, §14",["TRN-ARCH-05 §2","TRN-REV-01 C8"],[]),
+ ("TRN-REQ-AD-011","adapters","P0",1,"Bulk loads into Unbound MUST use a configurable share of the sponsor's Echelon.Execution queue quota, a lower priority than interactive commands, and a separate worker role, so imports cannot throttle live donor operations.","Load test: interactive command latency within budget during a bulk load.","§11",["TRN-ARCH-05 §5","TRN-REV-01 C9"],[]),
+ ("TRN-REQ-AD-012","adapters","P1",1,"Historical-import (pre-go-live) batch domain operations MAY be used only while the sponsor programme is not live, and only through Unbound-defined operations that preserve per-record idempotency keys and receipts; post-go-live loads use per-record commands.","Unbound operation contract review (UNB-TRN-006).","§11, §21",["TRN-ARCH-12 §3","TRN-REV-01 C9"],[]),
+ ("TRN-REQ-MP-006","mapping-packages","P1",3,"Target-side and public-specification packages (Unbound canonical import shape, IRS, NACHA, BAI2/camt.053) MUST be built before any vendor-specific package.","Roadmap ordering.","§10",["TRN-ARCH-09 §3","TRN-REV-01 C7"],[],"review"),
+ ("TRN-REQ-MP-007","mapping-packages","P2",3,"Package reuse MUST be measured (share of mappings reused unmodified per migration) and vendor packages retired if reuse stays below an agreed threshold after three migrations.","Reuse metric per migration.","§10, §19",["TRN-REV-01 C7"],[]),
+ ("TRN-REQ-LN-010","lineage-evidence","P1",2,"Lineage, Echelon.Execution history for Transitus commands, and evidence MUST have explicit retention aligned with the consumer's record-keeping policy, with partition-based purge.","Retention configuration test.","§13",["TRN-ARCH-08","TRN-REV-01 C8"],[]),
+ ("TRN-REQ-PF-003","performance","P1",1,"The storage model MUST include Echelon.Execution command, history and outbox rows per loaded record (estimated 1.5-3 KB) in addition to Transitus lineage.","Storage model revised and later measured.","§18",["TRN-ARCH-12 §2"],[],"review"),
+ ("TRN-REQ-PF-004","performance","P1",1,"Before phase 2, the cost of the Transitus approach MUST be compared against hand-written per-feed F# modules for the same Unbound feeds, with a recorded decision.","Comparison in phase-1 exit review.","§18, §19",["TRN-ARCH-12 §6","TRN-REV-01 C2"],["DF-TRN-2026-0016"],"review"),
+ ("TRN-REQ-UI-011","visual-administration","P1",1,"Exceptions requiring human resolution MUST be surfaced through the consuming application's existing case/work-item system (for Unbound, its case system) rather than a Transitus-specific queue UI.","Integration via library callback.","§15",["TRN-ARCH-10","TRN-REV-01 C10"],[]),
+]
+DEFERRED_UI = {"TRN-REQ-UI-002","TRN-REQ-UI-003","TRN-REQ-UI-004"}
+
+def revise(r):
+    rid = r["id"]
+    phase = 4 if rid in DEFERRED_UI or rid == "TRN-REQ-UI-001" else PHASE.get(rid, r["phase"])
+    return {**r, "phase": phase, "priority": PRIORITY.get(rid, r["priority"]), "statement": STATEMENT.get(rid, r["statement"]),
+            "revision": "TRN-REV-01" if (rid in PHASE or rid in PRIORITY or rid in STATEMENT or rid in DEFERRED_UI) else None}
+
+R = [revise(r) for r in R] + [dict(id=i, category=c, priority=p, phase=ph, statement=s, acceptance=a, charter=ch, design=list(d),
+      decisions=list(dec), verify=v, status="proposed", revision="TRN-REV-01") for (i,c,p,ph,s,a,ch,d,dec,v) in
+      [(n[0],n[1],n[2],n[3],n[4],n[5],n[6],n[7],n[8],(n[9] if len(n)>9 else "test")) for n in NEW]]
+
+# Revision 1b: reviewer B (C4 expressiveness, C5 staging, C6 AI) dispositions.
+STATEMENT_B = {
+ "TRN-REQ-PS-005": "Control flow MUST be limited to DAG dependencies, total partitioning routes with a mandatory otherwise branch, union/join merges, runIf predicates over execution facts, per-stage error policies, retries and the bounded set operators of TRN-REQ-TX-011; general loops, recursion, user functions and dynamic stage generation MUST NOT be expressible.",
+ "TRN-REQ-PS-006": "User-configured pipelines MUST NOT contain or evaluate arbitrary executable code, dynamic SQL, JavaScript or unrestricted scripting; extension MUST occur only via reviewed, compiled F# packages governed by TRN-REQ-EXT-001..004. Because .NET cannot sandbox in-process code, extension safety rests on review, signing and allow-listing, not isolation.",
+ "TRN-REQ-PS-008": "Publish-time validation MUST compute an authority-and-semantics diff against the prior version and require elevated approval for any widening (new source, destination, egress host, secret slot, classification increase, relaxed gate or tolerance, new loss acknowledgement) and highlighted review for semantic-critical changes (idempotency-key fields, autoApprove conditions, enum/code mappings on financial fields, re-mapping between money or date fields, reference-data version changes).",
+ "TRN-REQ-ST-003": "Phase-2 staging MUST respect the consumer's tenancy model (for Unbound, CNV-ARC-001 schema and role per sponsor) and MUST NOT require runtime DDL: staging tables per schema version are created by the host's Strata-governed migrations; bulk loads MUST NOT rely on COPY into row-level-security tables (PostgreSQL does not support COPY FROM with RLS); partition-based purge requires a governed partition-maintenance mechanism (DEP-STRATA-01) or uses DELETE with measured vacuum cost.",
+ "TRN-REQ-SEC-018": "Retention MUST be enforced, with per-dataset encryption keys (crypto-shredding) for staging and raw data so that copies in WAL archives and backups become unreadable at purge; where crypto-shredding is not used, the backup retention window MUST be documented as the effective retention.",
+ "TRN-REQ-AI-007": "By default AI MUST receive schema metadata and synthetic or masked samples only; profile statistics (top-k values, min/max, patterns) inherit the classification of their field and MUST be masked accordingly; real samples require tenant policy permission and an approved provider for the data classification.",
+ "TRN-REQ-AI-003": "Source data, documents, external metadata and non-semantic annotations MUST be treated as untrusted and passed as delimited data with provenance tags; annotations MUST be excluded from AI context unless explicitly selected.",
+}
+PRIORITY_B = {"TRN-REQ-AI-008": "P0", "TRN-REQ-PF-002": "P0"}
+NEW_B = [
+ ("TRN-REQ-TX-011","transformation","P1",2,"The declarative model MUST provide bounded set operators: ordered scan (fill-down, running total with explicit order key), as-of join against date-effective reference data, date arithmetic and fiscal-period derivation, unpivot of repeated columns, bounded explode of schedules (declared maximum), duplicate clustering (connected components with maximum cluster size) and linear-time regex capture; each terminates in bounded time and space.","Counter-example fixtures from TRN-REV-01 C4 (U1, U9, U10, H1, H2) are expressible.","§6, §7",["TRN-ARCH-04 §3.6","TRN-REV-01 C4"],["DF-TRN-2026-0004"]),
+ ("TRN-REQ-EXT-001","extensions","P1",2,"Extensions MUST be compiled F# packages on a host allow-list, pinned by hash, with signatures that receive no I/O capability (values or bounded record sequences in, Results out).","Allow-list and signature checks.","§6",["TRN-ARCH-04 §5"],["DF-TRN-2026-0005"]),
+ ("TRN-REQ-EXT-002","extensions","P1",2,"Extensions MUST pass the conformance suite (determinism across cultures/time zones, totality fuzzing, documentation completeness) and two-person code review before allow-listing.","Conformance report and review record.","§6",["TRN-ARCH-04 §6"],[]),
+ ("TRN-REQ-EXT-003","extensions","P1",2,"Extensions MAY implement set-level stage operators (not only per-value operations) when the declarative catalogue cannot express a demonstrated scenario; each such extension MUST be recorded with the scenario that required it, as input to catalogue evolution.","Extension register.","§6",["TRN-REV-01 C4"],[]),
+ ("TRN-REQ-EXT-004","extensions","P1",2,"Extension versions MUST be recorded in the execution manifest and changes MUST be treated as semantic-critical changes under TRN-REQ-PS-008.","Manifest includes extension hashes.","§6, §9",["TRN-ARCH-01 §7"],[]),
+ ("TRN-REQ-AI-009","ai","P1",3,"AI enablement per tenant and pipeline class MUST be gated on the TRN-REQ-AI-008 evaluation meeting recorded precision thresholds; below threshold, AI suggestions are disabled for that class.","Gate configuration test.","§9",["TRN-ARCH-07 §5","TRN-REV-01 C6"],[]),
+ ("TRN-REQ-ST-009","storage","P1",2,"The recovery model MUST state that UNLOGGED staging is truncated on crash and recovery then requires re-running staged stages from preserved raw input.","Documented and tested crash recovery.","§5, §11",["TRN-ARCH-12 §2","TRN-REV-01 C5"],[]),
+ ("TRN-REQ-ST-010","storage","P1",2,"Shared reference datasets (e.g. IRS EO BMF) SHOULD be staged once per deployment as public reference data rather than per tenant, when their classification is public and the consumer's tenancy model permits.","Storage model shows single copy.","§5",["TRN-REV-01 C5"],[]),
+]
+R = [{**r, "statement": STATEMENT_B.get(r["id"], r["statement"]), "priority": PRIORITY_B.get(r["id"], r["priority"]),
+      "revision": "TRN-REV-01" if (r["id"] in STATEMENT_B or r["id"] in PRIORITY_B) else r.get("revision")} for r in R] + \
+    [dict(id=n[0], category=n[1], priority=n[2], phase=n[3], statement=n[4], acceptance=n[5], charter=n[6], design=list(n[7]),
+          decisions=list(n[8]), verify="test", status="proposed", revision="TRN-REV-01") for n in NEW_B]

@@ -50,6 +50,8 @@ returned no matches: Transitus is not yet registered, planned or referenced.
 | Charity knowledge acquisition model (SourceRegistry → AcquisitionRun → RawEvidence → ObservedClaim → VerifiedFact) | **Unbound** (domain) | `unbound/architecture/CHARITY-KNOWLEDGE-MODEL-AND-ACQUISITION-PIPELINE.md` (UNB-KNOW-023/027) | Transitus implements the generic *AcquisitionRun → RawEvidence* half; claims/verified facts stay in Unbound's domain. |
 | Migration run state machine (Contracted … Archived) | **Unbound** (domain) | RR-REQ-X-061-r1 | Transitus executions are steps *inside* a MigrationRun; the run's cutover/fencing remain Unbound's. |
 
+**Review correction (TRN-REV-01 C1).** Unbound already designs `SourceRegistry → AcquisitionRun → RawEvidence`, and its replay tooling already parses the IRS files. Transitus phase 1 therefore *adopts* that model and *moves* those parsers into `Transitus.Formats`; it does not build parallel versions (TRN-REQ-ARC-006). Summa and Helix Note have their own migration and extraction code, so they are **candidate** consumers, not committed ones.
+
 **Conclusion:** after removing what is owned elsewhere, Transitus's unique
 responsibility is: *the declarative pipeline model, the transformation and
 validation/reconciliation primitive libraries, the adapter contracts and a
@@ -57,26 +59,32 @@ small standard adapter set, raw/staging/lineage management, and the
 pipeline-level execution state machine on top of Echelon.Execution.*
 No existing Echelon component provides these (DF-TRN-2026-0001).
 
-## 2. Proposed library boundaries (one repository, several packages)
+## 2. Library boundaries (revised after TRN-REV-01)
 
-| Package | Depends on | Contents | Phase |
-|---|---|---|---|
-| `Transitus.Model` | — | DUs for pipeline, schema, expression tree, operations descriptors; JSON (JCS) codec; JSON Schema generation | 1 |
-| `Transitus.Validation.Definition` | Model | publish-time validator (types, DAG, policy, authority envelope) | 1 |
-| `Transitus.Transforms` | Model | standard operation library (pure) | 1 |
-| `Transitus.Checks` | Model | validation + reconciliation primitives (pure) | 1 |
-| `Transitus.Adapters.Abstractions` | Model | adapter contracts, error taxonomy, conformance suite | 1 |
-| `Transitus.Adapters.Standard` | Abstractions | CSV/TSV, fixed-width, JSON/NDJSON, XLSX, HTTPS, upload; later NACHA, SFTP, XML | 1–2 |
-| `Transitus.Engine` | Model, Transforms, Checks, Abstractions, **Echelon.Execution** | stage handlers, chunking, state machine, idempotency keys, evidence assembly | 2 |
-| `Transitus.Storage.Postgres` | Engine, Npgsql | raw metadata, staging, lineage, evidence stores; DDL as Strata-governed SQL | 2 |
-| `Transitus.Lineage` | Model | static lineage graph, record lineage writer/reader | 2 |
-| `Transitus.Assist` | Model, Validation.Definition | AI proposal protocol (provider-agnostic); no runtime dependency from Engine | 3 |
-| `Transitus.Admin` (WASM) | Forma, Limen, Iter | administration UI | 4 |
-| Mapping packages (`irs.*`, `nacha.*`…) | — (configuration) | separate folder/repo; versioned independently | 1+ |
+The original proposal had eleven code packages; its text miscounted them as
+eight. Review found that excessive for a single-owner portfolio (C11) and
+ahead of demand (C12). The revised boundaries are below.
 
-Total: eight code packages, of which four are pure and testable without I/O.
-Packages are not separately deployed services; the host references them
-(component monolith). No microservice is proposed (DF-TRN-2026-0015).
+### Phase 1: three pure libraries, the maintenance budget (TRN-REQ-ARC-007)
+
+| Package | Contents | Depends on |
+|---|---|---|
+| `Transitus.Formats` | Strict, limit-enforcing parsers that yield typed record streams with locators. Port of `Unbound.Replay/Sources.fs` covering IRS EO BMF, Pub 78, auto-revocation and OFAC SDN. CSV/TSV, fixed-width, NACHA (returns, NOC), BAI2 or camt.053, XLSX (read-only, cached values) and one custodian format. | BCL + at most two vetted parser libraries (ADR each) |
+| `Transitus.Checks` | Validation and reconciliation primitives (TRN-ARCH-06) as pure functions over typed sequences; conservation-law accounting. | none |
+| `Transitus.Evidence` | Raw-evidence records aligned to Unbound's `RawEvidence` model (hash, locator, rights policy, retention), deterministic idempotency keys, L0–L2 lineage records, evidence package assembly with a hash chain. | none |
+
+Consumers write each feed as a short F# module that composes these
+libraries. Loading goes through the consumer's own Echelon.Execution
+operations, used in place inside Unbound; extraction is not required in
+phase 1 (DF-TRN-2026-0006 revised).
+
+### Later phases (each gated by a recorded trigger)
+
+| Phase | Packages | Trigger |
+|---|---|---|
+| 2 | `Transitus.Model` (DU + JSON), `Transitus.Validation.Definition`, `Transitus.Transforms` (catalogue incl. bounded set operators), `Transitus.Engine` (state machine on Echelon.Execution), `Transitus.Storage.Postgres` | **T2:** a second consumer is committed (Helix Note or Summa), *or* the phase-1 exit review shows per-feed modules duplicating orchestration in ≥3 feeds, *or* non-engineer authoring is required |
+| 3 | `Transitus.Assist` (AI proposals), mapping-package tooling | **T3:** a migration is contracted with a customer-authorized sample, and the AI-008 evaluation meets thresholds |
+| 4 | `Transitus.Admin` (Forma/Limen) | **T4:** operators other than engineers must configure pipelines, which is not in Unbound release 1 (SPR-CFG-002 rejected a no-code engine) |
 
 ## 3. Proposed requirements on other components (not applied here)
 
@@ -85,7 +93,7 @@ does **not** change their responsibilities.
 
 | ID | Target | Proposal | Filed where |
 |---|---|---|---|
-| DEP-EXEC-01 | Echelon.Execution (Unbound) | Extraction to a shared repository now that a second consumer is defined; Transitus needs G1 lease renewal, G2 dependency resume, G3 payload protection/purge, G4 metrics | `unbound/requirements/discovery/2026-11-26-transitus-integration/` (this initiative) |
+| DEP-EXEC-01 | Echelon.Execution (Unbound) | Extraction to a shared repository **when trigger T2 fires** (it is unbenchmarked, RM-05, so early extraction is not proposed); meanwhile Transitus phase 1 needs no extraction. At extraction, Transitus needs G1 lease renewal, G2 dependency resume, G3 payload protection/purge, G4 metrics | `unbound/requirements/discovery/2026-11-26-transitus-integration/` (this initiative) |
 | DEP-STRATA-01 | Strata | Accept schema fragments contributed by an embedded library (staging/lineage DDL) under the host's governed migration path | recorded here; to be raised in Strata by its owner (read-only from this session) |
 | DEP-STRATA-02 | Strata DIV | Agree boundary between DIV interaction virtualization and Transitus source adapters | registry INIT-018 boundary review |
 | DEP-FORMA-01 | Forma workflow | Partition-routing node with mandatory `otherwise`; layout-as-annotation; mapping-table pattern with non-drag alternative | recorded here |

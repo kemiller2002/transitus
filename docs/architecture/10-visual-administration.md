@@ -13,6 +13,8 @@ decisions: [DF-TRN-2026-0010]
 
 ## 1. Position
 
+> **Revised after TRN-REV-01 C10: conditional.** The administration UI is built only if trigger T4 fires, meaning operators other than engineers must configure pipelines. Unbound release 1 has no sponsor-written configuration, and Unbound rejected a no-code configuration engine (SPR-CFG-002). Until T4, exceptions surface through the consuming application's existing case system (TRN-REQ-UI-011). Pipeline definitions may be rendered read-only as static documentation. Everything below is the specification to use *if* T4 fires.
+
 The administration UI is **phase 4** and optional. Everything it does must be
 possible through documented APIs first (TRN-REQ-UI-010). It is built from:
 

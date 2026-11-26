@@ -33,6 +33,12 @@ applications) need it.
 | U11 | **Financial reconciliation** (month-end) | domain report API + bank/custodian files | `r.matchSets`, `r.balance`, `r.timing`; evidence via Folio | close process, write-off policy (none silent), ProvisionalCalibration (CNV-FIN-004) | CNV-FIN-004, UNB-ACC-028 |
 | U12 | **Advisor relationship updates** | SCIM/HR feed or CSV | snapshot diff; scoped to (advisor, firm); removed relationships → approval | relationship authority | UNB-XIN-CRM-007, REQ-X-062 |
 
+| U13 | **OFAC SDN screening list ingestion** | HTTPS → CSV/XML (Treasury SDN) | snapshot diff; `v.freshness` (fail-safe when stale); normalized name/alias sets as reference data | screening decisions and matching policy | Unbound release-1 screening (added after TRN-REV-01 C12) |
+| U14 | **State charity registry ingestion (e.g. California AG Registry)** | HTTPS → CSV | snapshot diff by state registration id; identifier assertions | registration-status consequences | Unbound charity knowledge model (added after TRN-REV-01 C12) |
+| U15 | **Positive-pay issue file (outbound)** | domain export API → bank-specified fixed-width/CSV → SFTP | one-directional outbound pipeline; deterministic file id; `r.count` and `r.controlTotal` against issued payments; destination guarantee `none` ⇒ single attempt, OutcomeUnknown on ambiguity | payment issuance | CNV-PAY-002 (added after TRN-REV-01 C12) |
+
+**Release-1 scope note (TRN-REV-01 C12).** Unbound's own records conflict on migration. The adopted convergence clause CNV-EXP-002 (`release_scope: initial-implementation`) requires importing each donor's full fund history from the predecessor platform. The simplification discovery (`requirements/discovery/2026-11-24-simplification-economics/01-REVERSE-REQUIREMENTS-ANALYSIS.md:571`) proposes "no migration in R1" for REQ-X-061. OD-M-14 records no design partner. Which one governs is an Unbound owner decision (OQ-13). Transitus phase 1 serves the uncontested feeds U2, U3, U4, U7, U8, U13, U14 and U15, and serves U1/U10 only if the owner keeps CNV-EXP-002 in release 1.
+
 ### Worked example: U8 ACH returns
 
 1. `discover` SFTP folder `/returns/` (cursor: files seen by hash).
@@ -51,7 +57,7 @@ Transitus only proves the file was complete, correct, and delivered once.
 ## B. Helix Note
 
 Helix Note (ledger-first evidence system for medical/legal cases; F# +
-PostgreSQL/Strata + Limen/Forma) has file extraction already
+PostgreSQL/Strata + Limen/Forma; it calls the OpenAI API directly) has file extraction already
 (`HelixNote.Data.FileExtraction.fs`) and explicitly keeps lab values exactly
 as written with no silent unit conversion (HN-REQ-104).
 
@@ -90,6 +96,6 @@ optional modules.
 | Approval gates | ✓ | ✓ (patient consent) | Summa | core |
 | Record matching / dedupe | ✓ | ✓ (patient/provider records) | — | core |
 | AI mapping assistance | ✓ | ✓ (metadata only) | — | optional module |
-| Visual designer | ✓ | — | — | deferred (phase 4) |
+| Visual designer | ✓ (not in R1) | — | — | conditional on trigger T4 (fails the two-scenario rule) |
 | CDC / event streams | — | — | — | not built |
 | Bidirectional sync | — | — | — | not built |

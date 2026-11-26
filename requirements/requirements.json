@@ -1,13 +1,13 @@
 {
  "schema": "transitus.requirements/v1",
  "status": "proposed",
- "count": 115,
+ "count": 136,
  "requirements": [
   {
    "id": "TRN-REQ-PS-001",
    "category": "pipeline-spec",
-   "priority": "P0",
-   "phase": 1,
+   "priority": "P1",
+   "phase": 2,
    "statement": "Pipelines MUST be versioned, declarative JSON documents conforming to a published JSON Schema and an F# discriminated-union model; the content hash (SHA-256 of RFC 8785 canonical JSON, excluding annotations) identifies a pipeline version.",
    "acceptance": "Two semantically identical pipelines with different key order or layout annotations produce the same hash; schema-invalid documents are rejected with a located error.",
    "charter": "§6",
@@ -19,13 +19,14 @@
     "DF-TRN-2026-0002"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-PS-002",
    "category": "pipeline-spec",
-   "priority": "P0",
-   "phase": 1,
+   "priority": "P1",
+   "phase": 2,
    "statement": "Every stage MUST declare its kind, inputs (dependsOn), outputs, failure behaviour and the provenance it emits, per the lifecycle table.",
    "acceptance": "Publish-time validator rejects a stage lacking required fields; documentation lists inputs/outputs/state/failure/provenance for all 14 stage kinds.",
    "charter": "§4",
@@ -36,13 +37,14 @@
     "DF-TRN-2026-0003"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-PS-003",
    "category": "pipeline-spec",
-   "priority": "P0",
-   "phase": 1,
+   "priority": "P1",
+   "phase": 2,
    "statement": "Pipelines whose destination is classified system-of-record MUST include preserve, blocking validate, blocking reconcile, authorize and evidence stages.",
    "acceptance": "Validator rule PV-12 rejects a system-of-record pipeline missing any of these stages.",
    "charter": "§4, §12",
@@ -54,13 +56,14 @@
     "DF-TRN-2026-0011"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-PS-004",
    "category": "pipeline-spec",
-   "priority": "P0",
-   "phase": 1,
+   "priority": "P1",
+   "phase": 2,
    "statement": "Published pipeline versions MUST be immutable; publishing MUST require an authorized role, and pipelines handling restricted-financial or phi classifications MUST require a second approver.",
    "acceptance": "Attempting to modify a published version fails; single-approver publish of a financial pipeline is refused.",
    "charter": "§14",
@@ -71,14 +74,15 @@
     "DF-TRN-2026-0002"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-PS-005",
    "category": "pipeline-spec",
-   "priority": "P0",
-   "phase": 1,
-   "statement": "Control flow MUST be limited to DAG dependencies, total partitioning routes with a mandatory otherwise branch, union/join merges, runIf predicates over execution facts, per-stage error policies and retries; loops, recursion, user functions and dynamic stage generation MUST NOT be expressible.",
+   "priority": "P1",
+   "phase": 2,
+   "statement": "Control flow MUST be limited to DAG dependencies, total partitioning routes with a mandatory otherwise branch, union/join merges, runIf predicates over execution facts, per-stage error policies, retries and the bounded set operators of TRN-REQ-TX-011; general loops, recursion, user functions and dynamic stage generation MUST NOT be expressible.",
    "acceptance": "JSON Schema and validator reject cycles, missing otherwise branches and any construct outside the list.",
    "charter": "§4",
    "design": [
@@ -88,14 +92,15 @@
     "DF-TRN-2026-0003"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-PS-006",
    "category": "pipeline-spec",
    "priority": "P0",
-   "phase": 1,
-   "statement": "User-configured pipelines MUST NOT contain or evaluate arbitrary executable code, dynamic SQL, JavaScript or unrestricted scripting; extension MUST occur only via reviewed, compiled F# operation packages on a host allow-list.",
+   "phase": 2,
+   "statement": "User-configured pipelines MUST NOT contain or evaluate arbitrary executable code, dynamic SQL, JavaScript or unrestricted scripting; extension MUST occur only via reviewed, compiled F# packages governed by TRN-REQ-EXT-001..004. Because .NET cannot sandbox in-process code, extension safety rests on review, signing and allow-listing, not isolation.",
    "acceptance": "No schema field accepts code; fuzzed pipeline documents never cause code loading; an unlisted package reference fails validation.",
    "charter": "§6",
    "design": [
@@ -106,13 +111,14 @@
     "DF-TRN-2026-0005"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-PS-007",
    "category": "pipeline-spec",
-   "priority": "P0",
-   "phase": 1,
+   "priority": "P1",
+   "phase": 2,
    "statement": "Predicates and computed fields MUST use the typed, total Transitus Expression Language whose evaluation terminates in time linear in expression size.",
    "acceptance": "Type errors are reported at publish; property tests show termination and no exceptions for generated expressions.",
    "charter": "§6",
@@ -123,14 +129,15 @@
     "DF-TRN-2026-0004"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-PS-008",
    "category": "pipeline-spec",
-   "priority": "P0",
-   "phase": 1,
-   "statement": "Publish-time validation MUST compute an authority-envelope diff against the prior version and require elevated approval for any widening (new source, destination, egress host, secret slot, classification increase, relaxed gate or tolerance, new loss acknowledgement).",
+   "priority": "P1",
+   "phase": 2,
+   "statement": "Publish-time validation MUST compute an authority-and-semantics diff against the prior version and require elevated approval for any widening (new source, destination, egress host, secret slot, classification increase, relaxed gate or tolerance, new loss acknowledgement) and highlighted review for semantic-critical changes (idempotency-key fields, autoApprove conditions, enum/code mappings on financial fields, re-mapping between money or date fields, reference-data version changes).",
    "acceptance": "A diff adding an egress host is flagged and cannot publish with standard approval.",
    "charter": "§9, §14",
    "design": [
@@ -141,13 +148,14 @@
     "DF-TRN-2026-0012"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-PS-009",
    "category": "pipeline-spec",
    "priority": "P1",
-   "phase": 1,
+   "phase": 2,
    "statement": "Every operation, configuration field, stage kind and error code MUST have AI-readable semantics documentation, generated from or checked against the model.",
    "acceptance": "Documentation-completeness test fails when a DU case lacks semantics text.",
    "charter": "§6",
@@ -156,13 +164,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-PS-010",
    "category": "pipeline-spec",
    "priority": "P1",
-   "phase": 1,
+   "phase": 2,
    "statement": "The pipeline specification MUST support source, destination and schema definitions, field mappings, type conversion, validation, conditional transformation, lookups, joins, aggregation, filtering, deduplication, normalization, relationship resolution, reference data, reconciliation, error, retry and approval policies, scheduling, resource limits, retention and security classification.",
    "acceptance": "Each listed construct has a schema element and at least one example fixture.",
    "charter": "§6",
@@ -172,14 +181,15 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-ST-001",
    "category": "storage",
    "priority": "P0",
-   "phase": 2,
-   "statement": "Raw inputs MUST be preserved immutably and content-addressed by SHA-256 with tenant, source identifier, source locator, acquisition timestamp, source metadata, adapter version, classification and retention class before any parsing.",
+   "phase": 1,
+   "statement": "Raw inputs MUST be preserved immutably and content-addressed by SHA-256 with tenant, source identifier, source locator, acquisition timestamp, source metadata, adapter version, classification, rights policy and retention class before any parsing; where the source's rights policy does not permit storing bytes, Transitus MUST store the hash, size and a lawful reference instead and record that the bytes were not retained (aligns with Unbound UNB-KNOW RawEvidence 'store raw bytes only when permitted').",
    "acceptance": "Parse stage cannot start without a committed raw object; metadata row contains all listed fields.",
    "charter": "§5",
    "design": [
@@ -189,13 +199,14 @@
     "DF-TRN-2026-0008"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-ST-002",
    "category": "storage",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Source-supplied file names, paths and keys MUST be stored only as metadata and never used to derive storage paths.",
    "acceptance": "Zip-slip and path traversal fixtures produce no file outside the blob store namespace.",
    "charter": "§5, §14",
@@ -205,14 +216,15 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-ST-003",
    "category": "storage",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
-   "statement": "Staging MUST be typed, tenant-partitioned, chunked and isolated, with DDL produced at publish time through the host's Strata-governed migration path and no runtime ad hoc DDL.",
+   "statement": "Phase-2 staging MUST respect the consumer's tenancy model (for Unbound, CNV-ARC-001 schema and role per sponsor) and MUST NOT require runtime DDL: staging tables per schema version are created by the host's Strata-governed migrations; bulk loads MUST NOT rely on COPY into row-level-security tables (PostgreSQL does not support COPY FROM with RLS); partition-based purge requires a governed partition-maintenance mechanism (DEP-STRATA-01) or uses DELETE with measured vacuum cost.",
    "acceptance": "Execution role lacks DDL privilege; staging tables exist only after a governed migration.",
    "charter": "§5",
    "design": [
@@ -222,13 +234,14 @@
     "DF-TRN-2026-0008"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-ST-004",
    "category": "storage",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Processing MUST NOT require the full dataset to fit in memory; memory use MUST be bounded by the pipeline memory budget independent of record count.",
    "acceptance": "A 10x larger input does not increase peak working set beyond the configured budget (measured).",
    "charter": "§5",
@@ -237,7 +250,8 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-ST-005",
@@ -252,12 +266,13 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": null
   },
   {
    "id": "TRN-REQ-ST-006",
    "category": "storage",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
    "statement": "Staging MUST have an enforced TTL, MUST NOT be exposed through general query APIs, and MUST NOT be used as a source by any other tenant or application.",
    "acceptance": "Sweeper purges expired partitions and records purge evidence; no API returns staged rows except bounded, classification-masked previews.",
@@ -267,7 +282,8 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-ST-007",
@@ -284,7 +300,8 @@
     "DF-TRN-2026-0008"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": null
   },
   {
    "id": "TRN-REQ-ST-008",
@@ -301,13 +318,14 @@
     "DF-TRN-2026-0008"
    ],
    "verify": "review",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": null
   },
   {
    "id": "TRN-REQ-TX-001",
    "category": "transformation",
-   "priority": "P0",
-   "phase": 1,
+   "priority": "P1",
+   "phase": 2,
    "statement": "Every transformation operation MUST be versioned (name@major) and pinned by pipelines; behavioural change requires a new major version.",
    "acceptance": "Changing golden output of an operation without a major bump fails CI.",
    "charter": "§7",
@@ -318,7 +336,8 @@
     "DF-TRN-2026-0004"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-TX-002",
@@ -335,7 +354,8 @@
     "DF-TRN-2026-0004"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-TX-003",
@@ -350,13 +370,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-TX-004",
    "category": "transformation",
-   "priority": "P0",
-   "phase": 1,
+   "priority": "P1",
+   "phase": 2,
    "statement": "Operations that may lose information MUST be rejected unless the stage carries an acknowledgeLoss with reason; reversible, reversible-with-key and irreversible operations MUST be classified.",
    "acceptance": "Validator rejects truncate/round/mask without acknowledgement; descriptor lists reversibility for every operation.",
    "charter": "§7",
@@ -365,7 +386,8 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-TX-005",
@@ -380,7 +402,8 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-TX-006",
@@ -395,13 +418,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-TX-007",
    "category": "transformation",
-   "priority": "P0",
-   "phase": 1,
+   "priority": "P1",
+   "phase": 2,
    "statement": "Lookups MUST reference versioned reference sets whose versions are recorded in the execution manifest.",
    "acceptance": "Replaying with the same manifest yields identical lookup results after reference data has changed.",
    "charter": "§7, §9",
@@ -410,13 +434,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-TX-008",
    "category": "transformation",
-   "priority": "P0",
-   "phase": 2,
+   "priority": "P1",
+   "phase": 3,
    "statement": "Record matching MUST produce scored candidates; financial entities MUST NOT be auto-merged, and candidates between configured thresholds MUST go to review.",
    "acceptance": "Matching fixtures show no automatic merges for financial entity types.",
    "charter": "§7",
@@ -425,13 +450,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-TX-009",
    "category": "transformation",
    "priority": "P1",
-   "phase": 1,
+   "phase": 2,
    "statement": "The standard library MUST provide the operation catalogue in TRN-ARCH-04 §3 (string, Unicode, whitespace, date/time/zone, decimal, currency, enum, identifier, address, null, default, split, concat, conditional, math, lookup, matching, duplicate detection, relationship resolution, aggregation, masking, redaction, hashing, tokenization).",
    "acceptance": "Catalogue coverage test enumerates all listed operations.",
    "charter": "§7",
@@ -440,13 +466,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-TX-010",
    "category": "transformation",
    "priority": "P0",
-   "phase": 1,
+   "phase": 2,
    "statement": "Hashing of low-entropy identifiers MUST use keyed HMAC with a tenant-scoped key; unkeyed hashing of such identifiers MUST be rejected.",
    "acceptance": "Validator rejects privacy.hash with sha256 on fields typed ssn/ein/phone.",
    "charter": "§7, §14",
@@ -455,7 +482,8 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-AD-001",
@@ -472,7 +500,8 @@
     "DF-TRN-2026-0009"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-AD-002",
@@ -488,7 +517,8 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-AD-003",
@@ -503,12 +533,13 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-AD-004",
    "category": "adapters",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
    "statement": "Incremental transports MUST persist opaque, versioned checkpoints that advance only after downstream stage commit.",
    "acceptance": "Crash after acquisition but before stage commit re-acquires the same items.",
@@ -519,14 +550,15 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-AD-005",
    "category": "adapters",
-   "priority": "P0",
-   "phase": 1,
-   "statement": "Phase-1 adapters MUST cover upload, HTTPS, CSV/TSV, fixed-width, XLSX, JSON/NDJSON, staging-only sink and the Unbound domain API destination; further adapters MUST be justified by a consumer scenario.",
+   "priority": "P2",
+   "phase": 2,
+   "statement": "Adapters MUST be built only for scenarios in Unbound release scope or a committed second consumer. Phase-1 formats: CSV/TSV (IRS EO BMF, Pub 78, auto-revocation, OFAC SDN, state registries), fixed-width/NACHA (returns, NOC), BAI2 or camt.053 (one bank activity feed), XLSX (read-only, cached values), one custodian file format; transports remain in the host (upload, HTTPS, SFTP) until phase 2.",
    "acceptance": "Adapter catalogue lists the driving scenario for each adapter.",
    "charter": "§8",
    "design": [
@@ -536,7 +568,8 @@
     "DF-TRN-2026-0009"
    ],
    "verify": "review",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-AD-006",
@@ -551,12 +584,13 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": null
   },
   {
    "id": "TRN-REQ-AD-007",
    "category": "adapters",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
    "statement": "Destination adapters MUST declare a delivery guarantee (idempotent-key, natural-upsert, query-before-write, none) and support read-back where the destination allows.",
    "acceptance": "Engine selects retry/verification policy from the declared guarantee.",
@@ -568,7 +602,8 @@
     "DF-TRN-2026-0007"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-AD-008",
@@ -584,7 +619,8 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-AD-009",
@@ -599,7 +635,8 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": null
   },
   {
    "id": "TRN-REQ-AD-010",
@@ -614,12 +651,13 @@
    ],
    "decisions": [],
    "verify": "review",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": null
   },
   {
    "id": "TRN-REQ-EX-001",
    "category": "execution",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
    "statement": "Durable execution (queueing, leases, retries, idempotent intake, ordering, approval waits, quarantine, OutcomeUnknown, per-tenant fairness, pause) MUST be provided by Echelon.Execution; Transitus MUST NOT implement a separate queue.",
    "acceptance": "Transitus.Engine has no queue tables; stage commands appear in Echelon.Execution history.",
@@ -631,12 +669,13 @@
     "DF-TRN-2026-0006"
    ],
    "verify": "review",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-EX-002",
    "category": "execution",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
    "statement": "The engine MUST implement an explicit pipeline execution state machine including Blocked, PartiallyLoaded and OutcomeUnknown states whose legal transitions are defined by a total pure function.",
    "acceptance": "Exhaustive transition tests; illegal transitions return errors.",
@@ -648,12 +687,13 @@
     "DF-TRN-2026-0007"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-EX-003",
    "category": "execution",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
    "statement": "Batch, incremental, scheduled, manual, event-triggered, dry-run and replay modes MUST be supported.",
    "acceptance": "Each mode has an acceptance test.",
@@ -663,12 +703,13 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-EX-004",
    "category": "execution",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
    "statement": "Dry runs MUST execute stages 1-9 and produce a load plan without writing to any system of record.",
    "acceptance": "Dry run against the Unbound adapter performs zero domain commands.",
@@ -678,12 +719,13 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-EX-005",
    "category": "execution",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
    "statement": "Processing MUST be chunked with per-chunk checkpoints enabling resumption, cancellation and parallelism where declared.",
    "acceptance": "Kill a worker mid-run; resumed run produces identical outputs with no duplicate chunks.",
@@ -693,13 +735,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-EX-006",
    "category": "execution",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Each destination record MUST carry a deterministic idempotency key derived from tenant, pipeline, destination, declared natural key and business date.",
    "acceptance": "Replay produces identical keys; destination dedupes.",
    "charter": "§11, §14",
@@ -710,13 +753,14 @@
     "DF-TRN-2026-0007"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-EX-007",
    "category": "execution",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Transitus MUST NOT claim exactly-once delivery; ambiguous external effects MUST enter OutcomeUnknown and be resolved by verification or reconciliation, never by blind retry.",
    "acceptance": "Simulated timeout after send yields OutcomeUnknown and no retry.",
    "charter": "§11",
@@ -727,13 +771,14 @@
     "DF-TRN-2026-0007"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-EX-008",
    "category": "execution",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Load intent MUST be committed before the external call and the receipt after it; no transaction spans the network.",
    "acceptance": "Crash-injection test at each point leaves a resolvable state.",
    "charter": "§11",
@@ -742,12 +787,13 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-EX-009",
    "category": "execution",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
    "statement": "Compensation of loaded financial records MUST NOT be automatic.",
    "acceptance": "No code path issues reversal commands.",
@@ -757,12 +803,13 @@
    ],
    "decisions": [],
    "verify": "review",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-EX-010",
    "category": "execution",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
    "statement": "Resource limits (input bytes, record bytes, records, nesting depth, archive entries and ratio, memory budget, parallelism, CPU time) and backpressure MUST be enforced.",
    "acceptance": "Limit fixtures fail fast with typed errors; queue depth stays bounded under slow destinations.",
@@ -773,7 +820,8 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-EX-011",
@@ -788,7 +836,8 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": null
   },
   {
    "id": "TRN-REQ-EX-012",
@@ -803,13 +852,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": null
   },
   {
    "id": "TRN-REQ-VR-001",
    "category": "validation-reconciliation",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Transitus MUST provide generic validation primitives for required, type, range, pattern, code set, check digit, cross-field, uniqueness, referential integrity, completeness, sequence, freshness and distribution.",
    "acceptance": "Primitive catalogue tests.",
    "charter": "§12",
@@ -820,13 +870,14 @@
     "DF-TRN-2026-0011"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-VR-002",
    "category": "validation-reconciliation",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Transitus MUST provide reconciliation primitives for counts, control totals, hash totals, balance (opening + movements = closing), keyed set matching, cross-file, cross-system and timing differences.",
    "acceptance": "Primitive catalogue tests including NACHA control and hash totals.",
    "charter": "§12",
@@ -837,13 +888,14 @@
     "DF-TRN-2026-0011"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-VR-003",
    "category": "validation-reconciliation",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Monetary reconciliation tolerance MUST default to zero; non-zero tolerances MUST be declared with justification and appear in evidence.",
    "acceptance": "Profile without tolerance treats a one-cent difference as Unbalanced.",
    "charter": "§12",
@@ -852,13 +904,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-VR-004",
    "category": "validation-reconciliation",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Blocking validation and reconciliation gates MUST prevent all downstream stages, including load, when they fail.",
    "acceptance": "Failing gate leaves execution Blocked with zero destination effects.",
    "charter": "§12",
@@ -867,12 +920,13 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-VR-005",
    "category": "validation-reconciliation",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
    "statement": "Gate overrides MUST be elevated authorizations with justification, recorded in evidence, and MUST NOT modify data.",
    "acceptance": "Override evidence present; staged data hash unchanged.",
@@ -882,13 +936,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-VR-006",
    "category": "validation-reconciliation",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Unbound-specific accounting rules MUST live in Unbound-owned profiles, not in Transitus core.",
    "acceptance": "No Unbound domain terms in Transitus core packages (dependency/term scan).",
    "charter": "§12, §21",
@@ -899,13 +954,14 @@
     "DF-TRN-2026-0011"
    ],
    "verify": "review",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-VR-007",
    "category": "validation-reconciliation",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Every stage MUST satisfy the conservation law in = out + rejected + quarantined + deduplicated + filteredWithCount; discards without counts MUST be impossible.",
    "acceptance": "Engine assertion; mutation test that drops a record fails the execution.",
    "charter": "§12",
@@ -914,12 +970,13 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-VR-008",
    "category": "validation-reconciliation",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
    "statement": "Record-level exceptions MUST be typed, grouped by code and resolvable only by mapping change, reference data, corrected source or approved exclusion; staged values MUST NOT be hand-edited.",
    "acceptance": "No API mutates staged values.",
@@ -929,13 +986,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-VR-009",
    "category": "validation-reconciliation",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Transitus MUST NOT introduce balancing entries, write-offs, suspense entries or silently discarded records.",
    "acceptance": "Review and tests: no operation emits synthetic financial records.",
    "charter": "§12",
@@ -944,13 +1002,14 @@
    ],
    "decisions": [],
    "verify": "review",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-VR-010",
    "category": "validation-reconciliation",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Post-load verification MUST reconcile planned, loaded and read-back counts and totals.",
    "acceptance": "Verify stage report present in evidence for every system-of-record load.",
    "charter": "§11, §12",
@@ -960,7 +1019,8 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-VR-011",
@@ -975,7 +1035,8 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": null
   },
   {
    "id": "TRN-REQ-VR-012",
@@ -990,7 +1051,8 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": null
   },
   {
    "id": "TRN-REQ-AI-001",
@@ -1007,12 +1069,13 @@
     "DF-TRN-2026-0012"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": null
   },
   {
    "id": "TRN-REQ-AI-002",
    "category": "ai",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 3,
    "statement": "AI-generated configuration MUST pass the same deterministic validation, dry run and authorization gates as human changes.",
    "acceptance": "Proposal acceptance path identical; tests.",
@@ -1024,14 +1087,15 @@
     "DF-TRN-2026-0012"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-AI-003",
    "category": "ai",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 3,
-   "statement": "Source data, documents and external metadata MUST be treated as untrusted, passed as delimited data with provenance tags.",
+   "statement": "Source data, documents, external metadata and non-semantic annotations MUST be treated as untrusted and passed as delimited data with provenance tags; annotations MUST be excluded from AI context unless explicitly selected.",
    "acceptance": "Prompt construction tests.",
    "charter": "§9",
    "design": [
@@ -1039,12 +1103,13 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-AI-004",
    "category": "ai",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 3,
    "statement": "Prompt injection MUST NOT be able to change pipeline authority or execution behaviour; an adversarial corpus MUST run in CI.",
    "acceptance": "No authority-widening diff accepted across the corpus.",
@@ -1055,13 +1120,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-AI-005",
    "category": "ai",
    "priority": "P0",
-   "phase": 1,
+   "phase": 2,
    "statement": "Identical raw inputs, pipeline version, package versions, reference data versions, execution parameters and engine version MUST produce equivalent deterministic results; the runtime path MUST contain no model calls.",
    "acceptance": "Replay determinism test; dependency scan of Engine finds no AI provider.",
    "charter": "§9",
@@ -1073,7 +1139,8 @@
     "DF-TRN-2026-0012"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-AI-006",
@@ -1088,14 +1155,15 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": null
   },
   {
    "id": "TRN-REQ-AI-007",
    "category": "ai",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 3,
-   "statement": "By default AI MUST receive schema metadata and synthetic or masked samples only; real samples require tenant policy permission and an approved provider for the data classification.",
+   "statement": "By default AI MUST receive schema metadata and synthetic or masked samples only; profile statistics (top-k values, min/max, patterns) inherit the classification of their field and MUST be masked accordingly; real samples require tenant policy permission and an approved provider for the data classification.",
    "acceptance": "Classification-gated prompt builder tests.",
    "charter": "§9, §14",
    "design": [
@@ -1104,12 +1172,13 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-AI-008",
    "category": "ai",
-   "priority": "P2",
+   "priority": "P0",
    "phase": 3,
    "statement": "AI mapping accuracy MUST be measured against ground-truth packages before any accuracy claim is made.",
    "acceptance": "Evaluation harness report.",
@@ -1119,13 +1188,14 @@
    ],
    "decisions": [],
    "verify": "review",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-MP-001",
    "category": "mapping-packages",
-   "priority": "P0",
-   "phase": 1,
+   "priority": "P1",
+   "phase": 3,
    "statement": "Mapping packages MUST be versioned, content-hashed, configuration-only bundles that contain no customer data and no code.",
    "acceptance": "Package lint rejects code files and non-synthetic fixtures.",
    "charter": "§10",
@@ -1137,14 +1207,15 @@
     "DF-TRN-2026-0014"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-MP-002",
    "category": "mapping-packages",
-   "priority": "P0",
-   "phase": 1,
-   "statement": "Each package MUST declare the basis of its format knowledge (public specification, public API documentation, customer-authorized sample, synthetic representation); proprietary vendor schemas MUST NOT be invented.",
+   "priority": "P1",
+   "phase": 3,
+   "statement": "Each package MUST declare the basis of its format knowledge (public specification, public API documentation, customer-authorized sample, synthetic representation); proprietary vendor schemas MUST NOT be invented; packages derived from a vendor export MUST record a licence/contract clearance (e.g. vendor MSA anti-competitive-use and reverse-engineering clauses) before publication.",
    "acceptance": "Manifest basis required by schema; review checklist.",
    "charter": "§10",
    "design": [
@@ -1154,13 +1225,14 @@
     "DF-TRN-2026-0014"
    ],
    "verify": "review",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-MP-003",
    "category": "mapping-packages",
-   "priority": "P0",
-   "phase": 1,
+   "priority": "P1",
+   "phase": 3,
    "statement": "Customer-specific configuration MUST be expressed as overlays restricted to package-declared paths, not as forks.",
    "acceptance": "Overlay touching undeclared path is rejected.",
    "charter": "§10",
@@ -1169,7 +1241,8 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-MP-004",
@@ -1184,14 +1257,15 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": null
   },
   {
    "id": "TRN-REQ-MP-005",
    "category": "mapping-packages",
    "priority": "P1",
    "phase": 3,
-   "statement": "Promotion of improvements from customer overlays to base packages MUST carry no customer values and require disclosure review.",
+   "statement": "Promotion of improvements from customer overlays to base packages MUST carry no customer values, MUST be supported by at least two independent customer samples, and MUST pass disclosure and vendor-licence review.",
    "acceptance": "Promotion checklist and synthetic fixture regeneration.",
    "charter": "§10",
    "design": [
@@ -1199,13 +1273,14 @@
    ],
    "decisions": [],
    "verify": "review",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-LN-001",
    "category": "lineage-evidence",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Every material destination record MUST be traceable to original source, source record identifier, source version, pipeline version, mapping version, operations, reference data versions, validation results, authorization decision, execution identifier and destination response.",
    "acceptance": "Lineage query returns all elements for a loaded record.",
    "charter": "§13",
@@ -1216,14 +1291,15 @@
     "DF-TRN-2026-0013"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-LN-002",
    "category": "lineage-evidence",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
-   "statement": "Field-level lineage MUST be provided statically per pipeline version; per-record field values MUST NOT be stored except for fields marked lineageCaptureValue (selection codes only).",
+   "statement": "Field-level lineage MUST be provided statically per pipeline version; per-record field values MUST NOT be stored except selection codes for fields marked lineageCaptureValue; natural keys of records classified restricted-personal or above MUST be stored as tenant-keyed HMACs, not in clear text.",
    "acceptance": "Static graph present; storage test shows no per-field value table.",
    "charter": "§13",
    "design": [
@@ -1233,13 +1309,14 @@
     "DF-TRN-2026-0013"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-LN-003",
    "category": "lineage-evidence",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Every execution MUST produce an evidence package (manifest, conservation table, validation, reconciliation, approvals, receipts summary, exceptions summary, hash chain).",
    "acceptance": "Evidence stage output validated against schema.",
    "charter": "§13",
@@ -1248,7 +1325,8 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-LN-004",
@@ -1263,12 +1341,13 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": null
   },
   {
    "id": "TRN-REQ-LN-005",
    "category": "lineage-evidence",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
    "statement": "Approvals MUST be recorded as signed events with identity, timestamp, plan hash and validation snapshot hash.",
    "acceptance": "Approval events verify.",
@@ -1278,13 +1357,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-LN-006",
    "category": "lineage-evidence",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Evidence MUST be hash-chained per execution and anchored in an append-only per-tenant chain.",
    "acceptance": "Tampering fixture detected.",
    "charter": "§13, §14",
@@ -1293,7 +1373,8 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-LN-007",
@@ -1311,13 +1392,14 @@
     "DF-TRN-2026-0015"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": null
   },
   {
    "id": "TRN-REQ-LN-008",
    "category": "lineage-evidence",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Logs, telemetry and evidence MUST NOT contain values of fields classified above internal.",
    "acceptance": "Log-leak test suite.",
    "charter": "§13, §14",
@@ -1326,7 +1408,8 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-LN-009",
@@ -1341,13 +1424,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": null
   },
   {
    "id": "TRN-REQ-SEC-001",
    "category": "security",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Parsers MUST be pure over byte streams with no ambient authority, pinned versions and continuous fuzzing.",
    "acceptance": "Fuzz corpus runs in CI.",
    "charter": "§14",
@@ -1356,13 +1440,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-SEC-002",
    "category": "security",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Archive handling MUST enforce compressed size, uncompressed size, entry count, nesting depth and compression-ratio limits while streaming.",
    "acceptance": "Zip-bomb fixtures rejected before allocation.",
    "charter": "§14",
@@ -1371,13 +1456,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-SEC-003",
    "category": "security",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "XML parsing MUST prohibit DTDs and external resolution and bound document size.",
    "acceptance": "XXE and billion-laughs fixtures rejected.",
    "charter": "§14",
@@ -1386,13 +1472,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-SEC-004",
    "category": "security",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Transitus-generated CSV/XLSX MUST neutralize formula-leading cells; imported formulas MUST NOT be evaluated.",
    "acceptance": "Formula-injection fixtures.",
    "charter": "§14",
@@ -1401,13 +1488,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-SEC-005",
    "category": "security",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Path traversal from archive entries or source names MUST be impossible.",
    "acceptance": "Zip-slip fixtures.",
    "charter": "§14",
@@ -1416,13 +1504,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-SEC-006",
    "category": "security",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Malformed input MUST produce typed, located errors with no silent repair.",
    "acceptance": "Malformed corpus.",
    "charter": "§14",
@@ -1431,13 +1520,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-SEC-007",
    "category": "security",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Resource exhaustion MUST be bounded by per-pipeline limits and non-backtracking regex with timeouts.",
    "acceptance": "Limit fixtures.",
    "charter": "§14",
@@ -1446,12 +1536,13 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-SEC-008",
    "category": "security",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
    "statement": "Data poisoning MUST be mitigated through independent control totals, reference validation, anomaly thresholds and approval gates.",
    "acceptance": "Poisoning fixtures blocked by gates.",
@@ -1461,13 +1552,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-SEC-009",
    "category": "security",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Secrets MUST be referenced by name only, resolved from the host secret provider and never persisted in pipelines, staging, lineage, logs or prompts.",
    "acceptance": "Secret-leak scan.",
    "charter": "§14",
@@ -1476,12 +1568,13 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-SEC-010",
    "category": "security",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
    "statement": "Pipeline changes MUST be authorized, versioned and separated by duty for sensitive classifications.",
    "acceptance": "Publish authorization tests.",
@@ -1491,13 +1584,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-SEC-011",
    "category": "security",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Tenant isolation MUST apply to raw, staging, lineage, exceptions and evidence; cross-tenant references MUST be inexpressible.",
    "acceptance": "Cross-tenant fixture rejected.",
    "charter": "§14",
@@ -1506,12 +1600,13 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-SEC-012",
    "category": "security",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
    "statement": "Staging MUST be encrypted at rest per host policy and purged per TTL with evidence.",
    "acceptance": "Purge evidence.",
@@ -1521,12 +1616,13 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-SEC-013",
    "category": "security",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
    "statement": "Destinations MUST be registered by the host and granted per tenant; pipelines cannot introduce destinations.",
    "acceptance": "Unregistered destination rejected.",
@@ -1536,13 +1632,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-SEC-014",
    "category": "security",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Third-party parser libraries MUST be isolated and limited and tracked for vulnerabilities.",
    "acceptance": "Dependency scan.",
    "charter": "§14",
@@ -1551,12 +1648,13 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-SEC-015",
    "category": "security",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
    "statement": "Network egress MUST be restricted to per-adapter-instance allow-lists with redirect checks.",
    "acceptance": "Egress test.",
@@ -1566,13 +1664,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-SEC-016",
    "category": "security",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Replays MUST be explicit and produce the original idempotency keys; duplicate raw inputs MUST be detected.",
    "acceptance": "Replay fixture zero effects.",
    "charter": "§14",
@@ -1581,13 +1680,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-SEC-017",
    "category": "security",
    "priority": "P0",
-   "phase": 2,
+   "phase": 1,
    "statement": "Dependencies MUST be pinned with lock files, SBOM and vulnerability scanning.",
    "acceptance": "CI evidence.",
    "charter": "§14",
@@ -1596,14 +1696,15 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-SEC-018",
    "category": "security",
-   "priority": "P0",
+   "priority": "P1",
    "phase": 2,
-   "statement": "Retention MUST be enforced, with crypto-shredding where physical erasure cannot be guaranteed.",
+   "statement": "Retention MUST be enforced, with per-dataset encryption keys (crypto-shredding) for staging and raw data so that copies in WAL archives and backups become unreadable at purge; where crypto-shredding is not used, the backup retention window MUST be documented as the effective retention.",
    "acceptance": "Retention tests.",
    "charter": "§14",
    "design": [
@@ -1611,7 +1712,8 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-SEC-019",
@@ -1626,14 +1728,15 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": null
   },
   {
    "id": "TRN-REQ-UI-001",
    "category": "visual-administration",
    "priority": "P2",
    "phase": 4,
-   "statement": "The administration UI MUST be built on Forma components and Forma's portable workflow capability behind Limen; Transitus MUST NOT build its own graph editor.",
+   "statement": "If (and only if) trigger T4 is met, the administration UI MUST be built on Forma components and Forma's portable workflow capability behind Limen; Transitus MUST NOT build its own graph editor.",
    "acceptance": "Dependency review.",
    "charter": "§15, §16",
    "design": [
@@ -1643,12 +1746,13 @@
     "DF-TRN-2026-0010"
    ],
    "verify": "review",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-UI-002",
    "category": "visual-administration",
-   "priority": "P0",
+   "priority": "P2",
    "phase": 4,
    "statement": "The visual graph MUST be a projection of the authoritative JSON definition with a tested round-trip; layout is non-semantic annotation.",
    "acceptance": "Round-trip property test.",
@@ -1660,7 +1764,8 @@
     "DF-TRN-2026-0010"
    ],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-UI-003",
@@ -1675,12 +1780,13 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-UI-004",
    "category": "visual-administration",
-   "priority": "P0",
+   "priority": "P2",
    "phase": 4,
    "statement": "Every drag-and-drop interaction MUST have an accessible, mobile-friendly alternative; WCAG 2.2 AA.",
    "acceptance": "Accessibility audit.",
@@ -1690,14 +1796,15 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-UI-010",
    "category": "visual-administration",
-   "priority": "P0",
+   "priority": "P2",
    "phase": 2,
-   "statement": "All configuration, execution, approval, exception and lineage operations MUST be available through documented, versioned APIs before any UI exists.",
+   "statement": "All configuration, execution, approval, exception and lineage operations MUST be available as documented library APIs; HTTP exposure is the host application's decision.",
    "acceptance": "OpenAPI coverage check.",
    "charter": "§15",
    "design": [
@@ -1705,13 +1812,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-ARC-001",
    "category": "architecture",
-   "priority": "P0",
-   "phase": 1,
+   "priority": "P1",
+   "phase": 2,
    "statement": "Transitus MUST be implemented in F# in a functional style as embeddable libraries hosted in a consuming application (component monolith); no independently deployed microservice without explicit architectural approval.",
    "acceptance": "Repository contains no deployable service project.",
    "charter": "§16",
@@ -1722,13 +1830,14 @@
     "DF-TRN-2026-0015"
    ],
    "verify": "review",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-ARC-002",
    "category": "architecture",
-   "priority": "P0",
-   "phase": 1,
+   "priority": "P1",
+   "phase": 2,
    "statement": "Transitus MUST consume existing Echelon capabilities (Echelon.Execution, Strata, Forma, Limen, Folio, Aegis) rather than duplicating them.",
    "acceptance": "Dependency analysis kept current.",
    "charter": "§2, §16",
@@ -1739,7 +1848,8 @@
     "DF-TRN-2026-0001"
    ],
    "verify": "review",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-ARC-003",
@@ -1754,13 +1864,14 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": null
   },
   {
    "id": "TRN-REQ-ARC-004",
    "category": "architecture",
    "priority": "P1",
-   "phase": 1,
+   "phase": 2,
    "statement": "Infrastructure dependencies MUST be minimal: the host's PostgreSQL and an optional object store only.",
    "acceptance": "Dependency review.",
    "charter": "§16",
@@ -1771,13 +1882,14 @@
     "DF-TRN-2026-0008"
    ],
    "verify": "review",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-ARC-005",
    "category": "architecture",
    "priority": "P1",
-   "phase": 1,
+   "phase": 2,
    "statement": "Each new third-party dependency MUST be approved by decision record with licence and supply-chain review.",
    "acceptance": "Decision records exist for each dependency.",
    "charter": "§16",
@@ -1786,14 +1898,15 @@
    ],
    "decisions": [],
    "verify": "review",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-PF-001",
    "category": "performance",
    "priority": "P0",
-   "phase": 2,
-   "statement": "Every assumption in the performance model MUST be replaced by a measurement before capacity or commercial commitments are made, and theoretical estimates MUST NOT be presented as benchmarks.",
+   "phase": 1,
+   "statement": "Every assumption in the performance model (A1-A12) MUST be replaced by a measurement, including Echelon.Execution per-command storage and per-record domain-command cost on the Unbound benchmark instance, before capacity or commercial commitments are made; theoretical estimates MUST NOT be presented as benchmarks.",
    "acceptance": "Benchmark report per assumption A1-A11.",
    "charter": "§18",
    "design": [
@@ -1801,14 +1914,15 @@
    ],
    "decisions": [],
    "verify": "review",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   },
   {
    "id": "TRN-REQ-PF-002",
    "category": "performance",
-   "priority": "P1",
+   "priority": "P0",
    "phase": 2,
-   "statement": "The engine MUST process 10^6-record executions within the host database's capacity without degrading concurrent OLTP latency beyond an agreed budget.",
+   "statement": "Bulk loads MUST NOT degrade the sponsor's live OLTP latency beyond an agreed budget; load rate MUST be governed by a configurable share of the sponsor's queue quota (see TRN-REQ-AD-011).",
    "acceptance": "Load test with concurrent OLTP workload.",
    "charter": "§18",
    "design": [
@@ -1816,7 +1930,371 @@
    ],
    "decisions": [],
    "verify": "test",
-   "status": "proposed"
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-ARC-006",
+   "category": "architecture",
+   "priority": "P0",
+   "phase": 1,
+   "statement": "Transitus MUST NOT re-implement a capability that an Echelon component or the consuming application already provides; in particular phase 1 MUST port, not duplicate, the IRS/OFAC parsing in Unbound.Replay/Sources.fs, and MUST adopt Unbound's SourceRegistry/AcquisitionRun/RawEvidence model rather than a competing one.",
+   "acceptance": "Duplication review per phase; Unbound.Replay consumes Transitus.Formats or the parsers move.",
+   "charter": "§2",
+   "design": [
+    "TRN-ARCH-11 §1",
+    "TRN-REV-01 C1"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0001"
+   ],
+   "verify": "review",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-ARC-007",
+   "category": "architecture",
+   "priority": "P0",
+   "phase": 1,
+   "statement": "Each phase MUST declare a maintenance budget (packages, adapters, third-party parser libraries, mapping packages) and MUST NOT exceed it without a decision record; phase 1 is limited to three packages.",
+   "acceptance": "Package count check in CI.",
+   "charter": "§19",
+   "design": [
+    "docs/roadmap.md",
+    "TRN-REV-01 C11"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0016"
+   ],
+   "verify": "review",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-ARC-008",
+   "category": "architecture",
+   "priority": "P0",
+   "phase": 1,
+   "statement": "Every phase-1 work item MUST trace to an Unbound release-1 requirement (release_scope initial-implementation) or to a committed second consumer.",
+   "acceptance": "Traceability table in roadmap.",
+   "charter": "§19, §21",
+   "design": [
+    "docs/roadmap.md",
+    "TRN-REV-01 C12"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0016"
+   ],
+   "verify": "review",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-ARC-009",
+   "category": "architecture",
+   "priority": "P0",
+   "phase": 1,
+   "statement": "Phase transitions MUST be gated by recorded triggers (T2 engine, T3 packages/AI, T4 UI) and kill criteria; absent the trigger, the deferred capability MUST NOT be built.",
+   "acceptance": "Decision record per phase gate.",
+   "charter": "§19",
+   "design": [
+    "docs/roadmap.md"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0016"
+   ],
+   "verify": "review",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-EX-013",
+   "category": "execution",
+   "priority": "P0",
+   "phase": 1,
+   "statement": "Durable command payloads (Echelon.Execution) MUST carry dataset/record references and hashes only, never record values classified restricted-personal or above (consistent with Unbound CNV-ARC-001 vault references).",
+   "acceptance": "Payload classification test.",
+   "charter": "§11, §14",
+   "design": [
+    "TRN-ARCH-05 §2",
+    "TRN-REV-01 C8"
+   ],
+   "decisions": [],
+   "verify": "test",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-AD-011",
+   "category": "adapters",
+   "priority": "P0",
+   "phase": 1,
+   "statement": "Bulk loads into Unbound MUST use a configurable share of the sponsor's Echelon.Execution queue quota, a lower priority than interactive commands, and a separate worker role, so imports cannot throttle live donor operations.",
+   "acceptance": "Load test: interactive command latency within budget during a bulk load.",
+   "charter": "§11",
+   "design": [
+    "TRN-ARCH-05 §5",
+    "TRN-REV-01 C9"
+   ],
+   "decisions": [],
+   "verify": "test",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-AD-012",
+   "category": "adapters",
+   "priority": "P1",
+   "phase": 1,
+   "statement": "Historical-import (pre-go-live) batch domain operations MAY be used only while the sponsor programme is not live, and only through Unbound-defined operations that preserve per-record idempotency keys and receipts; post-go-live loads use per-record commands.",
+   "acceptance": "Unbound operation contract review (UNB-TRN-006).",
+   "charter": "§11, §21",
+   "design": [
+    "TRN-ARCH-12 §3",
+    "TRN-REV-01 C9"
+   ],
+   "decisions": [],
+   "verify": "test",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-MP-006",
+   "category": "mapping-packages",
+   "priority": "P1",
+   "phase": 3,
+   "statement": "Target-side and public-specification packages (Unbound canonical import shape, IRS, NACHA, BAI2/camt.053) MUST be built before any vendor-specific package.",
+   "acceptance": "Roadmap ordering.",
+   "charter": "§10",
+   "design": [
+    "TRN-ARCH-09 §3",
+    "TRN-REV-01 C7"
+   ],
+   "decisions": [],
+   "verify": "review",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-MP-007",
+   "category": "mapping-packages",
+   "priority": "P2",
+   "phase": 3,
+   "statement": "Package reuse MUST be measured (share of mappings reused unmodified per migration) and vendor packages retired if reuse stays below an agreed threshold after three migrations.",
+   "acceptance": "Reuse metric per migration.",
+   "charter": "§10, §19",
+   "design": [
+    "TRN-REV-01 C7"
+   ],
+   "decisions": [],
+   "verify": "test",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-LN-010",
+   "category": "lineage-evidence",
+   "priority": "P1",
+   "phase": 2,
+   "statement": "Lineage, Echelon.Execution history for Transitus commands, and evidence MUST have explicit retention aligned with the consumer's record-keeping policy, with partition-based purge.",
+   "acceptance": "Retention configuration test.",
+   "charter": "§13",
+   "design": [
+    "TRN-ARCH-08",
+    "TRN-REV-01 C8"
+   ],
+   "decisions": [],
+   "verify": "test",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-PF-003",
+   "category": "performance",
+   "priority": "P1",
+   "phase": 1,
+   "statement": "The storage model MUST include Echelon.Execution command, history and outbox rows per loaded record (estimated 1.5-3 KB) in addition to Transitus lineage.",
+   "acceptance": "Storage model revised and later measured.",
+   "charter": "§18",
+   "design": [
+    "TRN-ARCH-12 §2"
+   ],
+   "decisions": [],
+   "verify": "review",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-PF-004",
+   "category": "performance",
+   "priority": "P1",
+   "phase": 1,
+   "statement": "Before phase 2, the cost of the Transitus approach MUST be compared against hand-written per-feed F# modules for the same Unbound feeds, with a recorded decision.",
+   "acceptance": "Comparison in phase-1 exit review.",
+   "charter": "§18, §19",
+   "design": [
+    "TRN-ARCH-12 §6",
+    "TRN-REV-01 C2"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0016"
+   ],
+   "verify": "review",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-UI-011",
+   "category": "visual-administration",
+   "priority": "P1",
+   "phase": 1,
+   "statement": "Exceptions requiring human resolution MUST be surfaced through the consuming application's existing case/work-item system (for Unbound, its case system) rather than a Transitus-specific queue UI.",
+   "acceptance": "Integration via library callback.",
+   "charter": "§15",
+   "design": [
+    "TRN-ARCH-10",
+    "TRN-REV-01 C10"
+   ],
+   "decisions": [],
+   "verify": "test",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-TX-011",
+   "category": "transformation",
+   "priority": "P1",
+   "phase": 2,
+   "statement": "The declarative model MUST provide bounded set operators: ordered scan (fill-down, running total with explicit order key), as-of join against date-effective reference data, date arithmetic and fiscal-period derivation, unpivot of repeated columns, bounded explode of schedules (declared maximum), duplicate clustering (connected components with maximum cluster size) and linear-time regex capture; each terminates in bounded time and space.",
+   "acceptance": "Counter-example fixtures from TRN-REV-01 C4 (U1, U9, U10, H1, H2) are expressible.",
+   "charter": "§6, §7",
+   "design": [
+    "TRN-ARCH-04 §3.6",
+    "TRN-REV-01 C4"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0004"
+   ],
+   "verify": "test",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-EXT-001",
+   "category": "extensions",
+   "priority": "P1",
+   "phase": 2,
+   "statement": "Extensions MUST be compiled F# packages on a host allow-list, pinned by hash, with signatures that receive no I/O capability (values or bounded record sequences in, Results out).",
+   "acceptance": "Allow-list and signature checks.",
+   "charter": "§6",
+   "design": [
+    "TRN-ARCH-04 §5"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0005"
+   ],
+   "verify": "test",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-EXT-002",
+   "category": "extensions",
+   "priority": "P1",
+   "phase": 2,
+   "statement": "Extensions MUST pass the conformance suite (determinism across cultures/time zones, totality fuzzing, documentation completeness) and two-person code review before allow-listing.",
+   "acceptance": "Conformance report and review record.",
+   "charter": "§6",
+   "design": [
+    "TRN-ARCH-04 §6"
+   ],
+   "decisions": [],
+   "verify": "test",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-EXT-003",
+   "category": "extensions",
+   "priority": "P1",
+   "phase": 2,
+   "statement": "Extensions MAY implement set-level stage operators (not only per-value operations) when the declarative catalogue cannot express a demonstrated scenario; each such extension MUST be recorded with the scenario that required it, as input to catalogue evolution.",
+   "acceptance": "Extension register.",
+   "charter": "§6",
+   "design": [
+    "TRN-REV-01 C4"
+   ],
+   "decisions": [],
+   "verify": "test",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-EXT-004",
+   "category": "extensions",
+   "priority": "P1",
+   "phase": 2,
+   "statement": "Extension versions MUST be recorded in the execution manifest and changes MUST be treated as semantic-critical changes under TRN-REQ-PS-008.",
+   "acceptance": "Manifest includes extension hashes.",
+   "charter": "§6, §9",
+   "design": [
+    "TRN-ARCH-01 §7"
+   ],
+   "decisions": [],
+   "verify": "test",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-AI-009",
+   "category": "ai",
+   "priority": "P1",
+   "phase": 3,
+   "statement": "AI enablement per tenant and pipeline class MUST be gated on the TRN-REQ-AI-008 evaluation meeting recorded precision thresholds; below threshold, AI suggestions are disabled for that class.",
+   "acceptance": "Gate configuration test.",
+   "charter": "§9",
+   "design": [
+    "TRN-ARCH-07 §5",
+    "TRN-REV-01 C6"
+   ],
+   "decisions": [],
+   "verify": "test",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-ST-009",
+   "category": "storage",
+   "priority": "P1",
+   "phase": 2,
+   "statement": "The recovery model MUST state that UNLOGGED staging is truncated on crash and recovery then requires re-running staged stages from preserved raw input.",
+   "acceptance": "Documented and tested crash recovery.",
+   "charter": "§5, §11",
+   "design": [
+    "TRN-ARCH-12 §2",
+    "TRN-REV-01 C5"
+   ],
+   "decisions": [],
+   "verify": "test",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
+  },
+  {
+   "id": "TRN-REQ-ST-010",
+   "category": "storage",
+   "priority": "P1",
+   "phase": 2,
+   "statement": "Shared reference datasets (e.g. IRS EO BMF) SHOULD be staged once per deployment as public reference data rather than per tenant, when their classification is public and the consumer's tenancy model permits.",
+   "acceptance": "Storage model shows single copy.",
+   "charter": "§5",
+   "design": [
+    "TRN-REV-01 C5"
+   ],
+   "decisions": [],
+   "verify": "test",
+   "status": "proposed",
+   "revision": "TRN-REV-01"
   }
  ]
 }

@@ -11,7 +11,7 @@ def render():
     data = {"schema": "transitus.requirements/v1", "status": "proposed", "count": len(R), "requirements": R}
     js = json.dumps(data, indent=1, ensure_ascii=False) + "\n"
     head = "---\nid: TRN-REQ-REGISTER\ntitle: Transitus Requirements Register\nstatus: proposed\nversion: 0.1.0\ncreated: 2026-11-26\nupdated: 2026-11-26\ngenerated_by: tools/render_requirements.py (do not hand-edit)\n---\n\n"
-    md = [head + f"# Requirements register\n\n{len(R)} proposed requirements. Priority: P0 = required for first production use, P1 = required for the phase, P2 = conditional/deferred. Machine-readable: `requirements/requirements.json`.\n"]
+    md = [head + f"# Requirements register\n\n{len(R)} proposed requirements (revised after adversarial review TRN-REV-01; rows carry `revision` in JSON). Phases: 1 = Unbound release-1 feed libraries, 2 = engine and declarative model (trigger T2), 3 = packages and AI (T3), 4 = admin UI (T4) — see `docs/roadmap.md`. Priority: P0 = required for first production use, P1 = required for the phase, P2 = conditional/deferred. Machine-readable: `requirements/requirements.json`.\n"]
     for cat in dict.fromkeys(r["category"] for r in R):
         md.append(f"\n## {cat}\n\n| ID | P | Phase | Requirement | Acceptance | Verify |\n|---|---|---|---|---|---|")
         md += [f"| {r['id']} | {r['priority']} | {r['phase']} | {r['statement']} | {r['acceptance']} | {r['verify']} |" for r in R if r["category"] == cat]

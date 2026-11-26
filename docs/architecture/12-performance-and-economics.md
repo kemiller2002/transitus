@@ -26,13 +26,16 @@ evidence_quality: theoretical — no measurements exist; nothing here is a bench
 | A4 | Parse + per-record transforms, in-process, per core | 100,000 records/s (4 cores ⇒ 400k/s) | conservative for streaming .NET CSV with typed conversion; benchmark in phase 2 |
 | A5 | PostgreSQL binary `COPY` into staging, managed 4-vCPU instance | 50,000 rows/s | benchmark (RM-05-style) |
 | A6 | Set operations (dedupe/join/aggregate) in PostgreSQL, one pass | 30,000 rows/s effective | benchmark |
-| A7 | Domain API load, one record per durable command (Echelon.Execution: command + history + outbox + business writes) | 1,000 records/s | depends on Unbound domain write cost; benchmark with RM-05 |
-| A8 | Domain API load with batch commands (≤500 records per command) | 20,000 records/s | **requires batch-capable domain operations** (proposal UNB-TRN-012) |
+| A7 | Domain API load, one record per durable command (Echelon.Execution: ≈5 commits and 20+ statements per record including command, history, outbox and business writes) | **revised: 300–800 records/s with the sponsor database otherwise idle; 100–250 records/s alongside live traffic** (the original proposal assumed 1,000) | TRN-REV-01 C9, derived from Unbound's only benchmark (bare transactions at 2,127–3,944 tx/s); benchmark with RM-05 |
+| A8 | Batch domain operations | **withdrawn as a planning figure** (the original 20,000 records/s was not credible). Batching conflicts with per-fund ordering (UNB-AVL-005), per-key quarantine (UNB-AVL-007) and per-record receipts after go-live; it is allowed only for pre-go-live historical import (TRN-REQ-AD-012, Unbound proposal UNB-TRN-006) | TRN-REV-01 C9 |
+| A12 | Echelon.Execution storage per loaded record (command row with payload, history entries, outbox) | 1.5–3 KB/record, retained per that module's policy; purge not yet implemented (EAR-CMD-022) | TRN-REV-01 C8; measure (TRN-REQ-PF-003) |
 | A9 | L2 record lineage per destination record | 300 B | §TRN-ARCH-08 |
 | A10 | WAL amplification for logged staging | 1.5× staged bytes | `UNLOGGED` staging removes most of it |
 | A11 | Chunk size | 10,000 records | checkpoint = one transaction per chunk |
 
 ## 2. Model by volume
+
+> **Revised after TRN-REV-01.** The table keeps the original A7/A8 figures for traceability. The load columns are superseded: use the revised A7 range (100–800 records/s) and treat the batched column as void except for pre-go-live historical import. Add A12 Execution storage to the lineage column.
 
 | Records | Raw stored | Peak staging | L2 lineage | Core processing (parse + 3× stage + 1 set pass) | Load, unbatched (A7) | Load, batched (A8) | WAL (logged staging) |
 |---|---|---|---|---|---|---|---|
@@ -51,7 +54,7 @@ evidence_quality: theoretical — no measurements exist; nothing here is a bench
 | **Database load** | Dominated by staging writes (3 × N × 600 B) and WAL. At 10⁷ records ≈ 18 GB written + 27 GB WAL in ~16 min ≈ 47 MB/s sustained writes — significant for a shared OLTP instance (Unbound runs one cluster per CNV-ARC-001). |
 | **Network** | Source download = raw size; domain API traffic ≈ 1–2× payload. Not a bottleneck below 10⁸ records on cloud networking. |
 | **Parallelism** | Parse/transform scale with cores until COPY saturates (~A5). Load parallelism is bounded by destination ordering keys and domain write capacity, not by Transitus. |
-| **Recovery time** | Crash ⇒ lease expiry (configurable, e.g. 5 min) + re-run of at most one chunk per worker. Worst case for a 10⁷ run ≈ lease duration + seconds. Raw preservation means a corrupted staging can be rebuilt by replay (cost = core processing time). |
+| **Recovery time** | Logged staging: crash ⇒ lease expiry (configurable, e.g. 5 min) + re-run of at most one chunk per worker. **UNLOGGED staging is truncated on crash**, so recovery then re-runs every staged stage from preserved raw input (TRN-REQ-ST-009). Worst case for a 10⁷ run ≈ lease duration + seconds. Raw preservation means a corrupted staging can be rebuilt by replay (cost = core processing time). |
 | **Lineage storage** | L2 grows with loaded records: 10⁷ ⇒ 3 GB, retained P7Y for financial ⇒ consider partition-by-month and compression; L3-static is negligible. Storing per-field values would multiply by fields per record (×20–50) — rejected (DF-TRN-2026-0013). |
 
 ## 3. Where database-backed staging becomes inefficient
@@ -67,10 +70,9 @@ port already exists for raw data; Parquet via a library), satisfying "without
 additional deployment complexity". Its cost is engineering complexity
 (external sort/merge join), which is why it is deferred.
 
-**Load is the dominant bottleneck, not staging.** Unbatched domain-API
-loading of 10⁷ records takes ~2.8 h (A7). This is acceptable for one-time
-migrations but motivates batch domain operations (A8) for recurring
-high-volume feeds (custodian transactions, BMF). See adversarial challenge C9.
+**Load is the dominant bottleneck, not staging.** With the revised A7, unbatched domain-API
+loading of 10⁷ records takes ≈3.5–9 h on an otherwise idle sponsor database, and 11–28 h alongside live traffic (the table above used the original 1,000/s figure). This is acceptable for one-time
+migrations for recurring feeds it argues for loading only diffs (BMF) and for a bounded quota share (TRN-REQ-AD-011), not for batching after go-live. See adversarial challenge C9.
 
 ## 4. Operating cost (theoretical)
 
@@ -82,7 +84,7 @@ the host process against the host database. Incremental cost is:
 | Compute | Absorbed by host app instance; ≈10 min/week BMF + ≈1 min/day custodian (A4–A7) | theoretical |
 | Staging storage | transient; peak ≈ 9 GB during migration (A2, A3) | theoretical |
 | Raw retention (P7Y) | BMF snapshots ≈ 600 MB/week raw — dedupe by hash only helps when unchanged; ≈ 30 GB/year; compress (CSV ≈ 5–8× gzip) ⇒ ≈ 5 GB/year | theoretical |
-| Lineage | ≈ (2M × 52 changed-subset + 50k × 250) × 300 B — but BMF loads only **diffs** (typically <5% weekly) ⇒ ≈ 1.5–5 GB/year | theoretical |
+| Lineage | **Revised (TRN-REV-01 C5/C8):** custodian rows alone ≈ 50k × 250 days × 300 B ≈ 3.75 GB/year; with BMF diffs and 400–600 B/record including indexes, ≈ 5–7 GB/year; plus Echelon.Execution rows (A12) ≈ 1.5–3 KB per loaded record unless purged | theoretical |
 | Engineering & maintenance | dominant cost; see §5 | estimate |
 
 ## 5. Comparison with commercial and open-source alternatives
@@ -111,12 +113,16 @@ rates data migration as "build early; sell as onboarding + independent
 assurance", with a hypothesised $25–75k per project). The adversarial review
 (C2) tests whether these benefits justify the engineering cost.
 
+## 5a. Baseline the proposal must beat: hand-written per-feed F# (TRN-REV-01 C2)
+
+The cheapest alternative is neither a vendor tool nor Transitus. It is a short F# module per feed inside Unbound that uses existing .NET parsers and loads through Echelon.Execution. For the roughly six fixed release-1 feeds, the reviewer estimates 3–4 engineer-weeks. Transitus phase 1 is therefore scoped as the **shared libraries those modules would otherwise duplicate**: formats, checks and evidence (TRN-ARCH-11 §2). Before phase 2, TRN-REQ-PF-004 requires a recorded comparison. If per-feed modules prove cheaper and no second consumer is committed, the engine (phase 2) is not built.
+
 ## 6. Engineering cost estimate (theoretical)
 
 | Phase | Scope | Order of magnitude |
 |---|---|---|
-| 1 | Model, validator, transforms (core subset), checks, CSV/XLSX/JSON/fixed-width, HTTPS/upload, staging-only + Unbound destination, dry run | 6–10 engineer-weeks with AI assistance |
-| 2 | Engine on Echelon.Execution, PostgreSQL storage, lineage L0–L2, evidence, NACHA, SFTP, XML | 8–12 engineer-weeks |
+| 1 (revised) | Three libraries: Formats (port Unbound.Replay parsers; CSV, NACHA, BAI2/camt.053, XLSX read, one custodian format), Checks (validation + reconciliation primitives), Evidence (raw preservation records, hashes, idempotency keys, L0–L2 lineage, evidence package) | 4–6 engineer-weeks |
+| 2 (trigger T2) | Declarative model + validator, engine state machine, staging, chunking | 8–12 engineer-weeks |
 | 3 | AI assistance, mapping package tooling, upgrade diffs | 4–6 engineer-weeks |
 | 4 | Forma admin UI; optional file-backed staging; OpenLineage export | 8–12 engineer-weeks |
 | Ongoing | parser/library updates, package maintenance, security patches | ≈0.1–0.2 FTE |

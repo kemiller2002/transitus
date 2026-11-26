@@ -33,7 +33,9 @@ save; YAML is never stored or hashed (avoids YAML 1.1/1.2 ambiguity such as
 
 ## 2. Lifecycle stages
 
-The fourteen stages from the charter are **stage kinds**. A pipeline is a DAG
+> **Revised after TRN-REV-01.** The declarative pipeline document described here is a **phase-2** deliverable (trigger T2, `docs/roadmap.md`). In phase 1, consumers compose the same stage functions directly in F#; the DU model is the phase-2 serialization target, so phase-1 code migrates without semantic change.
+
+The fourteen lifecycle stages from the charter are **stage kinds**; the schema adds two structural kinds (`route`, `union`), for sixteen in total. A pipeline is a DAG
 of stage instances; the engine enforces ordering constraints between kinds.
 
 | # | Stage kind | Input | Output | Execution state persisted | Failure behaviour | Provenance emitted |
@@ -82,7 +84,9 @@ Supported constructs, all declarative:
 | Retry | `retry: { attempts, backoff: exponential(base, cap), jitter, on: [errorClass] }` | Applies to I/O stages only (discover/ingest/load/verify). |
 | Wait/approval | `authorize` stage | Durable wait. |
 
-Deliberately **excluded**: loops, recursion, arbitrary variables, user
+Bounded set operators added after review (TRN-REQ-TX-011): ordered scan (fill-down, running totals with an explicit order key), as-of join against date-effective reference data, fiscal-period derivation, unpivot, bounded explode, duplicate clustering with a maximum cluster size, and linear-time regex capture.
+
+Deliberately **excluded**: general loops, recursion, arbitrary variables, user
 functions, dynamic stage generation, string-built SQL, embedded scripts.
 Expressiveness analysis and escape hatch: TRN-REV-01 challenge C4.
 
@@ -168,7 +172,10 @@ Before a definition can be published:
    egress allow-lists ⊆ tenant policy; no destination not granted to tenant.
 6. Authority-envelope diff against the previous published version
    (new sources, destinations, egress hosts, classification increases,
-   relaxed gates) — any widening requires the elevated approval path.
+   relaxed gates) — any widening requires the elevated approval path —
+   plus highlighted review of semantic-critical changes (idempotency-key
+   fields, auto-approve conditions, financial code mappings, money/date
+   field re-mapping, reference-data versions) (TRN-REQ-PS-008, revised).
 7. Dry-run against fixtures in the package (if present) must pass.
 
 Identical inputs to this validator produce identical results; the

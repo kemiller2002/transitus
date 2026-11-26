@@ -57,25 +57,32 @@ Isolated, temporary, typed working data.
 | **Temporary tables** (`CREATE TEMP TABLE`) | No WAL; auto-drop | Session-bound — incompatible with leased, resumable, multi-worker execution | **Rejected** for stage outputs; allowed inside one chunk handler |
 | **UNLOGGED tables** | ~2–3× faster writes, no WAL | Truncated on crash; not replicated | Acceptable for staging because raw input is preserved and stages are replayable — opt-in per pipeline |
 
-### Decision (DF-TRN-2026-0008)
+### Decision (DF-TRN-2026-0008, revised after TRN-REV-01 C5)
 
-- Default: **typed, partitioned staging tables in a `transitus_staging`
-  schema**, one table per *schema version* (not per dataset) partitioned by
-  `(tenant, dataset_id)` via list partitioning; DDL generated from the
-  schema definition and applied through **Strata** (Transitus never issues
-  ad hoc DDL at runtime — staging tables for a pipeline's schemas are created
-  when the pipeline is *published*, through the host's Strata-governed
-  migration path). Dropping a partition is the purge mechanism (cheap,
-  no vacuum debt).
-- Opt-in: **chunked Parquet in the blob store** for very large pipelines,
-  with set operations executed by an external-sort/merge-join implementation
-  in the engine (phase 4; only if the performance model's thresholds are
-  demonstrated in practice — see TRN-ARCH-12).
-- In-memory streaming within a chunk always.
+**Phase 1: no Transitus-owned staging.** The phase-1 libraries stream typed
+chunks to the consumer. Unbound persists what it needs in its own schema, under
+its CNV-ARC-001 tenancy model (one schema and role per sponsor).
 
-Open issue: generating DDL at publish time requires Strata to accept
-programmatically produced schema fragments from an embedded library; this is
-a proposed requirement for Strata (DEP-STRATA-01), not assumed.
+**Phase 2 (trigger T2).** The originally proposed design, one shared
+`transitus_staging` schema with LIST partitions per `(tenant, dataset_id)`,
+was rejected on review for five reasons:
+
+1. LIST partitioning accepts only one key column.
+2. Creating per-dataset partitions at runtime is DDL, which ST-003 forbids.
+3. PostgreSQL does not support `COPY FROM` into tables with row-level security.
+4. A shared schema conflicts with Unbound's schema-per-sponsor model and its A/B/C tenancy profiles.
+5. Staging WAL would pass through the synchronous standby that CNV-ARC-001 requires.
+
+The phase-2 candidate design, to be confirmed by measurement (TRN-REQ-PF-001):
+
+- **Location.** Staging tables live in the consumer's tenant schema, one table per schema version. Strata-governed migrations create them at deployment.
+- **Loading.** Bulk load uses `COPY` into a per-sponsor, non-RLS **load table** owned by the sponsor's staging role, followed by `INSERT … SELECT`. Alternatively, it relies on schema-per-sponsor isolation instead of RLS for staging.
+- **Purge.** Either `DELETE` by `dataset_id` with measured vacuum cost, or RANGE partitions by expiry day. The partition option needs a governed partition-maintenance mechanism that Strata accepts (DEP-STRATA-01).
+- **Backups and WAL.** Per-dataset encryption keys (crypto-shredding) make purged data unreadable in WAL archives and backups. Where they are not used, the backup retention window is documented as the effective retention (TRN-REQ-SEC-018).
+- **Shared public reference data.** IRS EO BMF is staged once per deployment, not once per sponsor (TRN-REQ-ST-010).
+- **UNLOGGED tables.** Allowed only with the recovery model stated in TRN-REQ-ST-009.
+
+**Deferred.** File-backed columnar staging (Parquet chunks in the blob store) is built only on measured need (TRN-REQ-ST-008).
 
 ### Staging controls
 

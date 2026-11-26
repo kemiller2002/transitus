@@ -42,6 +42,12 @@ checkpointed, and how load effects are made effectively-once.
 | Pause tenant / pipeline | `PauseScope.Tenant` / `PauseScope.Operation` | — |
 | Stage completion → next stage | Outbox message → next command intake, in the same transaction as the stage's state write | — |
 
+Review constraints (TRN-REV-01 C8, C9):
+
+- Command payloads carry dataset/record references and hashes only, never personal values (TRN-REQ-EX-013), consistent with CNV-ARC-001 vault references.
+- Bulk loads use a bounded share of the sponsor's queue quota at lower priority, through a separate worker role, so imports cannot throttle live donor operations (TRN-REQ-AD-011). The module's per-sponsor queue limit of 10,000 commands would otherwise let a migration starve interactive work.
+- In phase 1, Echelon.Execution is used **in place** inside Unbound; extraction waits for trigger T2.
+
 Consequences:
 
 - Every stage transition is committed atomically with its output ledger

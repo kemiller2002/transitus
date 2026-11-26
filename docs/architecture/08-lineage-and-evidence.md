@@ -17,7 +17,7 @@ decisions: [DF-TRN-2026-0013]
 |---|---|---|---|
 | L0 Execution | execution manifest: raw input hashes, pipeline/package/reference/engine versions, parameters, reports, approvals | O(1): a few KB | always |
 | L1 Dataset/chunk | chunk hashes, counts, Merkle roots, stage→stage edges | ~100 chunks × ~200 B ≈ 20 KB | always |
-| L2 Record | for each destination record: source raw hash + record locator (row/byte offset/JSON pointer) + source natural key + destination id + idempotency key + receipt id | ~150–250 B/record ⇒ 150–250 MB raw; with PostgreSQL row overhead (~24 B header + alignment) and one index ≈ 300–400 MB | system-of-record destinations |
+| L2 Record | for each destination record: source raw hash + record locator (row/byte offset/JSON pointer) + source natural key + destination id + idempotency key + receipt id | ~150–250 B/record of data; with PostgreSQL row overhead and the 2–3 indexes needed to query by destination id, source hash and execution ≈ 400–600 B/record ⇒ 400–600 MB (revised after TRN-REV-01 C8). Natural keys of personal records are stored as tenant-keyed HMACs (TRN-REQ-LN-002) | system-of-record destinations |
 | L3 Field | for each destination field: contributing source fields + operation chain | Stored as **mapping-level static lineage** (field→field graph per pipeline version, a few KB) + record-level L2. Per-record field values are *not* stored. | static always; dynamic only for fields marked `lineageCaptureValue` |
 
 Key insight: field-level lineage is almost entirely **static** — it is a

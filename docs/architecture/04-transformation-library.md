@@ -115,8 +115,8 @@ Rules (normative):
 
 | Operation | Rev | Loss | Semantics |
 |---|---|---|---|
-| `number.parse@1` (`culture`, `groupSeparator`, `decimalSeparator`, `allowExponent=false`, `negative: minus\|parentheses\|trailing-minus`) | R | no | Exact parse to `Decimal`; rejects ambiguous inputs like `1,234` when culture is not declared. |
-| `money.parse@1` (`currency` fixed or from field, `scale`) | R | no | Rejects more fractional digits than scale (`PRECISION_LOSS`). Currency symbols are not interpreted unless a symbol→ISO map is declared. |
+| `number.parse@1` (`culture`, `groupSeparator`, `decimalSeparator`, `allowExponent=false`, `negative: minus\|parentheses\|trailing-minus`) | I (value-preserving; source formatting not retained) | no | Exact parse to `Decimal`; rejects ambiguous inputs like `1,234` when culture is not declared. |
+| `money.parse@1` (`currency` fixed or from field, `scale`) | I (value-preserving; source formatting not retained) | no | Rejects more fractional digits than scale (`PRECISION_LOSS`). Currency symbols are not interpreted unless a symbol→ISO map is declared. |
 | `decimal.round@1` (`scale`, `mode: half-even\|half-up\|half-down\|floor\|ceiling\|truncate`) | I | yes | Only way to reduce scale. `acknowledgeLoss` mandatory; financial fields need approval reference. |
 | `decimal.rescale@1` (increase only) | R | no | Adds trailing zeros. Decrease → error. |
 | `math.eval@1` (expression over + − × ÷, min, max, abs, with declared result scale and rounding) | I | when rounding | Division always requires a declared scale and rounding mode; divide-by-zero → `DIVIDE_BY_ZERO`. No exponentiation, no floats. |
@@ -127,8 +127,8 @@ Rules (normative):
 
 | Operation | Rev | Loss | Semantics |
 |---|---|---|---|
-| `date.parse@1` (`formats: [..]` explicit list, `culture`, `century pivot` explicit) | R | no | Ambiguous formats (e.g. `01/02/2026` with both `MM/dd` and `dd/MM` listed) → `AMBIGUOUS_DATE` unless an ordered preference is declared. |
-| `datetime.parseLocal@1` | R | no | Produces `LocalDateTime`. |
+| `date.parse@1` (`formats: [..]` explicit list, `culture`, `century pivot` explicit) | I (value-preserving; source formatting not retained) | no | Ambiguous formats (e.g. `01/02/2026` with both `MM/dd` and `dd/MM` listed) → `AMBIGUOUS_DATE` unless an ordered preference is declared. |
+| `datetime.parseLocal@1` | I (value-preserving; source formatting not retained) | no | Produces `LocalDateTime`. |
 | `datetime.assignZone@1` (`zone: IANA id`, `tzdbVersion`, `onGap: reject\|shift-forward`, `onOverlap: reject\|earlier\|later`) | R | no | DST gaps and overlaps are explicit; tzdb version is pinned reference data. |
 | `instant.toZone@1` | R | no | Presentation conversion. |
 | `date.businessDay@1` (`calendar: setId@v`, `direction`) | I | no | Calendar is reference data (e.g. Federal Reserve holiday calendar for ACH settlement dates). |
@@ -187,6 +187,8 @@ Rules (normative):
   recorded in the execution manifest.
 
 ## 5. Extension mechanism
+
+> Revised after TRN-REV-01 C4: .NET cannot sandbox in-process code, so extension safety rests on review, signing, allow-listing and capability-free signatures (TRN-REQ-EXT-001..004), and extensions may implement set-level operators where the catalogue cannot express a demonstrated scenario (EXT-003). Parse operations are classified irreversible-but-value-preserving: the parsed value is exact, but the original text formatting is recoverable only from the preserved raw input.
 
 New operations are added only as **reviewed, compiled F# modules** that
 implement `OperationDescriptor` + `Transform`, ship in a signed/hashed

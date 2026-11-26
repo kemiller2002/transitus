@@ -69,10 +69,17 @@ confirms no public export schemas for these vendors.
 | `bank.bai2` / `iso20022.camt053` | public-specification | phase 2 (bank activity, CNV-PAY-007) |
 | `custodian.generic-positions-transactions` | synthetic-representation + customer samples | skeleton |
 | `payroll.generic-contributions` | synthetic-representation | skeleton (payroll not in R1, OD-M-02) |
-| `daf.grant-record` | public (daf-landscape standard v0.1) | buildable now |
+| `daf.grant-record` | Echelon draft (daf-landscape `standards/daf-grant-record` v0.1 — not an industry-endorsed standard) | buildable now as an Echelon canonical shape |
 | `spreadsheet.admin` (generic fund/donor/grant workbook) | synthetic-representation | skeleton; primary path for small sponsors |
 | `vendor.ren-iphi`, `vendor.tifin-give`, `vendor.giftingnetwork`, `vendor.daftech`, `vendor.cf-fims`, `vendor.foundant` | none public | placeholder only until a customer-authorized sample |
 | `bank.custom` | per-customer overlay on `spreadsheet.admin`/fixed-width | overlay pattern |
+
+## 3a. Review findings (TRN-REV-01 C7)
+
+- "Ren/iPhi" is at least two systems (iPhi and DFX); each needs its own detector.
+- Vendor contracts restrict use: the iPhi MSA §3.4 prohibits using the service to build a competing product and reverse engineering, and promises customer content "in industry-standard format" only for 15 days after termination. Packages derived from a vendor export therefore need licence/contract clearance (TRN-REQ-MP-002).
+- Migration volume is small (on the order of 2–3 platform exits per year across the market by the reviewer's estimate), so vendor-specific reuse is expected to save perhaps 10–20% of a migration's effort, versus 20–30% from target-side and public-specification packages (estimates, not measurements). Target-side packages come first (TRN-REQ-MP-006) and reuse is measured (MP-007).
+- Promotion requires at least two independent customer samples (MP-005).
 
 ## 4. Compatibility and upgrades
 
