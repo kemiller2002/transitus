@@ -975,5 +975,198 @@
     "title": "Owner resolutions: defer Echelon.Execution extraction until its shared contract is stable; DIV virtualizes interactions while Transitus moves data; unknown outcomes are never blindly retried; AI is provider-independent with per-tenant/classification authorization; CDC deferred; retention from approved policy with no invented durations; FX domain-owned; authorized domain loading interfaces mandatory",
     "updated": "2026-11-26",
     "work_item": "WI-0002"
+  },
+  {
+    "approval_stage": "strategically-approved",
+    "confidence": "high",
+    "created": "2026-11-26",
+    "created_by_agent": "claude",
+    "decided_by": "kemiller2002 (repository owner), DAF Landscape Phase III owner approval of DEC-001..DEC-012 dated 2026-11-26",
+    "decision_type": "strategy",
+    "evidence": [
+      "kemiller2002/daf-landscape:research/competitive-displacement/data/registers/decisions.csv#DEC-011",
+      "kemiller2002/daf-landscape:research/competitive-displacement/23-executive-decision-register.md",
+      "kemiller2002/daf-landscape:research/competitive-displacement/18-transitus-implications.md"
+    ],
+    "id": "DF-TRN-2026-0022",
+    "path": "research/decisions/DF-TRN-2026-0022--owner-approved-scope-discipline-dec-011.md",
+    "provenance": {
+      "contributions": {
+        "EXE-20261126T203508536Z-de9f55a7": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-26T20:36:28.000Z",
+          "evidence": [
+            "kemiller2002/daf-landscape:research/competitive-displacement/data/registers/decisions.csv#DEC-011"
+          ],
+          "operations": [
+            "created"
+          ],
+          "reason": "Record owner strategic approval of DAF Landscape DEC-011 (2026-11-26)"
+        }
+      }
+    },
+    "status": "accepted",
+    "superseded_by": [],
+    "supersedes": [],
+    "tags": [
+      "transitus",
+      "owner-decision",
+      "daf-landscape-phase-3",
+      "strategic-approval"
+    ],
+    "title": "Owner strategic approval of DAF Landscape DEC-011 (Transitus scope discipline): keep the approved phase-1 scope, develop public-specification and canonical migration capabilities, and defer customer-specific proprietary vendor packages until authorized source data exists",
+    "updated": "2026-11-26",
+    "work_item": "WI-0003"
+  },
+  {
+    "approval_stage": "strategically-approved",
+    "confidence": "medium",
+    "created": "2026-11-26",
+    "created_by_agent": "claude",
+    "decided_by": "kemiller2002 (repository owner), DAF Landscape Phase III owner approval of DEC-001..DEC-012 dated 2026-11-26",
+    "decision_type": "strategy",
+    "evidence": [
+      "kemiller2002/daf-landscape:research/competitive-displacement/data/registers/decisions.csv#DEC-007",
+      "kemiller2002/daf-landscape:research/competitive-displacement/08-frictionless-onboarding.md",
+      "kemiller2002/daf-landscape:research/competitive-displacement/22-commercial-validation-plan.md#V-5"
+    ],
+    "id": "DF-TRN-2026-0023",
+    "path": "research/decisions/DF-TRN-2026-0023--owner-approved-concentrated-migration-dec-007.md",
+    "provenance": {
+      "contributions": {
+        "EXE-20261126T203508536Z-de9f55a7": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-26T20:37:30.000Z",
+          "evidence": [
+            "kemiller2002/daf-landscape:research/competitive-displacement/data/registers/decisions.csv"
+          ],
+          "operations": [
+            "created"
+          ],
+          "reason": "Record owner strategic approval of DAF Landscape Phase II decisions (2026-11-26)"
+        }
+      }
+    },
+    "status": "accepted",
+    "superseded_by": [],
+    "supersedes": [],
+    "tags": [
+      "transitus",
+      "owner-decision",
+      "daf-landscape-phase-3",
+      "strategic-approval"
+    ],
+    "title": "Owner strategic approval of DAF Landscape DEC-007 (concentrated migration strategy): the first vendor-specific source package targets one incumbent source cluster selected on recorded evidence, never arbitrarily",
+    "updated": "2026-11-26",
+    "work_item": "WI-0003"
+  },
+  {
+    "approval_stage": "strategically-approved",
+    "confidence": "high",
+    "created": "2026-11-26",
+    "created_by_agent": "claude",
+    "decided_by": "kemiller2002 (repository owner), DAF Landscape Phase III owner approval of DEC-001..DEC-012 dated 2026-11-26",
+    "decision_type": "strategy",
+    "evidence": [
+      "kemiller2002/daf-landscape:research/competitive-displacement/data/registers/decisions.csv#DEC-010",
+      "kemiller2002/daf-landscape:research/competitive-displacement/data/registers/cross-repository-implications.csv#XRI-009",
+      "kemiller2002/daf-landscape:research/competitive-displacement/data/registers/cross-repository-implications.csv#XRI-011",
+      "kemiller2002/daf-landscape:research/competitive-displacement/22-commercial-validation-plan.md#V-4"
+    ],
+    "id": "DF-TRN-2026-0024",
+    "path": "research/decisions/DF-TRN-2026-0024--owner-approved-evidence-based-slas-dec-010.md",
+    "provenance": {
+      "contributions": {
+        "EXE-20261126T203508536Z-de9f55a7": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-26T20:37:30.000Z",
+          "evidence": [
+            "kemiller2002/daf-landscape:research/competitive-displacement/data/registers/decisions.csv"
+          ],
+          "operations": [
+            "created"
+          ],
+          "reason": "Record owner strategic approval of DAF Landscape Phase II decisions (2026-11-26)"
+        }
+      }
+    },
+    "status": "accepted",
+    "superseded_by": [],
+    "supersedes": [],
+    "tags": [
+      "transitus",
+      "owner-decision",
+      "daf-landscape-phase-3",
+      "strategic-approval"
+    ],
+    "title": "Owner strategic approval of DAF Landscape DEC-010 (evidence-based process SLAs): Transitus measures migration timing and onboarding maturity as targets only; no SLA or maturity level is claimed or committed before successful rehearsal and validation (V-4) and contractual review",
+    "updated": "2026-11-26",
+    "work_item": "WI-0003"
+  },
+  {
+    "approval_stage": "strategically-approved",
+    "confidence": "medium",
+    "created": "2026-11-26",
+    "created_by_agent": "claude",
+    "decided_by": "kemiller2002 (repository owner), DAF Landscape Phase III owner approval of DEC-001..DEC-012 dated 2026-11-26",
+    "decision_type": "strategy",
+    "evidence": [
+      "kemiller2002/daf-landscape:research/competitive-displacement/data/registers/decisions.csv#DEC-012",
+      "kemiller2002/daf-landscape:research/competitive-displacement/data/registers/decisions.csv#DEC-008",
+      "kemiller2002/daf-landscape:research/competitive-displacement/22-commercial-validation-plan.md"
+    ],
+    "id": "DF-TRN-2026-0025",
+    "path": "research/decisions/DF-TRN-2026-0025--owner-approved-validation-and-gated-capital-constraints.md",
+    "provenance": {
+      "contributions": {
+        "EXE-20261126T203508536Z-de9f55a7": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-26T20:37:31.000Z",
+          "evidence": [
+            "kemiller2002/daf-landscape:research/competitive-displacement/data/registers/decisions.csv"
+          ],
+          "operations": [
+            "created"
+          ],
+          "reason": "Record owner strategic approval of DAF Landscape Phase II decisions (2026-11-26)"
+        }
+      }
+    },
+    "status": "accepted",
+    "superseded_by": [],
+    "supersedes": [],
+    "tags": [
+      "transitus",
+      "owner-decision",
+      "daf-landscape-phase-3",
+      "strategic-approval"
+    ],
+    "title": "Owner strategic approval of DAF Landscape DEC-012 (commercial validation plan) and DEC-008 (gated capital deployment) as constraints on Transitus: V-4 is the Transitus evidence gate, synthetic rehearsal is a lower-cost precursor that cannot satisfy it, and Transitus effort estimates are not approved expenditure",
+    "updated": "2026-11-26",
+    "work_item": "WI-0003"
   }
 ]

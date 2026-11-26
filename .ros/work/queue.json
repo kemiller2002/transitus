@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "transitus",
-  "nextSeq": 3,
+  "nextSeq": 4,
   "items": [
     {
       "id": "WI-0001",
@@ -34,6 +34,27 @@
       "attachments": [],
       "createdAt": "2026-11-26T18:17:01.457Z",
       "updatedAt": "2026-11-26T18:27:54.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0003",
+      "title": "DAF Landscape Phase III Stage I: record owner approval of DEC-007/008/010/011/012, process XRI-009..014, pre-contract assessment requirements (no production code)",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "ready",
+      "attachments": [],
+      "createdAt": "2026-11-26T20:35:01.629Z",
+      "updatedAt": "2026-11-26T20:35:07.000Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",

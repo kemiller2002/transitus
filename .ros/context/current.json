@@ -4,7 +4,7 @@
   "repository": "transitus",
   "actor": "ros-bootstrap",
   "startedAt": "2026-11-26T15:17:03.787Z",
-  "updatedAt": "2026-11-26T18:27:54.000Z",
+  "updatedAt": "2026-11-26T20:35:08.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -108,6 +108,17 @@
       },
       "completedAt": "2026-11-26T18:27:54.000Z",
       "conclusion": "Owner-directed phase-1 scope reconciled across requirements, schemas, decisions, roadmap and related repositories; independent challenge recorded"
+    },
+    {
+      "id": "WI-0003",
+      "type": "research",
+      "state": "active",
+      "semanticState": "active",
+      "evidence": [],
+      "updatedAt": "2026-11-26T20:35:08.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20261126T203508536Z-de9f55a7"
+      ]
     }
   ]
 }
