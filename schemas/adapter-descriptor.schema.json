@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://echelon-foundry.dev/transitus/adapter-descriptor/1.0.json",
+  "title": "Transitus adapter descriptor (proposal 1.0)",
+  "description": "Declared identity, role, capabilities, configuration schema, secret slots, egress and error taxonomy of an adapter. Semantics: docs/architecture/03-adapter-architecture.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "role", "version", "configSchema", "capabilities", "errorTaxonomy", "semantics"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9.-]+@[0-9]+$" },
+    "role": { "enum": ["transport", "format", "destination"] },
+    "version": { "type": "string" },
+    "configSchema": { "type": "object" },
+    "capabilities": {
+      "type": "array", "uniqueItems": true,
+      "items": { "enum": ["schema-discovery", "incremental-cursor", "cdc", "pagination:offset", "pagination:cursor", "pagination:link-header", "pagination:token", "rate-limit:fixed", "rate-limit:header-driven", "seekable", "checksum-from-source", "server-side-filter", "dry-run", "read-back", "idempotency-key", "batch-load", "synthetic-fixture"] }
+    },
+    "deliveryGuarantee": { "enum": ["idempotent-key", "natural-upsert", "query-before-write", "none"], "description": "Destinations only." },
+    "secrets": { "type": "array", "items": { "type": "object", "required": ["slot", "kind"], "properties": { "slot": { "type": "string" }, "kind": { "enum": ["api-key", "oauth2-client", "ssh-private-key", "ssh-host-key-pin", "basic", "mtls-cert"] } } } },
+    "egress": { "type": "string", "description": "How egress host:port is derived from config (e.g. 'config.host:config.port')." },
+    "limits": { "type": "object", "description": "Parser/resource limits enforced by the adapter." },
+    "errorTaxonomy": {
+      "type": "array", "minItems": 1,
+      "items": { "type": "object", "required": ["code", "class"], "properties": { "code": { "type": "string" }, "class": { "enum": ["Transient", "RateLimited", "AuthFailure", "PermanentInput", "PermanentConfig", "Ambiguous"] }, "description": { "type": "string" } } }
+    },
+    "semantics": { "type": "string", "description": "Path or URL of AI-readable semantics documentation." }
+  }
+}

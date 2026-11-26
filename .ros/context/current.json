@@ -30,7 +30,27 @@
       "updatedAt": "2026-11-26T15:17:21.000Z",
       "telemetryExecutionIds": [
         "EXE-20261126T151721856Z-671cd5b7"
-      ]
+      ],
+      "latestCheckpoint": {
+        "id": "52f128f9a5c2b6b9b950fe1e",
+        "recordedAt": "2026-11-26T15:25:41.000Z",
+        "executionId": "EXE-20261126T151721856Z-671cd5b7",
+        "repository": "transitus",
+        "branch": "claude/transitus-research-architecture-42a96z",
+        "commit": "c619246ba4b790f8876b6d8c8ab4426804491ff5",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/transitus"
+        },
+        "remoteBranch": "claude/transitus-research-architecture-42a96z",
+        "remoteCommit": "c619246ba4b790f8876b6d8c8ab4426804491ff5",
+        "summary": "Architecture drafts committed (TRN-ARCH-00..11, threat model, use cases)",
+        "nextAction": "Competitive research, requirements register, decisions, schemas, adversarial review",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      }
     }
   ]
 }

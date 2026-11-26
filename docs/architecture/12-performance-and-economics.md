@@ -1,0 +1,122 @@
+---
+id: TRN-ARCH-12
+title: Performance and Economic Models (theoretical)
+status: proposed
+version: 0.1.0
+created: 2026-11-26
+updated: 2026-11-26
+work_item: WI-0001
+evidence_quality: theoretical — no measurements exist; nothing here is a benchmark
+---
+
+# Performance and economic models
+
+> **Every figure in this document is a theoretical estimate derived from the
+> stated assumptions. None has been measured.** Phase 2 must replace each
+> assumption with a measurement (TRN-REQ-PF-001) before any figure is used
+> for capacity or commercial commitments.
+
+## 1. Assumptions
+
+| ID | Assumption | Value | Basis / how to verify |
+|---|---|---|---|
+| A1 | Average raw record size (CSV row) | 300 B | typical of BMF/custodian rows; measure per package |
+| A2 | Typed staged row on disk incl. tuple header, alignment, one index | 600 B | ≈2× raw; measure with `pg_total_relation_size` |
+| A3 | Staged datasets materialized per pipeline (parsed, transformed, load plan) | 3 | pipeline-dependent |
+| A4 | Parse + per-record transforms, in-process, per core | 100,000 records/s (4 cores ⇒ 400k/s) | conservative for streaming .NET CSV with typed conversion; benchmark in phase 2 |
+| A5 | PostgreSQL binary `COPY` into staging, managed 4-vCPU instance | 50,000 rows/s | benchmark (RM-05-style) |
+| A6 | Set operations (dedupe/join/aggregate) in PostgreSQL, one pass | 30,000 rows/s effective | benchmark |
+| A7 | Domain API load, one record per durable command (Echelon.Execution: command + history + outbox + business writes) | 1,000 records/s | depends on Unbound domain write cost; benchmark with RM-05 |
+| A8 | Domain API load with batch commands (≤500 records per command) | 20,000 records/s | **requires batch-capable domain operations** (proposal UNB-TRN-012) |
+| A9 | L2 record lineage per destination record | 300 B | §TRN-ARCH-08 |
+| A10 | WAL amplification for logged staging | 1.5× staged bytes | `UNLOGGED` staging removes most of it |
+| A11 | Chunk size | 10,000 records | checkpoint = one transaction per chunk |
+
+## 2. Model by volume
+
+| Records | Raw stored | Peak staging | L2 lineage | Core processing (parse + 3× stage + 1 set pass) | Load, unbatched (A7) | Load, batched (A8) | WAL (logged staging) |
+|---|---|---|---|---|---|---|---|
+| 1,000 | 300 KB | 2 MB | 300 KB | 0.1 s | 1 s | 0.1 s | 3 MB |
+| 100,000 | 30 MB | 180 MB | 30 MB | 10 s | 1.7 min | 5 s | 270 MB |
+| 1,000,000 | 300 MB | 1.8 GB | 300 MB | 1.6 min | 17 min | 50 s | 2.7 GB |
+| 10,000,000 | 3 GB | 18 GB | 3 GB | 16 min | 2.8 h | 8 min | 27 GB |
+| 100,000,000 | 30 GB | 180 GB | 30 GB | 2.7 h | 28 h | 1.4 h | 270 GB |
+
+### Other dimensions
+
+| Dimension | Model |
+|---|---|
+| **Memory** | Bounded and independent of N: `chunkSize × recordSize × parallelism × 2 (in-flight)` ≈ 10,000 × 1 KB × 4 × 2 ≈ **80 MB**, plus reference-set caches (bounded by `memoryBudget`; large lookups go to PostgreSQL). Nothing requires the dataset to fit in memory. |
+| **Checkpoint overhead** | One transaction per 10k-record chunk: 100 transactions per 1M records — negligible (<1%) relative to COPY. Smaller chunks raise overhead linearly; 1k chunks ≈ 1,000 tx per 1M. |
+| **Database load** | Dominated by staging writes (3 × N × 600 B) and WAL. At 10⁷ records ≈ 18 GB written + 27 GB WAL in ~16 min ≈ 47 MB/s sustained writes — significant for a shared OLTP instance (Unbound runs one cluster per CNV-ARC-001). |
+| **Network** | Source download = raw size; domain API traffic ≈ 1–2× payload. Not a bottleneck below 10⁸ records on cloud networking. |
+| **Parallelism** | Parse/transform scale with cores until COPY saturates (~A5). Load parallelism is bounded by destination ordering keys and domain write capacity, not by Transitus. |
+| **Recovery time** | Crash ⇒ lease expiry (configurable, e.g. 5 min) + re-run of at most one chunk per worker. Worst case for a 10⁷ run ≈ lease duration + seconds. Raw preservation means a corrupted staging can be rebuilt by replay (cost = core processing time). |
+| **Lineage storage** | L2 grows with loaded records: 10⁷ ⇒ 3 GB, retained P7Y for financial ⇒ consider partition-by-month and compression; L3-static is negligible. Storing per-field values would multiply by fields per record (×20–50) — rejected (DF-TRN-2026-0013). |
+
+## 3. Where database-backed staging becomes inefficient
+
+| Regime | Observation | Response |
+|---|---|---|
+| ≤10⁶ records per execution | Staging and WAL are small; all on the application database is fine. | Default. |
+| 10⁶–10⁷ | WAL and vacuum pressure on a shared OLTP cluster become visible; staging writes compete with production traffic. | Use `UNLOGGED` staging partitions (safe because raw is preserved and stages replay); drop partitions instead of `DELETE`; schedule large runs off-peak; materialize only 2 datasets (stream transform into load plan). |
+| ≥10⁷ (and especially 10⁸) | 18–180 GB staging on the OLTP database is unreasonable; core processing hours long. | Opt-in file-backed columnar staging (Parquet chunks in blob store, external sort/merge in engine) — **phase 4, only if a consumer demonstrates this volume**. No Echelon scenario identified today exceeds ~10⁷ records per execution (largest: IRS EO BMF ≈ 1.9M rows across four regional files; a large sponsor migration ≈ 10⁶–10⁷ rows of history). |
+
+The file-backed option introduces **no new deployment component** (blob store
+port already exists for raw data; Parquet via a library), satisfying "without
+additional deployment complexity". Its cost is engineering complexity
+(external sort/merge join), which is why it is deferred.
+
+**Load is the dominant bottleneck, not staging.** Unbatched domain-API
+loading of 10⁷ records takes ~2.8 h (A7). This is acceptable for one-time
+migrations but motivates batch domain operations (A8) for recurring
+high-volume feeds (custodian transactions, BMF). See adversarial challenge C9.
+
+## 4. Operating cost (theoretical)
+
+Transitus has **no licence fee and no separate infrastructure**: it runs in
+the host process against the host database. Incremental cost is:
+
+| Cost driver | Estimate for a sponsor running BMF weekly (≈2M rows) + daily custodian files (≈50k rows) + one 5M-row migration per year | Basis |
+|---|---|---|
+| Compute | Absorbed by host app instance; ≈10 min/week BMF + ≈1 min/day custodian (A4–A7) | theoretical |
+| Staging storage | transient; peak ≈ 9 GB during migration (A2, A3) | theoretical |
+| Raw retention (P7Y) | BMF snapshots ≈ 600 MB/week raw — dedupe by hash only helps when unchanged; ≈ 30 GB/year; compress (CSV ≈ 5–8× gzip) ⇒ ≈ 5 GB/year | theoretical |
+| Lineage | ≈ (2M × 52 changed-subset + 50k × 250) × 300 B — but BMF loads only **diffs** (typically <5% weekly) ⇒ ≈ 1.5–5 GB/year | theoretical |
+| Engineering & maintenance | dominant cost; see §5 | estimate |
+
+## 5. Comparison with commercial and open-source alternatives
+
+Unit prices below are from TRN-RES-01 §2.3 (verified unless stated).
+
+| Option | Pricing unit | Applying to the scenario above | Structural fit |
+|---|---|---|---|
+| Fivetran | MAR (500k free tier; $5 minimum per connection from Jan 2026) [SRC-001, SRC-002] | BMF changes + custodian rows likely exceed free tier; vendor-specific custodian/NACHA sources need Connector SDK code anyway. | Targets warehouses, not domain APIs with approval gates; does not load into an application through business invariants. |
+| Airbyte Cloud | credits ($20 / 5 credits; Plus from $189/month) [SRC-003] | Low $ for volume; custom file formats need connector development. | Warehouse/lake destinations; self-hosted ≈0.5 FTE/quarter operational burden reported [SRC-068]. |
+| AWS Glue | $0.44 / DPU-hour [SRC-004] | A 2-DPU, 15-min job ≈ $0.22/run — cheap compute; cost is in AWS lock-in, cold starts, and building everything else. | Spark-centric; Echelon runs PostgreSQL + F#; adds a second runtime. |
+| Azure Data Factory | $1 / 1k activity runs; $0.25 / DIU-hour [SRC-006] | Low $ for runs; data flows need ≥8-vCore Spark clusters [SRC-005]. | JSON definitions + ARM templating; designer-centric. |
+| Informatica IDMC | IPU; no list price; reported £74,999 minimum (unverified) [SRC-015, SRC-016] | Disproportionate for a seed-stage product. | Enterprise suite. |
+| dlt (open source, Apache-2.0) | free library | Closest architectural analogue [SRC-112]. | **Python** — adds a second language/runtime to an F#-only estate; no approval/reconciliation/domain-API loading model. |
+| Meltano/Singer | free | Reusable taps. | Python; process-per-connector. |
+| **Transitus** | none | Incremental infra ≈ storage above; engineering is the cost. | Native to Echelon stack; gates, reconciliation, evidence, domain API loading built in. |
+
+Interpretation: on **cash cost**, commercial tools are cheap at Echelon's
+volumes (hundreds to low thousands of dollars per year for most). The case
+for Transitus is therefore **not** licence savings; it is (1) loading through
+domain APIs with blocking financial gates and evidence, which no surveyed
+product provides; (2) no second runtime (Python/JVM/Spark) or SaaS data
+processor for regulated donor data; (3) reuse across Unbound, Helix Note and
+Summa; and (4) migration as a commercial capability (daf-landscape OPP-10
+rates data migration as "build early; sell as onboarding + independent
+assurance", with a hypothesised $25–75k per project). The adversarial review
+(C2) tests whether these benefits justify the engineering cost.
+
+## 6. Engineering cost estimate (theoretical)
+
+| Phase | Scope | Order of magnitude |
+|---|---|---|
+| 1 | Model, validator, transforms (core subset), checks, CSV/XLSX/JSON/fixed-width, HTTPS/upload, staging-only + Unbound destination, dry run | 6–10 engineer-weeks with AI assistance |
+| 2 | Engine on Echelon.Execution, PostgreSQL storage, lineage L0–L2, evidence, NACHA, SFTP, XML | 8–12 engineer-weeks |
+| 3 | AI assistance, mapping package tooling, upgrade diffs | 4–6 engineer-weeks |
+| 4 | Forma admin UI; optional file-backed staging; OpenLineage export | 8–12 engineer-weeks |
+| Ongoing | parser/library updates, package maintenance, security patches | ≈0.1–0.2 FTE |

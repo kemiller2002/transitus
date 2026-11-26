@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://echelon-foundry.dev/transitus/mapping-package/1.0.json",
+  "title": "Transitus mapping package manifest (proposal 1.0)",
+  "description": "Configuration-only bundle: schemas, templates, mappings, reference data, validation/reconciliation profiles, synthetic fixtures. Never contains customer data or code. Semantics: docs/architecture/09-mapping-packages.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "id", "version", "basis", "licence", "engine", "contents"],
+  "properties": {
+    "kind": { "const": "transitus.mapping-package" },
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$" },
+    "version": { "type": "string" },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "basis": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["kind", "reference"],
+        "properties": {
+          "kind": { "enum": ["public-specification", "public-api-documentation", "customer-authorized-sample", "synthetic-representation"] },
+          "reference": { "type": "string", "description": "URL or document id for public bases; an authorization record id (never the sample) for customer samples; 'synthetic' otherwise." },
+          "retrieved": { "type": "string", "format": "date" }
+        }
+      }
+    },
+    "licence": { "type": "string" },
+    "engine": { "type": "object", "required": ["specVersion"], "properties": { "specVersion": { "type": "string" }, "minEngine": { "type": "string" } } },
+    "accepts": {
+      "type": "array",
+      "description": "Source format versions this package understands, with detectors.",
+      "items": {
+        "type": "object", "required": ["formatVersion", "detector"],
+        "properties": {
+          "formatVersion": { "type": "string" },
+          "detector": { "type": "object", "description": "Declarative detector, e.g. required header set or record-type signature." }
+        }
+      }
+    },
+    "contents": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "schemas": { "type": "array", "items": { "type": "string" } },
+        "templates": { "type": "array", "items": { "type": "string" } },
+        "mappings": { "type": "array", "items": { "type": "string" } },
+        "reference": { "type": "array", "items": { "type": "string" } },
+        "validationProfiles": { "type": "array", "items": { "type": "string" } },
+        "reconciliationProfiles": { "type": "array", "items": { "type": "string" } },
+        "fixtures": { "type": "array", "items": { "type": "string" } },
+        "docs": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "overlayPaths": { "type": "array", "items": { "type": "string" }, "description": "JSON Pointer prefixes a customer overlay may patch." },
+    "hashes": { "type": "object", "additionalProperties": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" } },
+    "provenance": { "type": "object" }
+  }
+}

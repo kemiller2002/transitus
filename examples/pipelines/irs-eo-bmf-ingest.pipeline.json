@@ -1,0 +1,44 @@
+{
+  "$schema": "../../schemas/pipeline.schema.json",
+  "kind": "transitus.pipeline",
+  "specVersion": "1.0",
+  "id": "unbound.irs-eo-bmf.ingest",
+  "version": "1.0.0",
+  "title": "IRS Exempt Organizations Business Master File ingestion (illustrative)",
+  "description": "Weekly snapshot ingestion of the IRS EO BMF regional extracts into Unbound's charity registry via its domain API. Illustrative example for the specification; not a production pipeline.",
+  "tenant": "{{tenant}}",
+  "classification": "public",
+  "packages": [ { "id": "irs.eo-bmf", "version": "^1.0.0" } ],
+  "defaults": { "culture": "invariant", "timeZone": "America/New_York", "unicodeForm": "NFC" },
+  "parameters": {
+    "region": { "type": "enum", "values": ["eo1", "eo2", "eo3", "eo4"], "description": "IRS regional extract file" }
+  },
+  "sources": {
+    "bmf": { "adapter": "https@1", "config": { "urlTemplate": "https://www.irs.gov/pub/irs-soi/{{param.region}}.csv", "egress": ["www.irs.gov:443"] } }
+  },
+  "destinations": {
+    "charities": { "adapter": "unbound.domain-api@1", "operation": "charity.recordRegistryObservation", "classification": "system-of-record" }
+  },
+  "stages": [
+    { "id": "ingest", "kind": "ingest", "source": "bmf", "retry": { "attempts": 5, "backoff": { "base": "PT10S", "cap": "PT10M" }, "jitter": true, "on": ["Transient", "RateLimited"] } },
+    { "id": "raw", "kind": "preserve", "dependsOn": ["ingest"], "retention": "P7Y" },
+    { "id": "parse", "kind": "parse", "dependsOn": ["raw"], "template": "irs.eo-bmf/parse-csv@1", "onError": "quarantine" },
+    { "id": "profile", "kind": "profile", "dependsOn": ["parse"] },
+    { "id": "diff", "kind": "transform", "dependsOn": ["profile"], "template": "irs.eo-bmf/snapshot-diff-by-ein@1", "chunkParallel": false },
+    { "id": "map", "kind": "transform", "dependsOn": ["diff"], "mapping": "irs.eo-bmf/to-unbound-registry-observation@1", "chunkParallel": true },
+    { "id": "check", "kind": "validate", "dependsOn": ["map"], "profile": "irs.eo-bmf/validation@1", "gate": "blocking" },
+    { "id": "recon", "kind": "reconcile", "dependsOn": ["check"], "gate": "blocking", "rules": [
+      { "rule": "r.count@1", "args": { "compare": ["parsed", "staged"], "tolerance": 0 } },
+      { "rule": "v.distribution@1", "args": { "metric": "rowCount", "baseline": "previousSuccessfulRun", "maxChangePct": 2 } }
+    ] },
+    { "id": "approve", "kind": "authorize", "dependsOn": ["recon"], "policy": { "autoApproveIf": "recon.status = 'balanced'", "else": { "approvers": ["role:charity-data-steward"], "count": 1 } } },
+    { "id": "load", "kind": "load", "dependsOn": ["approve"], "destination": "charities", "batchSize": 500, "idempotencyKey": ["ein", "execution.sourceAsOf"], "retry": { "attempts": 5, "on": ["Transient", "RateLimited"] } },
+    { "id": "verify", "kind": "verify", "dependsOn": ["load"], "sample": { "rate": 0.01, "min": 50 } },
+    { "id": "evidence", "kind": "evidence", "dependsOn": ["verify"] },
+    { "id": "retain", "kind": "retain", "dependsOn": ["evidence"] }
+  ],
+  "errorPolicy": { "default": "quarantine", "maxErrorRate": 0.001 },
+  "resources": { "maxInputBytes": "512MiB", "maxRecordBytes": "8KiB", "maxRecords": 2000000, "memoryBudget": "256MiB", "parallelism": 4 },
+  "retention": { "raw": "P7Y", "staging": "P30D", "exceptions": "P2Y", "lineage": "P7Y", "evidence": "P7Y" },
+  "schedule": { "cron": "0 6 * * 2", "timeZone": "America/New_York", "misfire": "runOnce" }
+}

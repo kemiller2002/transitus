@@ -1,0 +1,1214 @@
+{
+ "schema": "transitus.source-register/v1",
+ "generated": "2026-11-26",
+ "sources": [
+  {
+   "id": "SRC-001",
+   "title": "Fivetran Pricing",
+   "url": "https://www.fivetran.com/pricing",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-002",
+   "title": "Fivetran docs, 2026 Pricing Updates",
+   "url": "https://fivetran.com/docs/usage-based-pricing/pricing-updates/2026-pricing-updates",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-003",
+   "title": "Airbyte Pricing",
+   "url": "https://airbyte.com/pricing",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-004",
+   "title": "AWS Glue Pricing",
+   "url": "https://aws.amazon.com/glue/pricing/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-005",
+   "title": "Azure Data Factory pipeline pricing page",
+   "url": "https://azure.microsoft.com/en-us/pricing/details/data-factory/data-pipeline/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-006",
+   "title": "Azure Retail Prices API, query `serviceName eq 'Azure Data Factory v2' and armRegionName eq 'eastus' and priceType eq 'Consumption'`",
+   "url": "https://prices.azure.com/api/retail/prices",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-007",
+   "title": "dbt Pricing",
+   "url": "https://www.getdbt.com/pricing",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-008",
+   "title": "Dagster Pricing",
+   "url": "https://dagster.io/pricing",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-009",
+   "title": "Prefect Pricing",
+   "url": "https://www.prefect.io/pricing",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-010",
+   "title": "Estuary Pricing",
+   "url": "https://estuary.dev/pricing/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-011",
+   "title": "Informatica downloads / PowerCenter lifecycle",
+   "url": "https://www.informatica.com/download.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-012",
+   "title": "CData, \"The Sun is Setting on PowerCenter Support\"",
+   "url": "https://www.cdata.com/blog/sun-sets-on-powercenter-whats-next",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-013",
+   "title": "Ksolves, \"PowerCenter End of Support\"",
+   "url": "https://www.ksolves.com/blog/big-data/powercenter-end-of-support",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-014",
+   "title": "Informatica blog, Volume Tier Pricing and Flex IPU",
+   "url": "https://www.informatica.com/blogs/announcing-volume-tier-pricing-and-flex-ipu-consumption-based-pricing-for-informatica-intelligent-data-management-cloud.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-015",
+   "title": "Informatica IDMC consumption pricing page",
+   "url": "https://www.informatica.com/products/cloud-integration/pricing.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-016",
+   "title": "UK G-Cloud 15 Informatica pricing document (search summary only, unverified)",
+   "url": "https://assets.applytosupply.digitalmarketplace.service.gov.uk/g-cloud-15/documents/703188/592589319296837-pricing-document-2026-01-29-1612.pdf",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-017",
+   "title": "Salesforce, \"Salesforce Completes Acquisition of Informatica\" (18 Nov 2025)",
+   "url": "https://www.salesforce.com/news/press-releases/2025/11/18/salesforce-completes-acquisition-of-informatica/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-018",
+   "title": "Informatica blog, Agentic goal-driven data management with CLAIRE GPT",
+   "url": "https://www.informatica.com/blogs/introducing-agentic-goal-driven-data-management-with-claire-gpt.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-019",
+   "title": "Informatica news release, AI-powered Cloud Integration and MDM capabilities (2 Apr 2025)",
+   "url": "https://www.informatica.com/about-us/news/news-releases/2025/04/20250402-informatica-introduces-new-ai-powered-cloud-integration-and-master-data-management-capabilities.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-020",
+   "title": "Informatica CLAIRE promotion sign-up page",
+   "url": "https://www.informatica.com/DEModSignUp",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-021",
+   "title": "Informatica docs, Runtime Environments > Secure Agents",
+   "url": "https://onlinehelp.informatica.com/IICS/dev/admin/en/gg-iics-rte/Secure_Agents.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-022",
+   "title": "Informatica 2025 IDMC Security Architecture Whitepaper",
+   "url": "https://trust.informatica.com/content/dam/informatica-trust/generic/2025_idmc_security_architecture_whitepaper_3.pdf",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-023",
+   "title": "G2, Informatica PowerCenter reviews",
+   "url": "https://www.g2.com/products/informatica-powercenter/reviews",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-024",
+   "title": "PeerSpot, Informatica PowerCenter pros and cons",
+   "url": "https://origin.peerspot.com/products/informatica-powercenter-pros-and-cons",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-025",
+   "title": "SelectHub, Informatica PowerCenter",
+   "url": "https://www.selecthub.com/p/etl-tools/informatica-powercenter/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-026",
+   "title": "Informatica, \"Data Lineage in CDGC, Part 2\" (slides)",
+   "url": "https://www.informatica.com/content/dam/informatica-cxp/techtuesdays-slides-pdf/Data%20Lineage%20in%20CDGC%20A%20Practical%20Guide%20to%20Key%20Categories%20and%20Setup%20Approaches%20-%20Part%202.pdf",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-027",
+   "title": "Microsoft Learn, What's new in Integration Services in SQL Server 2025",
+   "url": "https://learn.microsoft.com/en-us/sql/integration-services/what-s-new-in-integration-services-in-sql-server-2025",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-028",
+   "title": "Microsoft SQL Server Blog, SSIS CDC by Attunity deprecations (28 Feb 2024)",
+   "url": "https://www.microsoft.com/en-us/sql-server/blog/2024/02/28/sql-server-integration-services-ssis-change-data-capture-attunity-feature-deprecations/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-029",
+   "title": "Microsoft SQL Server Blog, SSIS Microsoft Connector for Oracle deprecation (21 Jan 2025)",
+   "url": "https://www.microsoft.com/sql-server/blog/2025/01/21/sql-server-integration-services-ssis-microsoft-connector-for-oracle-deprecation",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-030",
+   "title": "Microsoft Tech Community, Package format changes in SQL Server Denali",
+   "url": "https://techcommunity.microsoft.com/blog/ssis/package-format-changes-in-sql-server-denali/387953",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-031",
+   "title": "MSSQLTips, Git merge conflict SSIS projects",
+   "url": "https://www.mssqltips.com/sqlservertip/6683/git-merge-conflict-ssis-projects",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-032",
+   "title": "Stack Overflow, \"How do I merge SSIS package files?\"",
+   "url": "https://stackoverflow.com/questions/5468151/how-do-i-merge-ssis-package-files",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-033",
+   "title": "Directions on Microsoft, SQL Server Integration Services roadmap",
+   "url": "https://www.directionsonmicrosoft.com/roadmaps/ref/sql-server-integration-services-roadmap/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-034",
+   "title": "Microsoft Learn, Continuous integration and delivery in Azure Data Factory",
+   "url": "https://learn.microsoft.com/en-us/azure/data-factory/continuous-integration-delivery",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-035",
+   "title": "Microsoft Learn, Linked Resource Manager templates with CI/CD",
+   "url": "https://learn.microsoft.com/en-us/azure/data-factory/continuous-integration-delivery-linked-templates",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-036",
+   "title": "G2, Azure Data Factory reviews",
+   "url": "https://www.g2.com/products/azure-data-factory/reviews",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-037",
+   "title": "SQLServerCentral, \"Azure Data Factory pipeline debugging fails with BadRequest\"",
+   "url": "https://www.sqlservercentral.com/blogs/azure-data-factory-pipeline-debugging-fails-with-badrequest",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-038",
+   "title": "Microsoft Learn, Copilot for Fabric Data Factory, get started",
+   "url": "https://learn.microsoft.com/en-us/fabric/data-factory/copilot-fabric-data-factory-get-started",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-039",
+   "title": "Microsoft Fabric Blog, AI-powered development with Data Factory",
+   "url": "https://blog.fabric.microsoft.com/en-US/blog/ai-powered-development-with-data-factory-microsoft-fabric/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-040",
+   "title": "Microsoft Learn, Data pipelines pricing for Fabric Data Factory",
+   "url": "https://learn.microsoft.com/en-us/fabric/data-factory/pricing-pipelines",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-041",
+   "title": "Microsoft Learn, Copy job pricing",
+   "url": "https://learn.microsoft.com/fabric/data-factory/pricing-copy-job",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-042",
+   "title": "Microsoft Learn, Pricing scenario: load 1 TB Parquet to Data Warehouse",
+   "url": "https://learn.microsoft.com/en-us/fabric/data-factory/pricing-scenario-load-1-tb-parquet-to-data-warehouse",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-043",
+   "title": "Qlik, Talend Open Studio retirement page",
+   "url": "https://www.qlik.com/us/products/talend-open-studio",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-044",
+   "title": "Qlik Talend Cloud Plans and Pricing",
+   "url": "https://www.qlik.com/us/pricing/data-integration-products-pricing",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-045",
+   "title": "AWS Marketplace, Qlik Talend Cloud Starter listing (search summary only, unverified)",
+   "url": "https://aws.amazon.com/marketplace/pp/prodview-yvole2ix5rkfq",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-046",
+   "title": "Qlik Help, Preventing code generation errors caused by the 65 KB limit",
+   "url": "https://help.qlik.com/talend/en-US/code-generation-prevent-error/8.0/how-to-prevent-errors-in-code-generation-caused-by-65-kb-limit",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-047",
+   "title": "Qlik Help, Optimizing Talend Studio performance",
+   "url": "https://help.qlik.com/talend/en-US/installation-guide-linux/Cloud/optimizing-talend-studio-performance",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-048",
+   "title": "Capterra, Talend Open Studio reviews",
+   "url": "https://www.capterra.com/p/246747/Talend-Open-Studio/reviews",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-049",
+   "title": "Qlik Community, Download Talend Open Studio thread",
+   "url": "https://community.qlik.com/t5/Installing-and-Upgrading/Download-Talend-Open-Studio/td-p/2470265",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-050",
+   "title": "Apache NiFi In Depth",
+   "url": "https://nifi.apache.org/docs/nifi-docs/html/nifi-in-depth.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-051",
+   "title": "Apache NiFi Python Developer's Guide (2.0.0-M1)",
+   "url": "https://nifi.apache.org/documentation/nifi-2.0.0-M1/html/python-developer-guide.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-052",
+   "title": "Apache NiFi, GitHubFlowRegistryClient component",
+   "url": "https://nifi.apache.org/components/org.apache.nifi.github.GitHubFlowRegistryClient/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-053",
+   "title": "Stackable docs, NiFi Flow Versioning",
+   "url": "https://docs.stackable.tech/home/25.7/nifi/usage_guide/flow-versioning/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-054",
+   "title": "PeerSpot, Apache NiFi pros and cons",
+   "url": "https://peerspot.com/products/apache-nifi-pros-and-cons",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-055",
+   "title": "Kestra, Apache NiFi alternatives (vendor-interested)",
+   "url": "https://kestra.io/resources/data/apache-nifi-alternatives",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-056",
+   "title": "Xebia, \"Apache NiFi: why do data engineers love it and hate it\"",
+   "url": "https://xebia.com/blog/apache-nifi-why-do-data-engineers-love-it-and-hate-it-at-the-same-time-blog-series-introduction/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-057",
+   "title": "Pentaho, Statement of Direction",
+   "url": "https://pentaho.com/statement-of-direction/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-058",
+   "title": "Wikipedia, Pentaho",
+   "url": "https://en.wikipedia.org/wiki/Pentaho",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-059",
+   "title": "Hitachi Vantara, Pentaho Community Edition page",
+   "url": "https://www.hitachivantara.com/de-de/products/pentaho-platform/data-integration-analytics/pentaho-community-edition.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-060",
+   "title": "Hitachi Vantara docs, Work with transformations (PDI 9.5)",
+   "url": "https://help.hitachivantara.com/Documentation/Pentaho/Data_Integration_and_Analytics/9.5/Products/Work_with_transformations",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-061",
+   "title": "O'Reilly / Packt, Pentaho Data Integration Beginner's Guide, Appendix B: Pan and Kitchen",
+   "url": "https://www.oreilly.com/library/view/pentaho-data-integration/9781782165040/apb.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-062",
+   "title": "PeerSpot, What needs improvement with Pentaho Data Integration",
+   "url": "https://origin.peerspot.com/questions/what-needs-improvement-with-pentaho-data-integration",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-063",
+   "title": "Airbyte docs, Airbyte Protocol",
+   "url": "https://docs.airbyte.com/platform/understanding-airbyte/airbyte-protocol",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-064",
+   "title": "Airbyte docs, Low-code CDK overview",
+   "url": "https://docs.airbyte.com/platform/connector-development/config-based/low-code-cdk-overview",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-065",
+   "title": "Airbyte docs, Connector Builder AI Assist",
+   "url": "https://docs.airbyte.com/platform/connector-development/connector-builder-ui/ai-assist",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-066",
+   "title": "Airbyte docs, License FAQ",
+   "url": "https://docs.airbyte.com/platform/developer-guides/licenses/license-faq",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-067",
+   "title": "Airbyte docs, Connector updates",
+   "url": "https://docs.airbyte.com/platform/managing-airbyte/connector-updates",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-068",
+   "title": "Enterprise DNA, Practitioner Airbyte review",
+   "url": "https://enterprisedna.co/resources/blog/practitioner-airbyte-review",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-069",
+   "title": "Estuary blog, Airbyte sync job failures in production (vendor-interested)",
+   "url": "https://estuary.dev/blog/airbyte-sync-jobs-failure-production/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-070",
+   "title": "Airbyte docs, Breaking change list",
+   "url": "https://docs.airbyte.com/release_notes/breaking-changes",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-071",
+   "title": "Fivetran docs, Connector SDK",
+   "url": "https://fivetran.com/docs/connector-sdk",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-072",
+   "title": "Fivetran docs, Building Custom Connectors with AI Agents",
+   "url": "https://fivetran.com/docs/connector-sdk/building-connectors/ai-tools",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-073",
+   "title": "Fivetran docs, Hybrid Deployment",
+   "url": "https://fivetran.com/docs/core-concepts/deployment-models/hybrid-deployment",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-074",
+   "title": "Fivetran docs, What data does Fivetran receive from my local environment?",
+   "url": "https://fivetran.com/docs/deployment-models/hybrid-deployment/troubleshooting/receive-data-from-local",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-075",
+   "title": "Meltano blog, The hidden business cost of row-based ETL pricing (vendor-interested)",
+   "url": "https://meltano.com/blog/the-hidden-business-cost-of-row-based-etl-pricing-when-growth-becomes-a-liability",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-076",
+   "title": "Definite blog, Fivetran bill doubled (vendor-interested)",
+   "url": "https://www.definite.app/blog/fivetran-bill-doubled",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-077",
+   "title": "Fivetran blog, Fivetran acquires Tobiko Data",
+   "url": "https://www.fivetran.com/blog/fivetran-acquires-tobiko-data-to-power-enterprise-grade-transformations",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-078",
+   "title": "Fivetran press, Fivetran and dbt Labs complete merger (1 Jun 2026)",
+   "url": "https://www.fivetran.com/press/fivetran-dbt-labs-complete-merger-to-create-the-data-infrastructure-for-trusted-ai-agents",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-079",
+   "title": "TechTarget, Fivetran's Tobiko Data acquisition aids data transformation",
+   "url": "https://www.techtarget.com/searchdatamanagement/news/366630327/Fivetrans-Tobiko-Data-acquisition-aids-data-transformation",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-080",
+   "title": "dbt docs, Data tests",
+   "url": "https://docs.getdbt.com/docs/build/data-tests",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-081",
+   "title": "dbt Licensing FAQ",
+   "url": "https://www.getdbt.com/licenses-faq",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-082",
+   "title": "dbt blog, New code, new license: the dbt Fusion engine",
+   "url": "https://www.getdbt.com/blog/new-code-new-license-understanding-the-new-license-for-the-dbt-fusion-engine",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-083",
+   "title": "SQLMesh docs, Comparisons (vendor-interested)",
+   "url": "https://sqlmesh.readthedocs.io/en/latest/comparisons/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-084",
+   "title": "Tobiko blog, Traps and pitfalls of using SQL with Jinja (vendor-interested)",
+   "url": "https://tobikodata.com/blog/traps-and-pitfalls-of-using-sql-with-jinja",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-085",
+   "title": "Benn Stancil, \"How dbt fails\"",
+   "url": "https://benn.substack.com/p/how-dbt-fails",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-086",
+   "title": "dbt Developer Blog, Faster project parsing with Rust",
+   "url": "https://docs.getdbt.com/blog/faster-project-parsing-with-rust",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-087",
+   "title": "AWS Glue docs, Tracking processed data using job bookmarks",
+   "url": "https://docs.aws.amazon.com/glue/latest/dg/monitor-continuations.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-088",
+   "title": "AWS Glue docs, Using job bookmarks",
+   "url": "https://docs.aws.amazon.com/glue/latest/dg/programming-etl-connect-bookmarks.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-089",
+   "title": "AWS Big Data Blog, Capture data lineage from dbt, Apache Airflow and Apache Spark with Amazon SageMaker",
+   "url": "https://aws.amazon.com/blogs/big-data/capture-data-lineage-from-dbt-apache-airflow-and-apache-spark-with-amazon-sagemaker",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-090",
+   "title": "AWS docs, Automate lineage capture from tools (SageMaker Unified Studio)",
+   "url": "https://docs.aws.amazon.com/sagemaker-unified-studio/latest/userguide/datazone-data-lineage-automate-capture-from-tools.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-091",
+   "title": "G2, AWS Glue reviews",
+   "url": "https://www.g2.com/products/aws-glue/reviews",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-092",
+   "title": "PeerSpot, AWS Glue pros and cons",
+   "url": "https://peerspot.com/products/aws-glue-pros-and-cons",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-093",
+   "title": "AWS Knowledge Center, Glue reprocesses data with job bookmarks enabled",
+   "url": "https://aws.amazon.com/premiumsupport/knowledge-center/glue-reprocess-data-job-bookmarks-enabled/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-094",
+   "title": "Apache Hop manual, Hop Concepts",
+   "url": "https://hop.apache.org/manual/latest/getting-started/hop-concepts.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-095",
+   "title": "Apache Hop manual, Pipeline Unit Testing",
+   "url": "https://hop.apache.org/manual/next/pipeline/pipeline-unit-testing.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-096",
+   "title": "Apache Hop manual, Getting started with Apache Beam",
+   "url": "https://hop.apache.org/manual/next/pipeline/beam/getting-started-with-beam.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-097",
+   "title": "Apache Beam Programming Guide",
+   "url": "https://beam.apache.org/documentation/programming-guide/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-098",
+   "title": "Apache Beam, Test Your Pipeline",
+   "url": "https://beam.apache.org/documentation/pipelines/test-your-pipeline/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-099",
+   "title": "Google Cloud, Dataflow pricing",
+   "url": "https://cloud.google.com/dataflow/pricing",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-100",
+   "title": "Dagster docs, Assets",
+   "url": "https://dagster.io/docs/guides/build/assets",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-101",
+   "title": "GitHub, dagster-io/dagster (licence)",
+   "url": "https://github.com/dagster-io/dagster",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-102",
+   "title": "Dagster blog, Prefect is acquiring Dagster",
+   "url": "https://dagster.io/blog/prefect-is-acquiring-dagster",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-103",
+   "title": "Dagster Customer FAQ: Prefect Acquisition",
+   "url": "https://dagster.io/dagster-customer-faq",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-104",
+   "title": "Atlan, Dagster vs Airflow",
+   "url": "https://atlan.com/dagster-vs-airflow/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-105",
+   "title": "OpenLineage Ecosystem page (Dagster integration)",
+   "url": "https://openlineage.github.io/ecosystem",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-106",
+   "title": "GitHub, PrefectHQ/prefect (licence)",
+   "url": "https://github.com/PrefectHQ/prefect",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-107",
+   "title": "Prefect docs, Transactions",
+   "url": "https://docs.prefect.io/v3/develop/transactions",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-108",
+   "title": "Prefect docs, Task caching",
+   "url": "https://docs.prefect.io/v3/develop/task-caching",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-109",
+   "title": "The New Stack, Prefect acquires Dagster orchestrator",
+   "url": "https://thenewstack.io/prefect-acquires-dagster-orchestrator/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-110",
+   "title": "Meltano Hub, Singer Spec",
+   "url": "https://hub.meltano.com/singer/spec/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-111",
+   "title": "Meltano docs, Project concepts",
+   "url": "https://docs.meltano.com/concepts/project/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-112",
+   "title": "dlt docs, Introduction",
+   "url": "https://dlthub.com/docs/intro",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-113",
+   "title": "dlt docs, Schema contracts",
+   "url": "https://dlthub.com/docs/general-usage/schema-contracts",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-114",
+   "title": "GitHub, dlt-hub/dlt README (Apache 2.0)",
+   "url": "https://github.com/dlt-hub/dlt",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-115",
+   "title": "Estuary docs, Derivations",
+   "url": "https://docs.estuary.dev/concepts/derivations/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-116",
+   "title": "Estuary Flow docs, Concepts (collections, JSON Schema, catalog sources)",
+   "url": "https://estuary.readthedocs.io/en/latest/docs/concepts.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-117",
+   "title": "GitHub, estuary/flow (licence files)",
+   "url": "https://github.com/estuary/flow",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-118",
+   "title": "Debezium docs, Architecture",
+   "url": "https://debezium.io/documentation/reference/stable/architecture.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-119",
+   "title": "Debezium docs, Outbox Event Router",
+   "url": "https://debezium.io/documentation/reference/stable/transformations/outbox-event-router.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-120",
+   "title": "Debezium docs (2.3), Sending signals to a Debezium connector",
+   "url": "https://debezium.io/documentation/reference/2.3/configuration/signalling.html",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-121",
+   "title": "SQLMesh docs, Concepts overview",
+   "url": "https://sqlmesh.readthedocs.io/en/stable/concepts/overview/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-122",
+   "title": "Redpanda Connect docs, Enterprise Licensing; plus Bloblang \"About\" page (https://docs.redpanda.com/redpanda-connect/guides/bloblang/about/)",
+   "url": "https://docs.redpanda.com/redpanda-connect/get-started/licensing",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-123",
+   "title": "Redpanda blog, Redpanda Connect",
+   "url": "https://redpanda.com/blog/redpanda-connect",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-124",
+   "title": "TechCrunch, Redpanda acquires Benthos (30 May 2024)",
+   "url": "https://techcrunch.com/2024/05/30/redpanda-acquires-benthos-to-expand-its-end-to-end-streaming-data-platform",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-125",
+   "title": "OpenLineage docs, Integrations",
+   "url": "https://openlineage.io/docs/next/integrations",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-126",
+   "title": "GitHub, OpenLineage/OpenLineage",
+   "url": "https://github.com/OpenLineage/OpenLineage",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-127",
+   "title": "Thoughtworks Technology Radar, OpenLineage",
+   "url": "https://www.thoughtworks.com/radar/platforms/openlineage",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "SRC-128",
+   "title": "Hevo, Fivetran pricing guide (vendor-interested)",
+   "url": "https://hevodata.com/learn/fivetran-pricing/",
+   "accessed": "2026-11-26",
+   "notes": null,
+   "category": "external-web"
+  },
+  {
+   "id": "ECH-001",
+   "title": "Echelon.Execution README (durable command execution, incubating)",
+   "url": "https://github.com/kemiller2002/unbound/blob/main/execution/README.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-002",
+   "title": "Echelon.Execution core types",
+   "url": "https://github.com/kemiller2002/unbound/blob/main/execution/src/Echelon.Execution/Types.fs",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-003",
+   "title": "Strata README (declarative PostgreSQL schema management)",
+   "url": "https://github.com/kemiller2002/strata/blob/main/README.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-004",
+   "title": "Strata data-interaction virtualization proposal STRATA-DIV-001",
+   "url": "https://github.com/kemiller2002/strata/blob/main/docs/requirements/data-interaction-virtualization.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-005",
+   "title": "Forma ADR-0006 portable workflow capability",
+   "url": "https://github.com/kemiller2002/forma/blob/main/docs/decisions/ADR-0006-portable-workflow-capability.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-006",
+   "title": "Forma contextual AI assistance interaction patterns",
+   "url": "https://github.com/kemiller2002/forma/blob/main/docs/requirements/contextual-ai-assistance-interaction-patterns-2026-11-23.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-007",
+   "title": "Arca storage requirements (ARCA-REC-007 no large binaries)",
+   "url": "https://github.com/kemiller2002/arca/blob/main/docs/requirements/ARCA-STORAGE-REQUIREMENTS.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-008",
+   "title": "Vigila README (task organizer, followup.* capabilities)",
+   "url": "https://github.com/kemiller2002/vigila/blob/main/README.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-009",
+   "title": "Registry responsibility and capability matrix (GAP-05/06/07)",
+   "url": "https://github.com/kemiller2002/echelon-registry/blob/main/portfolio/analysis/responsibility-and-capability-matrix.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-010",
+   "title": "Registry duplication and drift analysis (DRF-03, DRF-09)",
+   "url": "https://github.com/kemiller2002/echelon-registry/blob/main/portfolio/analysis/duplication-and-drift.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-011",
+   "title": "Registry architectural boundary analysis (BND-09, BND-10)",
+   "url": "https://github.com/kemiller2002/echelon-registry/blob/main/portfolio/analysis/architectural-boundary-analysis.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-012",
+   "title": "Praxis shared application foundations",
+   "url": "https://github.com/kemiller2002/praxis/blob/main/requirements/SHARED-APPLICATION-FOUNDATIONS.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-013",
+   "title": "Unbound charity external data acquisition (UNB-EXT-*)",
+   "url": "https://github.com/kemiller2002/unbound/blob/main/requirements/charities/COMPREHENSIVE-EXTERNAL-DATA-ACQUISITION.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-014",
+   "title": "Unbound custodian and investment management (UNB-CUST-*)",
+   "url": "https://github.com/kemiller2002/unbound/blob/main/requirements/integrations/CUSTODIAN-AND-INVESTMENT-MANAGEMENT.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-015",
+   "title": "Unbound legacy migration, portability and sponsor exit (REQ-X-061)",
+   "url": "https://github.com/kemiller2002/unbound/blob/main/research/daf-theoretical-enterprise-validation/19-questions/LEGACY-MIGRATION-PORTABILITY-AND-SPONSOR-EXIT-2026-11-23.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-016",
+   "title": "Unbound event architecture decision ADR-EVA-001",
+   "url": "https://github.com/kemiller2002/unbound/blob/main/requirements/discovery/2026-11-23-cross-industry/12-EVENT-ARCHITECTURE-DECISION.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-017",
+   "title": "Unbound charity knowledge model and acquisition pipeline (UNB-KNOW-*)",
+   "url": "https://github.com/kemiller2002/unbound/blob/main/architecture/CHARITY-KNOWLEDGE-MODEL-AND-ACQUISITION-PIPELINE.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-018",
+   "title": "Unbound replay source parsers (Pub 78, revocation, EO BMF, 990 XML, OFAC)",
+   "url": "https://github.com/kemiller2002/unbound/blob/main/requirements/convergence/2026-11-24-master/replay/src/Unbound.Replay/Sources.fs",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-019",
+   "title": "Unbound enterprise data contracts and provider integration",
+   "url": "https://github.com/kemiller2002/unbound/blob/main/research/daf-theoretical-enterprise-validation/19-questions/ENTERPRISE-DATA-CONTRACTS-PROVIDER-INTEGRATION-AND-EVIDENCE-GOVERNANCE-2026-11-23.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-020",
+   "title": "daf-landscape capital minimization report 12 (OPP-10 data migration)",
+   "url": "https://github.com/kemiller2002/daf-landscape/blob/main/research/commercial-opportunity/ai-native-capital-minimization/12-incremental-commercial-opportunities.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-021",
+   "title": "daf-landscape DAF grant record standard v0.1",
+   "url": "https://github.com/kemiller2002/daf-landscape/blob/main/standards/daf-grant-record/schema-v0.1.json",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-022",
+   "title": "Helix Note lab results requirement HN-REQ-104",
+   "url": "https://github.com/kemiller2002/helix-note-application/blob/main/docs/requirements/HN-REQ-104-lab-results.md",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  },
+  {
+   "id": "ECH-023",
+   "title": "Summa reconciliation and financial migration",
+   "url": "https://github.com/kemiller2002/summa/blob/main/src/Summa.Storage/Reconciliation.fs",
+   "accessed": "2026-11-26",
+   "notes": "Echelon repository evidence (main branch, shallow clone)",
+   "category": "echelon-repository"
+  }
+ ]
+}
