@@ -4,7 +4,7 @@
   "repository": "transitus",
   "actor": "ros-bootstrap",
   "startedAt": "2026-11-26T15:17:03.787Z",
-  "updatedAt": "2026-11-26T20:51:08.000Z",
+  "updatedAt": "2026-11-26T20:51:51.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -150,13 +150,40 @@
     {
       "id": "WI-0004",
       "type": "research",
-      "state": "active",
-      "semanticState": "active",
-      "evidence": [],
-      "updatedAt": "2026-11-26T20:51:08.000Z",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "research-record",
+          "path": "research/decisions/DF-TRN-2026-0026--dec-008-kill-rule-does-not-gate-transitus.md"
+        }
+      ],
+      "updatedAt": "2026-11-26T20:51:51.000Z",
       "telemetryExecutionIds": [
         "EXE-20261126T205108633Z-a4de7b2b"
-      ]
+      ],
+      "latestCheckpoint": {
+        "id": "afab02e94c45c32ed6acceda",
+        "recordedAt": "2026-11-26T20:51:50.000Z",
+        "executionId": "EXE-20261126T205108633Z-a4de7b2b",
+        "repository": "transitus",
+        "branch": "claude/fervent-galileo-bj4yk0",
+        "commit": "fa1009e8b00aad81ec53a60c7daa935fd185431b",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/transitus"
+        },
+        "remoteBranch": "claude/fervent-galileo-bj4yk0",
+        "remoteCommit": "fa1009e8b00aad81ec53a60c7daa935fd185431b",
+        "summary": "DF-TRN-2026-0026 recorded; OD-TRN-P3-02 resolved; DF-0025/UC-19 annotated",
+        "nextAction": "None for OD-TRN-P3-02; OD-TRN-P3-01 and OQ-17 remain open",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-11-26T20:51:51.000Z",
+      "conclusion": "inconclusive"
     }
   ]
 }
