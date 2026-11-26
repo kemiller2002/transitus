@@ -1008,6 +1008,23 @@
             "created"
           ],
           "reason": "Record owner strategic approval of DAF Landscape DEC-011 (2026-11-26)"
+        },
+        "EXE-20261126T210016939Z-536fe55b": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-26T21:01:25.000Z",
+          "evidence": [
+            "docs/research/03-daf-phase3-dispositions.md"
+          ],
+          "operations": [
+            "modified"
+          ],
+          "reason": "Stage I review fixes S1-06/07/08/15 and OD-P3-04 note (WI-0005)"
         }
       }
     },
@@ -1170,6 +1187,23 @@
             "modified"
           ],
           "reason": "Owner resolution of OD-TRN-P3-02 (2026-11-26): DEC-008 kill rule does not gate Transitus (annotation)"
+        },
+        "EXE-20261126T210016939Z-536fe55b": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-26T21:01:25.000Z",
+          "evidence": [
+            "docs/research/03-daf-phase3-dispositions.md"
+          ],
+          "operations": [
+            "modified"
+          ],
+          "reason": "Stage I review fixes S1-06/07/08/15 and OD-P3-04 note (WI-0005)"
         }
       }
     },
@@ -1219,6 +1253,23 @@
             "created"
           ],
           "reason": "Owner resolution of OD-TRN-P3-02 (2026-11-26): DEC-008 kill rule does not gate Transitus"
+        },
+        "EXE-20261126T210016939Z-536fe55b": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-26T21:01:25.000Z",
+          "evidence": [
+            "docs/research/03-daf-phase3-dispositions.md"
+          ],
+          "operations": [
+            "modified"
+          ],
+          "reason": "Stage I review fixes S1-06/07/08/15 and OD-P3-04 note (WI-0005)"
         }
       }
     },

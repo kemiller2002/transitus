@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "transitus",
-  "nextSeq": 5,
+  "nextSeq": 6,
   "items": [
     {
       "id": "WI-0001",
@@ -76,6 +76,27 @@
       "attachments": [],
       "createdAt": "2026-11-26T20:51:07.723Z",
       "updatedAt": "2026-11-26T20:51:51.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0005",
+      "title": "Address Stage I review findings S1-06/07/08/15 and OD-P3-04 note",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "ready",
+      "attachments": [],
+      "createdAt": "2026-11-26T21:00:15.984Z",
+      "updatedAt": "2026-11-26T21:00:16.000Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",

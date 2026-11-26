@@ -379,3 +379,24 @@ def _p3(r):
             "decisions": r["decisions"] + [d for d in DEC_P3.get(short, []) if d not in r["decisions"]]}
 R = [_p3(r) for r in R] + [dict(id=n[0], category=n[1], priority=n[2], phase=n[3], statement=n[4], acceptance=n[5], charter=n[6],
       design=list(n[7]), decisions=list(n[8]), verify=(n[9] if len(n) > 9 else "test"), status="proposed", revision=P3) for n in NEW_P3]
+
+# Revision 3b (2026-11-26): independent Stage I review dispositions (S1-06, S1-07), WI-0005.
+# S1-06: revision 3 added 18 phase-1 rows; the TA-gated and DEC-010-gated ones are named in ARC-009 so
+# that phase-1 exit does not depend on them. S1-07: the first-incumbent-cluster selection record is owned
+# by Unbound (UNB-CDD-ONB-002); Transitus consumes it instead of requiring its own.
+P3B = "DAF-P3-REV-S1"
+STATEMENT_P3B = {
+ "ARC-009": STATEMENT_P3["ARC-009"] + " The following rows carry phase 1 but are gated and are excluded from phase-1 exit criteria until their gate is recorded: trigger TA — TRN-REQ-ASM-001, ASM-002, ASM-003, ASM-004, ASM-006 and PRF-003; the DEC-010 gate (DF-TRN-2026-0024) for any use beyond internal measurement — TRN-REQ-MET-002 and MET-003.",
+ "MP-010": "When trigger T3 is met for vendor-specific packages, the first such package MUST target the single incumbent source cluster named in the consumer's recorded selection decision — for Unbound, the record required by UNB-CDD-ONB-002, which cites V-5 evidence and customer-authorized sample availability. Transitus MUST consume that record (by identifier and version) rather than keep its own selection, MUST refuse to publish a vendor-specific package whose source is not named in a consumer selection record, and each further incumbent needs a further consumer record (DEC-007).",
+}
+ACC_P3B = {
+ "MP-010": "Given no consumer selection record (Unbound UNB-CDD-ONB-002) naming source A, When a vendor-specific package for A is proposed for publication, Then publication is refused. Given a recorded selection naming source A, When a package for source B is proposed, Then publication is refused until a further consumer record names B. Given a package for A, When it is published, Then its manifest cites the selection record identifier and version.",
+}
+DESIGN_P3B = {"MP-010": ["Unbound requirements/discovery/2026-11-26-competitive-displacement-decisions (UNB-CDD-ONB-002)"]}
+def _p3b(r):
+    short = r["id"].replace("TRN-REQ-", "")
+    if short not in STATEMENT_P3B:
+        return r
+    return {**r, "statement": STATEMENT_P3B[short], "acceptance": ACC_P3B.get(short, r["acceptance"]), "revision": P3B,
+            "design": r["design"] + [d for d in DESIGN_P3B.get(short, []) if d not in r["design"]]}
+R = [_p3b(r) for r in R]

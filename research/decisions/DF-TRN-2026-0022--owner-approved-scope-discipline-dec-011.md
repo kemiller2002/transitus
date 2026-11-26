@@ -27,6 +27,17 @@ provenance:
         runtime: claude-code
       reason: "Record owner strategic approval of DAF Landscape DEC-011 (2026-11-26)"
       evidence: [kemiller2002/daf-landscape:research/competitive-displacement/data/registers/decisions.csv#DEC-011]
+    EXE-20261126T210016939Z-536fe55b:
+      operations: [modified]
+      at: 2026-11-26T21:01:25.000Z
+      actor:
+        kind: agent
+        id: anthropic/claude-code
+        provider: anthropic
+        model: unknown
+        runtime: claude-code
+      reason: "Stage I review fixes S1-06/07/08/15 and OD-P3-04 note (WI-0005)"
+      evidence: [docs/research/03-daf-phase3-dispositions.md]
 ---
 
 # Decision Record
@@ -56,6 +67,11 @@ Consequences recorded in requirements revision `DAF-P3-2026-11-26`
   flagged as such (TRN-REQ-ASM-007);
 - no new phase-1 package, adapter or operation is added by this decision;
   the ARC-007 maintenance budget is unchanged.
+
+> **Correction (2026-11-26, WI-0005, review finding S1-06; text above kept):**
+> the ARC-007 counts are unchanged, but phase-1 scope grows by 18 proposed
+> rows, 8 of them gated. See the scope-impact statement in `docs/roadmap.md`
+> and DF-TRN-2026-0025 §4.
 
 ## Status (status ladder)
 

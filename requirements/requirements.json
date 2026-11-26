@@ -2001,7 +2001,7 @@
    "category": "architecture",
    "priority": "P0",
    "phase": 1,
-   "statement": "Capabilities beyond phase 1 MUST be gated by recorded triggers: T2 complex DAGs (routes, unions, joins), the expression language, bounded set operators, extensions, chunk parallelism and in-engine scheduling (a demonstrated scenario the phase-1 model cannot express); T3 advanced AI and vendor-specific turnkey packages (AI evaluation thresholds met; customer-authorized sample and licence clearance; the first vendor package also needs the single-source selection of TRN-REQ-MP-010); TA the pre-contract assessment capabilities TRN-REQ-ASM-001..004/006 and TRN-REQ-PRF-003 (a recorded owner authorization naming the consumer requirement that needs them); T4 visual editing (non-engineer configuration required). Basic mapping packages are not gated. Until its trigger is recorded a gated capability is specification only.",
+   "statement": "Capabilities beyond phase 1 MUST be gated by recorded triggers: T2 complex DAGs (routes, unions, joins), the expression language, bounded set operators, extensions, chunk parallelism and in-engine scheduling (a demonstrated scenario the phase-1 model cannot express); T3 advanced AI and vendor-specific turnkey packages (AI evaluation thresholds met; customer-authorized sample and licence clearance; the first vendor package also needs the single-source selection of TRN-REQ-MP-010); TA the pre-contract assessment capabilities TRN-REQ-ASM-001..004/006 and TRN-REQ-PRF-003 (a recorded owner authorization naming the consumer requirement that needs them); T4 visual editing (non-engineer configuration required). Basic mapping packages are not gated. Until its trigger is recorded a gated capability is specification only. The following rows carry phase 1 but are gated and are excluded from phase-1 exit criteria until their gate is recorded: trigger TA — TRN-REQ-ASM-001, ASM-002, ASM-003, ASM-004, ASM-006 and PRF-003; the DEC-010 gate (DF-TRN-2026-0024) for any use beyond internal measurement — TRN-REQ-MET-002 and MET-003.",
    "acceptance": "Decision record per phase gate.",
    "charter": "§19",
    "design": [
@@ -2015,7 +2015,7 @@
    ],
    "verify": "review",
    "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "revision": "DAF-P3-REV-S1"
   },
   {
    "id": "TRN-REQ-EX-013",
@@ -2732,12 +2732,13 @@
    "category": "mapping-packages",
    "priority": "P1",
    "phase": 3,
-   "statement": "When trigger T3 is met for vendor-specific packages, the first such package MUST target one incumbent source cluster chosen by a recorded decision that cites (a) evidence of buyers on that source in active evaluation (daf-landscape V-5 or equivalent) and (b) at least one customer-authorized sample from that source; no incumbent may be selected without that evidence, and each further incumbent needs its own decision (DEC-007).",
-   "acceptance": "Given no recorded selection decision, When a vendor-specific package is proposed for publication, Then publication is refused. Given a recorded selection for source A, When a package for source B is proposed, Then a further decision is required.",
+   "statement": "When trigger T3 is met for vendor-specific packages, the first such package MUST target the single incumbent source cluster named in the consumer's recorded selection decision — for Unbound, the record required by UNB-CDD-ONB-002, which cites V-5 evidence and customer-authorized sample availability. Transitus MUST consume that record (by identifier and version) rather than keep its own selection, MUST refuse to publish a vendor-specific package whose source is not named in a consumer selection record, and each further incumbent needs a further consumer record (DEC-007).",
+   "acceptance": "Given no consumer selection record (Unbound UNB-CDD-ONB-002) naming source A, When a vendor-specific package for A is proposed for publication, Then publication is refused. Given a recorded selection naming source A, When a package for source B is proposed, Then publication is refused until a further consumer record names B. Given a package for A, When it is published, Then its manifest cites the selection record identifier and version.",
    "charter": "§10",
    "design": [
     "TRN-ARCH-09 §3",
-    "docs/research/03-daf-phase3-dispositions.md"
+    "docs/research/03-daf-phase3-dispositions.md",
+    "Unbound requirements/discovery/2026-11-26-competitive-displacement-decisions (UNB-CDD-ONB-002)"
    ],
    "decisions": [
     "DF-TRN-2026-0023",
@@ -2745,7 +2746,7 @@
    ],
    "verify": "review",
    "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "revision": "DAF-P3-REV-S1"
   },
   {
    "id": "TRN-REQ-MET-001",

@@ -31,6 +31,17 @@ provenance:
         runtime: claude-code
       reason: "Owner resolution of OD-TRN-P3-02 (2026-11-26): DEC-008 kill rule does not gate Transitus (annotation)"
       evidence: [DF-TRN-2026-0026]
+    EXE-20261126T210016939Z-536fe55b:
+      operations: [modified]
+      at: 2026-11-26T21:01:24.000Z
+      actor:
+        kind: agent
+        id: anthropic/claude-code
+        provider: anthropic
+        model: unknown
+        runtime: claude-code
+      reason: "Stage I review fixes S1-06/07/08/15 and OD-P3-04 note (WI-0005)"
+      evidence: [docs/research/03-daf-phase3-dispositions.md]
 ---
 
 # DAF Landscape Phase III: dispositions for Transitus
@@ -176,7 +187,7 @@ Disposition classes:
 | Affected requirements and decisions | DF-0019, ARC-009 (T3), MP-002, MP-004, MP-006; DEC-011 → DF-0022; DEC-007 → DF-0023 |
 | Already addressed? | **Deferral: yes** (DF-0019, ARC-009, MP-006). **Single-cluster ordering and per-report-version drift tests: no** |
 | Conflicts, duplication, gaps | No incumbent is chosen. The Phase II examples (NPact/FIMS, iPhi) are not a selection (DEC-007: "do not select arbitrarily") |
-| Refinement | MP-010 (the first vendor package needs a recorded selection citing V-5 evidence and an authorized sample); MP-004 refined (per report version, drift test); ARC-009 refined; roadmap note |
+| Refinement | MP-010 (the first vendor package needs a recorded selection citing V-5 evidence and an authorized sample; **revised 2026-11-26, review finding S1-07:** Transitus consumes Unbound's selection record, UNB-CDD-ONB-002, which is its single owner, rather than requiring its own); MP-004 refined (per report version, drift test); ARC-009 refined; roadmap note |
 | Disposition | **Requirements updated** (MP-004, ARC-009). The deferral is **Already satisfied**. The first-package rule is **New requirement added** (MP-010), itself **Deferred behind an explicit gate** (T3) and **Blocked by unavailable information** (no customer-authorized sample; V-5 not run) |
 | Acceptance (GWT) | Given no recorded selection, When a vendor package is proposed, Then publication is refused. Given an input matching no declared report version, When the drift test runs, Then it fails |
 | Validation requirements | Package-lint rule for the selection reference; drift-test fixture |
@@ -243,6 +254,11 @@ recorded owner authorization naming the consumer requirement that needs them.
 Unbound UNB-ONB-003 is `commercial-availability`, not release 1. The phase-1
 budget (ARC-007) is unchanged.
 
+> **Correction (2026-11-26, WI-0005, review finding S1-06; text above kept):**
+> only the ARC-007 counts are unchanged. revision DAF-P3-2026-11-26 added 18 phase-1 requirement rows (phase-1 total 121 → 139; P0 106 → 108: MIG-006 and MIG-007). Eight are gated and excluded from phase-1 exit (TA: ASM-001..004/006, PRF-003; DEC-010: MET-002/003, see TRN-REQ-ARC-009). Ten are ungated: PRF-001/002, VR-014, MIG-005/006/007, MET-001 and the constraints ASM-005/007/008. Their statements name no new code package, third-party parser, mapping package, transformation operation (of the 13) or port, so the ARC-007 *counts* are not exceeded on the text; they do add work inside existing packages (Formats: PRF-002; Checks: PRF-001, VR-014, MIG-005; Model: MIG-006; Engine/Evidence: MIG-007, MET-001) that is **not estimated**. Phase-1 scope therefore grows; these are proposed additions pending owner acceptance, not an unchanged scope.
+> TRN-REQ-ARC-009 now names the phase-1 rows that are TA-gated or
+> DEC-010-gated.
+
 ## 5. Boundary: generic Transitus vs Unbound-specific
 
 This boundary is consistent with the Unbound transitus-integration package
@@ -261,7 +277,7 @@ This boundary is consistent with the Unbound transitus-integration package
 | Domain loading | Port only (AD-008, ARC-011) | Domain operations (UNB-TRN-005), MigrationRun, fence, cutover (UNB-TRN-011, MIG-003) |
 | Assessment tiers and report | ✓ (mechanism, tier enforcement, report) | Legal basis, migration class, extraction plan, pricing/estimate band (UNB-ONB-001/002/003/004) |
 | Measurement facts, conformance clock | ✓ | Outcome report and any service commitment (UNB-ONB-030), gated by DEC-010 |
-| First-vendor selection | Package rule (MP-010) | Commercial selection evidence (V-5) |
+| First-vendor selection | Package rule (MP-010): consumes the selection record | The selection record itself (UNB-CDD-ONB-002), citing V-5 evidence |
 
 ## 6. Owner decisions and questions raised
 
@@ -281,6 +297,23 @@ None of these is resolved by this revision.
 | DEC-007 | DF-TRN-2026-0023 | Strategically approved. Requirements incorporated as `proposed` (MP-010, MP-004, ARC-009) |
 | DEC-010 | DF-TRN-2026-0024 | Strategically approved. Requirements incorporated as `proposed` (MET-001..003); the V-4 gate is not satisfied |
 | DEC-012, DEC-008 | DF-TRN-2026-0025 | Strategically approved (constraints only) |
+
+## 7a. DEC-005 trace: AI and mapping suggestions are advisory (review finding S1-15)
+
+DEC-005 (owner-approved 2026-11-26) says AI assessments and inferred records are advisory. They never silently become authoritative facts or financial, regulatory or eligibility decisions. In Transitus this is implemented by these existing rows. No new requirement is needed.
+
+| Requirement or decision | How it implements DEC-005 |
+|---|---|
+| DF-TRN-2026-0012 | AI may only propose pipeline diffs; deterministic gates dispose |
+| TRN-REQ-AI-001 | AI output is a PipelineDiff proposal only; it cannot execute, publish, approve or load |
+| TRN-REQ-AI-002 | AI-generated configuration passes the same deterministic validation, dry run and authorization as human changes |
+| TRN-REQ-AI-005 | The runtime path contains no model calls; results are deterministic |
+| TRN-REQ-AI-006 | AI proposals record model, provider, prompt version and hashes (labelled, traceable) |
+| TRN-REQ-AI-008, AI-009 | No accuracy claim and no enablement without measured precision |
+| TRN-REQ-PRF-003 | Mapping suggestions, deterministic or AI, are proposals and are unusable until accepted through the human publish path |
+| TRN-REQ-PRF-002 | Schema discovery reports candidates; it never selects or publishes |
+| TRN-REQ-MIG-005 | The harness produces evidence only; mapping approval states stay with the consumer (UNB-ONB-005) |
+| TRN-REQ-ASM-005, ASM-007 | Synthetic or unverified-assumption findings are labelled and excluded from evidenced totals |
 
 ## 8. Validation requirements for this revision
 

@@ -38,6 +38,17 @@ provenance:
         runtime: claude-code
       reason: "Owner resolution of OD-TRN-P3-02 (2026-11-26): DEC-008 kill rule does not gate Transitus (annotation)"
       evidence: [DF-TRN-2026-0026]
+    EXE-20261126T210016939Z-536fe55b:
+      operations: [modified]
+      at: 2026-11-26T21:01:25.000Z
+      actor:
+        kind: agent
+        id: anthropic/claude-code
+        provider: anthropic
+        model: unknown
+        runtime: claude-code
+      reason: "Stage I review fixes S1-06/07/08/15 and OD-P3-04 note (WI-0005)"
+      evidence: [docs/research/03-daf-phase3-dispositions.md]
 ---
 
 # Decision Record
@@ -71,6 +82,10 @@ Constraints on Transitus:
 4. **Minimization.** This revision adds no package, adapter or operation to
    the phase-1 budget (TRN-REQ-ARC-007); new requirements reuse the
    existing profile, validate, reconcile, verify and evidence stages.
+
+   > **Correction (2026-11-26, WI-0005, review finding S1-06; text above
+   > kept):** "adds no package, adapter or operation" holds only for the
+   > ARC-007 counts. The phase-1 scope itself grows. revision DAF-P3-2026-11-26 added 18 phase-1 requirement rows (phase-1 total 121 → 139; P0 106 → 108: MIG-006 and MIG-007). Eight are gated and excluded from phase-1 exit (TA: ASM-001..004/006, PRF-003; DEC-010: MET-002/003, see TRN-REQ-ARC-009). Ten are ungated: PRF-001/002, VR-014, MIG-005/006/007, MET-001 and the constraints ASM-005/007/008. Their statements name no new code package, third-party parser, mapping package, transformation operation (of the 13) or port, so the ARC-007 *counts* are not exceeded on the text; they do add work inside existing packages (Formats: PRF-002; Checks: PRF-001, VR-014, MIG-005; Model: MIG-006; Engine/Evidence: MIG-007, MET-001) that is **not estimated**. Phase-1 scope therefore grows; these are proposed additions pending owner acceptance, not an unchanged scope.
 5. **Termination criteria.** Transitus's only standing retirement rule is
    TRN-REQ-PF-004, which the owner made non-gating for phase 1. Whether the
    DEC-008 kill rule (no named partner by month 6; no referenceable pilot by

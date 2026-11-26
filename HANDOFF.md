@@ -41,6 +41,11 @@ The owner strategically approved DAF Landscape DEC-001..012 on 2026-11-26. For T
 - **XRI-009..014 dispositions, capability coverage and the generic/Unbound boundary:** `docs/research/03-daf-phase3-dispositions.md`.
 - **Open:** OD-TRN-P3-01, OQ-17 and UC-17..19 (`docs/open-questions.md`).
 - **OD-TRN-P3-02 resolved by the owner (2026-11-26, WI-0004):** the DEC-008 kill rule does not stop Transitus (DF-TRN-2026-0026).
+- **Stage I review fixes (WI-0005):**
+  - S1-06: phase-1 scope-impact statement in the roadmap and DF-0025/DF-0022 annotations; ARC-009 names the gated phase-1 rows.
+  - S1-07: MP-010 consumes Unbound UNB-CDD-ONB-002.
+  - S1-15: DEC-005 trace in the dispositions doc §7a.
+- **IP note (S1-08):** owner decision OD-P3-01 / OD-DAF-IP-001 ("EF owns all property we make"). `LICENSE` names an individual as copyright holder. **TODO for counsel**; `LICENSE` is not edited (see `docs/open-questions.md`, OQ-12 note).
 - **Tooling:** `tools/render_requirements.py` now preserves the Praxis provenance block of `requirements/REQUIREMENTS.md` across re-renders. Previously, re-rendering dropped it.
 - **Not authorized:** expenditure, commitments, implementation. The V-4 gate is not satisfied.
 

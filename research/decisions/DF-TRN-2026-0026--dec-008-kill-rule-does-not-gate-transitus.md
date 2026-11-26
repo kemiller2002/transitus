@@ -27,6 +27,17 @@ provenance:
         runtime: claude-code
       reason: "Owner resolution of OD-TRN-P3-02 (2026-11-26): DEC-008 kill rule does not gate Transitus"
       evidence: [DF-TRN-2026-0025]
+    EXE-20261126T210016939Z-536fe55b:
+      operations: [modified]
+      at: 2026-11-26T21:01:25.000Z
+      actor:
+        kind: agent
+        id: anthropic/claude-code
+        provider: anthropic
+        model: unknown
+        runtime: claude-code
+      reason: "Stage I review fixes S1-06/07/08/15 and OD-P3-04 note (WI-0005)"
+      evidence: [docs/research/03-daf-phase3-dispositions.md]
 ---
 
 # Decision Record
@@ -46,6 +57,13 @@ phase 1. Transitus phase transitions remain governed only by their own
 recorded triggers:
 - T2, T3, TA and T4 (TRN-REQ-ARC-009);
 - the TRN-REQ-PF-004 measurement, which stays non-gating for phase 1.
+
+## Note: when the kill rule's clock starts
+
+Owner decision OD-P3-04 ("Significant is when it becomes its own cost
+center") defines when the DEC-008 no-named-partner clock starts. It is
+recorded here because this record describes the kill rule. It does not
+change this decision: the kill rule does not gate Transitus.
 
 ## Limits
 

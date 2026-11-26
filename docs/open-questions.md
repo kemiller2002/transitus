@@ -31,6 +31,17 @@ provenance:
         runtime: claude-code
       reason: "Owner resolution of OD-TRN-P3-02 (2026-11-26): DEC-008 kill rule does not gate Transitus (annotation)"
       evidence: [DF-TRN-2026-0026]
+    EXE-20261126T210016939Z-536fe55b:
+      operations: [modified]
+      at: 2026-11-26T21:01:24.000Z
+      actor:
+        kind: agent
+        id: anthropic/claude-code
+        provider: anthropic
+        model: unknown
+        runtime: claude-code
+      reason: "Stage I review fixes S1-06/07/08/15 and OD-P3-04 note (WI-0005)"
+      evidence: [docs/research/03-daf-phase3-dispositions.md]
 ---
 
 # Open questions
@@ -66,6 +77,8 @@ the owner directed.
 | OQ-12 | Licence: MIT or PolyForm Noncommercial? | Resolve against the authoritative portfolio licensing policy before release. | The portfolio decision OD-GOV-018 (registry DRF-09). | First release, not this research phase. |
 | OQ-16 | Can NACHA layouts be redistributed in `nacha.ach`? | Verify NACHA redistribution rights. | A review of the NACHA Operating Rules licence terms. The package is internal-only until then (TRN-REQ-MP-008). | Publishing `nacha.ach`. |
 
+> **Note on OQ-12 (2026-11-26, WI-0005, review finding S1-08):** owner decision OD-P3-01 ("EF owns all property we make"; recorded in echelon-organization-administration as OD-DAF-IP-001) says Echelon Foundry owns the IP. `LICENSE` names an individual ("Copyright (c) 2026 Kevin Miller") as copyright holder. **TODO (counsel):** confirm the correct copyright holder and licence text together with OQ-12. `LICENSE` is deliberately not edited.
+
 ## Raised by the DAF Landscape Phase III revision (WI-0003, 2026-11-26)
 
 See `docs/research/03-daf-phase3-dispositions.md` §6. OD-TRN-P3-01 and OQ-17 remain open. OD-TRN-P3-02 was resolved by the owner on 2026-11-26 (DF-TRN-2026-0026); its row is kept for history.
@@ -73,7 +86,7 @@ See `docs/research/03-daf-phase3-dispositions.md` §6. OD-TRN-P3-01 and OQ-17 re
 | ID | Question | Evidence | Blocks |
 |---|---|---|---|
 | OD-TRN-P3-01 | Owner decision: which legal-basis and approval preconditions bind each assessment tier — Phase II revision 2 (T1 after sponsor IT approval; T2+ under MSA + DPA) or daf-landscape charity-network report 13 and Unbound UNB-ONB-003 (T0-T1 NDA; T2 NDA/DPA)? Counsel input needed. | daf-landscape `competitive-displacement/08` §3; `charity-network-and-onboarding/13` §2-§3; Unbound UNB-ONB-003 | ASM-001 parameters (trigger TA) |
-| OD-TRN-P3-02 | Owner decision: does the DEC-008 kill rule (no named partner by month 6; no referenceable pilot by month 24) pause Transitus work beyond phase 1, given that TRN-REQ-PF-004 is non-gating? | DF-TRN-2026-0025; daf-landscape `22` kill rule | **Resolved 2026-11-26 by the owner:** "Kill rule doesn't stop Transitus." The DEC-008 kill rule does not pause Transitus work, including work beyond phase 1 (DF-TRN-2026-0026). No expenditure or implementation is authorized; scope stays DEC-011 phase 1. |
+| OD-TRN-P3-02 | Owner decision: does the DEC-008 kill rule (no named partner by month 6; no referenceable pilot by month 24) pause Transitus work beyond phase 1, given that TRN-REQ-PF-004 is non-gating? | DF-TRN-2026-0025; daf-landscape `22` kill rule | **Resolved 2026-11-26 by the owner:** "Kill rule doesn't stop Transitus." The DEC-008 kill rule does not pause Transitus work, including work beyond phase 1 (DF-TRN-2026-0026). No expenditure or implementation is authorized; scope stays DEC-011 phase 1. Owner decision OD-P3-04 ("Significant is when it becomes its own cost center") defines when the DEC-008 no-named-partner clock starts. |
 | OQ-17 | What disclosure-control thresholds apply to T1 profiles (minimum contributor count, minimum population, dominance share)? Research proposes k = 10; no binding default is adopted. | `charity-network-and-onboarding/13` §2; TRN-REQ-PRF-001 | ASM-003 |
 
 ## Unresolved conflicts

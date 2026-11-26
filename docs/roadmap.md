@@ -21,6 +21,17 @@ provenance:
         runtime: claude-code
       reason: "DAF Landscape Phase III revision: trigger TA, DEC-007 ordering, new owner decisions and conflicts"
       evidence: [docs/research/03-daf-phase3-dispositions.md]
+    EXE-20261126T210016939Z-536fe55b:
+      operations: [modified]
+      at: 2026-11-26T21:01:23.000Z
+      actor:
+        kind: agent
+        id: anthropic/claude-code
+        provider: anthropic
+        model: unknown
+        runtime: claude-code
+      reason: "Stage I review fixes S1-06/07/08/15 and OD-P3-04 note (WI-0005)"
+      evidence: [docs/research/03-daf-phase3-dispositions.md]
 ---
 
 # Phased implementation roadmap
@@ -41,6 +52,9 @@ Phase 0 is complete when the owner has accepted or revised the remaining
 The owner strategically approved DEC-007, DEC-008, DEC-010, DEC-011 and DEC-012 (DF-TRN-2026-0022..0025). For this roadmap:
 - **Phase-1 scope and budget are unchanged** (DEC-011). The revision adds
   requirements that reuse existing stages:
+
+  > **Correction (2026-11-26, WI-0005, review finding S1-06; the statement above is kept for history):** "unchanged" is inaccurate. revision DAF-P3-2026-11-26 added 18 phase-1 requirement rows (phase-1 total 121 → 139; P0 106 → 108: MIG-006 and MIG-007). Eight are gated and excluded from phase-1 exit (TA: ASM-001..004/006, PRF-003; DEC-010: MET-002/003, see TRN-REQ-ARC-009). Ten are ungated: PRF-001/002, VR-014, MIG-005/006/007, MET-001 and the constraints ASM-005/007/008. Their statements name no new code package, third-party parser, mapping package, transformation operation (of the 13) or port, so the ARC-007 *counts* are not exceeded on the text; they do add work inside existing packages (Formats: PRF-002; Checks: PRF-001, VR-014, MIG-005; Model: MIG-006; Engine/Evidence: MIG-007, MET-001) that is **not estimated**. Phase-1 scope therefore grows; these are proposed additions pending owner acceptance, not an unchanged scope.
+
   - profile and schema discovery (PRF-001/002);
   - non-money sampling (VR-014);
   - the mapping-test harness (MIG-005);

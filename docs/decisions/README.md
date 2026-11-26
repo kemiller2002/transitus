@@ -4,6 +4,8 @@ Canonical Decision Records live in `research/decisions/`. This directory may
 contain human-oriented indexes and architectural decision views, but must not
 become a second canonical decision store.
 
+> **IP ownership note (2026-11-26, WI-0005):** owner decision OD-P3-01, recorded in echelon-organization-administration as OD-DAF-IP-001 ("EF owns all property we make"). `LICENSE` names an individual as copyright holder. TODO for counsel, with OQ-12; `LICENSE` is not edited.
+
 ## Architectural decision register
 
 - **`accepted`:** decided by the repository owner (transitus#1, 2026-11-26). Acceptance does not authorize implementation or merge.
