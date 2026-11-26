@@ -2,11 +2,24 @@
 id: TRN-OQ
 title: Open Questions, Owner Resolutions and Unresolved Conflicts
 status: proposed
-version: 0.2.0
+version: 0.3.0
 created: 2026-11-26
 updated: 2026-11-26
 work_item: WI-0002
 owner_resolution: https://github.com/kemiller2002/transitus/pull/1#issuecomment-7200249612
+provenance:
+  contributions:
+    EXE-20261126T203508536Z-de9f55a7:
+      operations: [modified]
+      at: 2026-11-26T20:42:24.000Z
+      actor:
+        kind: agent
+        id: anthropic/claude-code
+        provider: anthropic
+        model: unknown
+        runtime: claude-code
+      reason: "DAF Landscape Phase III revision: trigger TA, DEC-007 ordering, new owner decisions and conflicts"
+      evidence: [docs/research/03-daf-phase3-dispositions.md]
 ---
 
 # Open questions
@@ -42,6 +55,16 @@ the owner directed.
 | OQ-12 | Licence: MIT or PolyForm Noncommercial? | Resolve against the authoritative portfolio licensing policy before release. | The portfolio decision OD-GOV-018 (registry DRF-09). | First release, not this research phase. |
 | OQ-16 | Can NACHA layouts be redistributed in `nacha.ach`? | Verify NACHA redistribution rights. | A review of the NACHA Operating Rules licence terms. The package is internal-only until then (TRN-REQ-MP-008). | Publishing `nacha.ach`. |
 
+## Raised by the DAF Landscape Phase III revision (WI-0003, 2026-11-26)
+
+See `docs/research/03-daf-phase3-dispositions.md` §6. Open; not resolved by this revision.
+
+| ID | Question | Evidence | Blocks |
+|---|---|---|---|
+| OD-TRN-P3-01 | Owner decision: which legal-basis and approval preconditions bind each assessment tier — Phase II revision 2 (T1 after sponsor IT approval; T2+ under MSA + DPA) or daf-landscape charity-network report 13 and Unbound UNB-ONB-003 (T0-T1 NDA; T2 NDA/DPA)? Counsel input needed. | daf-landscape `competitive-displacement/08` §3; `charity-network-and-onboarding/13` §2-§3; Unbound UNB-ONB-003 | ASM-001 parameters (trigger TA) |
+| OD-TRN-P3-02 | Owner decision: does the DEC-008 kill rule (no named partner by month 6; no referenceable pilot by month 24) pause Transitus work beyond phase 1, given that TRN-REQ-PF-004 is non-gating? | DF-TRN-2026-0025; daf-landscape `22` kill rule | Phase 2+ planning |
+| OQ-17 | What disclosure-control thresholds apply to T1 profiles (minimum contributor count, minimum population, dominance share)? Research proposes k = 10; no binding default is adopted. | `charity-network-and-onboarding/13` §2; TRN-REQ-PRF-001 | ASM-003 |
+
 ## Unresolved conflicts
 
 These are tensions between the owner-directed scope and other evidence or
@@ -70,3 +93,11 @@ governance. Each is recorded rather than silently resolved.
 | UC-14 | "Bank format from the first partner", but no bank or ODFI partner exists. Until one does, the bank package claims conformance only to the public base standard. | OQ-06 | Unbound owner |
 | UC-15 | Observability is unowned (GAP-05), and Echelon.Execution metrics are blocked on U-07. Transitus emits OpenTelemetry through the host (OBS-001) but cannot supply monitoring ownership. | Registry OD-GOV-024; `unbound/execution/README.md` | Portfolio owner (OQ-03); Unbound owner for U-07 |
 | UC-16 | The registry lists Transitus as `active` against four initiatives before any code exists. | Registry PR #123 | Portfolio owner. Maturity is `requirements`; the status can be lowered to `experimental` if preferred. |
+
+### Conflicts from the DAF Landscape Phase III revision (WI-0003)
+
+| ID | Conflict | Evidence | Who resolves |
+|---|---|---|---|
+| UC-17 | The assessment tier legal basis differs between sources. Phase II revision 2 requires sponsor IT approval for T1 and an MSA plus a DPA for T2+. Charity-network report 13 and UNB-ONB-003 require an NDA for T0-T1 and an NDA/DPA for T2. Transitus requires the stricter host-supplied references by default (ASM-001). | See OD-TRN-P3-01 | Owner and counsel (OD-TRN-P3-01) |
+| UC-18 | Phase II maturity level 2 counts "≥2 timed mocks"; UNB-ONB-011 defaults to at least three trial runs, with the last two clean. Transitus fixes no count, because the rehearsal count is consumer-owned. | daf-landscape `08` §5; Unbound UNB-ONB-011 | Unbound owner |
+| UC-19 | Phase II report 18 cites DF-TRN-2026-0014 and DF-TRN-2026-0016, which DF-0019 and DF-0018 have superseded. DF-0016's kill criterion has no gating successor: PF-004 is non-gating. | `docs/research/03-daf-phase3-dispositions.md` §1 | daf-landscape owner (citation); owner (OD-TRN-P3-02) |

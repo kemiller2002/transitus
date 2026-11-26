@@ -31,6 +31,18 @@ The owner's comment on transitus#1 resolved OQ-13 (migration in release 1) and O
 - **Planning:** roadmap and estimates revised; unresolved conflicts UC-1..UC-16 recorded.
 - **Cross-repository:** Unbound #20, daf-landscape #89 and registry #123 updated.
 
+## DAF Landscape Phase III revision (WI-0003, 2026-11-26)
+
+The owner strategically approved DAF Landscape DEC-001..012 on 2026-11-26. For Transitus:
+
+- **Decisions:** DF-TRN-2026-0022..0025 record DEC-011, DEC-007, DEC-010 and DEC-012/DEC-008. Their `status` is `accepted` with `approval_stage: strategically-approved`, because Praxis allows no other DF status. No record is superseded.
+- **Requirements:** revision `DAF-P3-2026-11-26` adds 19 proposed requirements (PRF-001..003, VR-014, MIG-005..007, MP-010, MET-001..003, ASM-001..008) and refines VR-010, MP-004, MIG-001 and ARC-009. The register now holds 171 requirements.
+- **Trigger TA:** gates the pre-contract assessment.
+- **XRI-009..014 dispositions, capability coverage and the generic/Unbound boundary:** `docs/research/03-daf-phase3-dispositions.md`.
+- **Open:** OD-TRN-P3-01/02, OQ-17 and UC-17..19 (`docs/open-questions.md`).
+- **Tooling:** `tools/render_requirements.py` now preserves the Praxis provenance block of `requirements/REQUIREMENTS.md` across re-renders. Previously, re-rendering dropped it.
+- **Not authorized:** expenditure, commitments, implementation. The V-4 gate is not satisfied.
+
 ## Decisions and assumptions (phase 0, as first delivered)
 
 - ~~Phase 1 is three pure libraries (DF-TRN-2026-0016)~~. Superseded by DF-TRN-2026-0018: a minimal declarative pipeline.

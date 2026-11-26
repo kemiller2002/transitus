@@ -4,6 +4,20 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "tools"))
 from requirements_source import R  # noqa: E402
 
+def _existing_provenance(rel):
+    """Return the Praxis provenance block of an already-rendered file (preserved across re-renders), or ''."""
+    path = os.path.join(ROOT, rel)
+    if not os.path.exists(path): return ""
+    text = open(path, encoding="utf-8").read()
+    if not text.startswith("---\n"): return ""
+    front = text[4:text.find("\n---\n", 4) + 1]
+    i = front.find("provenance:\n")
+    return front[i:] if i >= 0 else ""
+
+def _with_provenance(head, rel):
+    block = _existing_provenance(rel)
+    return head.replace("(do not hand-edit)\n---\n", "(do not hand-edit)\n" + block + "---\n", 1) if block else head
+
 def render():
     ids = [r["id"] for r in R]
     dup = [i for i, c in collections.Counter(ids).items() if c > 1]
@@ -11,7 +25,7 @@ def render():
     data = {"schema": "transitus.requirements/v1", "status": "proposed", "count": len(R), "requirements": R}
     js = json.dumps(data, indent=1, ensure_ascii=False) + "\n"
     head = "---\nid: TRN-REQ-REGISTER\ntitle: Transitus Requirements Register\nstatus: proposed\nversion: 0.1.0\ncreated: 2026-11-26\nupdated: 2026-11-26\ngenerated_by: tools/render_requirements.py (do not hand-edit)\n---\n\n"
-    md = [head + f"# Requirements register\n\n{len(R)} proposed requirements (revised after adversarial review TRN-REV-01; rows carry `revision` in JSON). Phases (owner-directed revision, DF-TRN-2026-0018): 1 = minimal declarative typed linear pipeline, basic mapping packages, checkpoints/replay/idempotency, dry runs; 2 = complex DAGs and set operators (T2); 3 = advanced AI and vendor-specific packages (T3); 4 = visual editing (T4) — see `docs/roadmap.md`. Priority: P0 = required for first production use, P1 = required for the phase, P2 = conditional/deferred. Machine-readable: `requirements/requirements.json`.\n"]
+    md = [_with_provenance(head, "requirements/REQUIREMENTS.md") + f"# Requirements register\n\n{len(R)} proposed requirements (revisions TRN-REV-01, OWNER-2026-11-26, TRN-REV-02 and DAF-P3-2026-11-26; rows carry `revision` in JSON). Phases (owner-directed revision, DF-TRN-2026-0018): 1 = minimal declarative typed linear pipeline, basic mapping packages, checkpoints/replay/idempotency, dry runs; 2 = complex DAGs and set operators (T2); 3 = advanced AI and vendor-specific packages (T3); 4 = visual editing (T4); trigger TA gates the pre-contract assessment (ASM, PRF-003) — see `docs/roadmap.md`. Priority: P0 = required for first production use, P1 = required for the phase, P2 = conditional/deferred. Machine-readable: `requirements/requirements.json`.\n"]
     for cat in dict.fromkeys(r["category"] for r in R):
         md.append(f"\n## {cat}\n\n| ID | P | Phase | Requirement | Acceptance | Verify |\n|---|---|---|---|---|---|")
         md += [f"| {r['id']} | {r['priority']} | {r['phase']} | {r['statement']} | {r['acceptance']} | {r['verify']} |" for r in R if r["category"] == cat]
