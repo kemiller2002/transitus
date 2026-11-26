@@ -1,0 +1,12 @@
+{
+  "schema": "praxis.instance/1",
+  "instanceId": "pxi-4b173c33717a4c7486db3533b3c12a2f",
+  "createdAt": "2026-11-26T15:17:03.810Z",
+  "createdWith": "3.26.0",
+  "repository": {
+    "provider": "github",
+    "repositoryId": null,
+    "repository": "kemiller2002/transitus"
+  },
+  "predecessors": []
+}
