@@ -82,8 +82,7 @@ claims about AI accuracy are not made (see adversarial review C6).
 
 ## 6. Integration point
 
-The assistant runs in the host application, uses the host's approved model
-provider (Helix Note currently calls the OpenAI API directly, `helix-note-application/api/HelixNote.AI.OpenAI.fs:110`), and is optional:
+The assistant runs in the host application. Owner resolution of OQ-08: it is provider-independent, and each use is authorized per tenant and data classification, with no blanket provider approval (TRN-REQ-AI-010). It uses the provider authorized for that tenant and classification (Helix Note currently calls the OpenAI API directly, `helix-note-application/api/HelixNote.AI.OpenAI.fs:110`), and is optional:
 every capability above has a non-AI path (manual mapping in the editor or
 API). The Forma contextual AI assistance interaction patterns
 (`forma/docs/requirements/contextual-ai-assistance-interaction-patterns-2026-11-23.md`)

@@ -64,6 +64,49 @@ domain-independent component, and keeping the three libraries free of
 Unbound terms (VR-006) costs little. This is recorded as owner decision
 OQ-14 so the owner can choose otherwise.
 
+## Owner-directed revision (2026-11-26)
+
+The owner reviewed this outcome on transitus#1 (comment 7200249612) and **superseded** the three-library phase 1 with DF-TRN-2026-0018. Phase 1 now includes:
+- a minimal declarative typed linear pipeline;
+- isolated temporary staging;
+- basic reusable mapping packages, not conditioned on a signed customer;
+- checkpoints, replay and idempotency;
+- dry runs and migration rehearsal.
+
+Complex DAGs, advanced AI and visual editing stay deferred. OQ-13 was resolved as *migration in release 1*, and OQ-14 as *independent repository, no separate service*.
+
+The review findings remain on record. Where they conflict with the owner's scope, they are carried as constraints and listed as unresolved tensions in `../open-questions.md` §"Unresolved conflicts":
+- C3 complexity: the linear profile and the maintenance budget;
+- C11 maintenance: at most 7 packages;
+- C12 distraction: the phase-1 work traces to release-1 requirements.
+
+## Independent challenge of the revised scope (TRN-REV-02)
+
+A fifth reviewer, E, stress-tested the owner's scope without re-litigating it. Its verdict: the directive can be met with a linear, nine-stage, expression-free pipeline. But the critical path lies outside Transitus:
+- Unbound domain operations;
+- a canonical history shape;
+- a rehearsal cell;
+- the bank and Schwab specifications;
+- NACHA and Schwab rights.
+
+**Dispositions applied:**
+- **Phase-1 vocabulary:** the expression language (TEL) moves to phase 2; phase 1 uses a closed vocabulary (PS-012).
+- **Operations:** limited to 13 (TX-009). Implied decimals and a CUSIP identifier kind were added.
+- **Execution port:** the engine reaches Echelon.Execution only through host ports, never the assembly (ARC-011).
+- **Gates:** no overrides in phase 1 (VR-005).
+- **Checkpoints:** stage-granular (EX-005).
+- **Migration:** requirements MIG-001..004 added — rehearsal into a disposable sponsor cell, import stamps, no MigrationRun state changes, documents passed through.
+- **Isolation and observability:** negative tenant-isolation tests (SEC-020) and OpenTelemetry emission (OBS-001).
+- **Measurement:** pre-go-live benchmarks added (PF-005). PF-004 is restated as a dated retire-or-fold measurement.
+- **Retention:** every literal duration was removed from the documents.
+- **Staging:** writes use `INSERT` under RLS.
+- **Estimates:** revised to ≈15–24 engineer-weeks, plus ≈6–12 of prerequisites.
+- **Conflicts:** ten more recorded as UC-7..UC-16 in `../open-questions.md`.
+
+**Not adopted:** E's five-code-package variant. The owner named Formats, Checks and Evidence as libraries to reuse, so the budget allows seven, and records five as an acceptable variant (ARC-007).
+
+The full review is in `agent-reviews/adv-E.md`. One citation was corrected: E placed `17-RELEASE-1-SCOPE.md` in the wrong discovery folder.
+
 ## What the review did not change
 
 - **Principles P1–P15 stand.** The review constrained *when* capabilities

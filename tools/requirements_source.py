@@ -233,3 +233,97 @@ R = [{**r, "statement": STATEMENT_B.get(r["id"], r["statement"]), "priority": PR
       "revision": "TRN-REV-01" if (r["id"] in STATEMENT_B or r["id"] in PRIORITY_B) else r.get("revision")} for r in R] + \
     [dict(id=n[0], category=n[1], priority=n[2], phase=n[3], statement=n[4], acceptance=n[5], charter=n[6], design=list(n[7]),
           decisions=list(n[8]), verify="test", status="proposed", revision="TRN-REV-01") for n in NEW_B]
+
+# ---------------------------------------------------------------------------
+# Revision 2 (2026-11-26): owner-directed scope (transitus#1 comment 7200249612).
+# Phase 1 = minimal declarative typed linear pipeline + basic reusable mapping packages +
+# checkpoints/replay/idempotency + dry runs, reusing Formats/Checks/Evidence and Echelon.Execution.
+# Deferred: complex DAGs (T2), advanced AI and vendor-specific turnkey packages (T3), visual editing (T4).
+OWNER = "OWNER-2026-11-26"
+P1_IDS = set("""PS-001 PS-002 PS-003 PS-004 PS-005 PS-006 PS-007 PS-008 PS-009 PS-010
+ST-001 ST-002 ST-003 ST-004 ST-005 ST-006 ST-007 ST-009 ST-010
+TX-001 TX-002 TX-003 TX-004 TX-005 TX-006 TX-007 TX-009 TX-010
+AD-001 AD-002 AD-003 AD-004 AD-005 AD-006 AD-007 AD-008 AD-009 AD-011 AD-012
+EX-001 EX-002 EX-003 EX-004 EX-005 EX-006 EX-007 EX-008 EX-009 EX-010 EX-011 EX-012 EX-013
+VR-001 VR-002 VR-003 VR-004 VR-005 VR-006 VR-007 VR-008 VR-009 VR-010 VR-011 VR-012
+LN-001 LN-002 LN-003 LN-005 LN-006 LN-007 LN-008 LN-010
+MP-001 MP-002 MP-003 MP-004 MP-006 AI-005 UI-010 UI-011
+ARC-001 ARC-002 ARC-003 ARC-004 ARC-005 ARC-006 ARC-007 ARC-008 ARC-009
+PF-001 PF-002 PF-003 PF-004""".split()) | {f"SEC-{i:03d}" for i in range(1, 19)}
+P2_IDS = set("TX-008 TX-011 EXT-001 EXT-002 EXT-003 EXT-004 LN-004 SEC-019".split())
+P3_IDS = set("AI-001 AI-002 AI-003 AI-004 AI-006 AI-007 AI-008 AI-009 MP-005 MP-007".split())
+P1_P1 = set("PS-009 ST-007 ST-010 TX-009 AD-009 EX-011 EX-012 VR-011 VR-012 LN-007 LN-010 MP-004 PF-003 PF-004 UI-010 UI-011".split())
+def _phase(short, cur):
+    return 1 if short in P1_IDS else 2 if short in P2_IDS else 3 if short in P3_IDS else cur
+def _prio(short, phase, cur):
+    if phase == 1: return "P1" if short in P1_P1 else "P0"
+    return cur
+STATEMENT_O = {
+ "PS-005": "Phase-1 control flow MUST be a linear typed stage sequence per pipeline, with per-stage error policies that route records to quarantine, retries on I/O stages and runIf predicates over execution facts. Branching routes, unions, joins across datasets, the bounded set operators of TRN-REQ-TX-011 and other complex DAG constructs are deferred to phase 2 (trigger T2). General loops, recursion, user functions and dynamic stage generation MUST NOT be expressible in any phase.",
+ "PS-010": "The phase-1 specification MUST support source, destination and schema definitions, field mappings, type conversion, validation rules, conditional value mapping, lookups against pinned reference sets, filtering with counts, deduplication within a dataset, normalization, relationship resolution through destination lookup, reconciliation rules, error, retry and approval policies, scheduling, resource limits, retention policy references and security classification. Joins and aggregation across datasets are phase 2.",
+ "ST-003": "Isolated temporary staging MUST respect the consumer's tenancy model (for Unbound, CNV-ARC-001 schema and role per sponsor) and MUST NOT require runtime DDL: staging tables per schema version are created by the host's Strata-governed migrations; bulk loads MUST NOT rely on COPY into row-level-security tables; purge uses DELETE with measured vacuum cost or a governed partition-maintenance mechanism (DEP-STRATA-01).",
+ "ST-007": "The blob store MUST be a port with a PostgreSQL-backed default, subject to sizing evidence, and an optional S3-compatible implementation.",
+ "EX-001": "Durable execution (queueing, leases, retries, idempotent intake, ordering, approval waits, quarantine, OutcomeUnknown, per-tenant fairness, pause) MUST be provided by Echelon.Execution, used in place until its shared contract is stable (owner resolution of OQ-01); Transitus MUST NOT implement a separate queue.",
+ "EX-007": "Transitus MUST NOT claim exactly-once delivery; unknown external outcomes MUST NOT be blindly retried: they enter OutcomeUnknown and are resolved by verification, reconciliation or authorized human resolution.",
+ "LN-010": "Retention for raw input, staging, exceptions, lineage, Transitus-originated Echelon.Execution history and evidence MUST be taken from approved classification and sponsor policy references; Transitus MUST NOT define binding default durations, and durations in examples are illustrative.",
+ "MP-001": "Basic mapping packages (public-specification and target-side canonical packages) MUST be versioned, content-hashed, configuration-only bundles with no customer data and no code, and MUST be reusable across tenants without requiring a signed customer.",
+ "MP-006": "Phase-1 packages MUST be target-side or public-specification packages only: IRS EO BMF (and Pub 78/auto-revocation), NACHA returns/NOC (subject to TRN-REQ-MP-008), the first bank partner's activity format, the Schwab custodian format (subject to obtaining its documentation under acceptable terms) and the Unbound canonical historical import; vendor-specific turnkey packages follow in phase 3.",
+ "ARC-007": "Each phase MUST declare a maintenance budget and MUST NOT exceed it without a decision record. Phase-1 budget: at most seven code packages (Model, Validation.Definition, Formats, Checks, Evidence, Engine, Storage.Postgres), at most two third-party parser libraries, and at most five basic mapping packages.",
+ "ARC-008": "Every phase-1 work item MUST trace to an Unbound release-1 requirement or to the owner-directed phase-1 scope (DF-TRN-2026-0018).",
+ "ARC-009": "Capabilities beyond phase 1 MUST be gated by recorded triggers: T2 complex DAGs, bounded set operators and extensions (a demonstrated scenario the linear model cannot express); T3 advanced AI and vendor-specific turnkey packages (AI evaluation thresholds met; customer-authorized sample and licence clearance for vendor packages); T4 visual editing (non-engineer configuration required).",
+ "PF-004": "The phase-1 approach MUST later be measured against hand-written per-feed alternatives for the three demonstration scenarios (IRS feed, bank/custodian feed, canonical historical migration) and the result recorded; per owner direction the comparison informs later phases and does not gate phase 1.",
+ "AI-007": "By default AI MUST receive schema metadata and synthetic or masked samples only; profile statistics inherit their field's classification and MUST be masked accordingly; any use of real samples requires authorization for that tenant and data classification.",
+}
+NEW_O = [
+ ("TRN-REQ-PS-011","pipeline-spec","P0",1,"Phase 1 MUST provide a minimal declarative typed pipeline: a canonical-JSON document validated against the DU model at publish time, composed linearly of the stage kinds ingest, preserve, parse, stage, transform, validate, reconcile, authorize, load, verify, evidence and retain (profile optional), with every stage's inputs, outputs, state, failure behaviour and provenance as specified in TRN-ARCH-01 §2.","The three demonstration pipelines in examples/pipelines validate against schemas/pipeline-phase1.schema.json.","§4, §6",["TRN-ARCH-01 §2","schemas/pipeline-phase1.schema.json"],["DF-TRN-2026-0018"]),
+ ("TRN-REQ-EX-014","execution","P0",1,"Replay of a recorded execution manifest MUST be explicit, MUST reproduce identical staged outputs, and MUST reuse the original idempotency keys so that a replay into a destination produces no duplicate business effects.","Replay fixture: byte-identical staged output hashes; zero additional destination effects.","§9, §11",["TRN-ARCH-05 §4"],["DF-TRN-2026-0018"]),
+ ("TRN-REQ-VR-013","validation-reconciliation","P0",1,"Financial-correctness gates (blocking validation and reconciliation for restricted-financial data) and tenant isolation MUST be blocking in every phase and MUST NOT be disableable by pipeline configuration; only an elevated, evidenced override (TRN-REQ-VR-005) may proceed past a failed gate, and nothing may override tenant isolation.","Validator rejects a financial system-of-record pipeline with advisory-only gates; cross-tenant reference rejected.","§12, §14",["TRN-ARCH-06 §4","TRN-SEC-01 T12"],["DF-TRN-2026-0018"]),
+ ("TRN-REQ-MP-008","mapping-packages","P0",1,"Redistribution rights for format knowledge MUST be verified before publication: the NACHA Operating Rules licence for nacha.* packages and the Schwab documentation terms for custodian.schwab.* packages; until verified, the package is internal-only.","Rights verification record per package.","§10",["TRN-ARCH-09 §2"],["DF-TRN-2026-0019"],"review"),
+ ("TRN-REQ-ARC-010","architecture","P0",1,"Strata data-interaction virtualization (DIV) virtualizes application interactions; Transitus moves data. Transitus adapters MAY be exercised under DIV replay in tests; neither component re-implements the other's responsibility (owner resolution of OQ-02).","Boundary review at phase-1 exit.","§2, §16",["TRN-ARCH-11 §1"],["DF-TRN-2026-0021"],"review"),
+ ("TRN-REQ-AI-010","ai","P1",3,"AI assistance MUST be provider-independent; use of any provider MUST be authorized per tenant and data classification, with no blanket provider approval (owner resolution of OQ-08).","Provider authorization check per request.","§9, §14",["TRN-ARCH-07 §6"],["DF-TRN-2026-0021"]),
+ ("TRN-REQ-MP-009","mapping-packages","P0",1,"Phase 1 MUST demonstrate, at least theoretically, three versioned basic packages and pipelines: IRS EO BMF ingestion, a bank (first partner format) or Schwab custodian feed, and the Unbound canonical historical migration including a migration rehearsal (dry run against a sponsor's export with full reconciliation and evidence, no system-of-record effect).","Worked examples in examples/ validate; rehearsal evidence package specified.","§10, §17",["TRN-RES-02","examples/"],["DF-TRN-2026-0018","DF-TRN-2026-0019"]),
+]
+def _owner(r):
+    short = r["id"].replace("TRN-REQ-", "")
+    ph = _phase(short, r["phase"])
+    changed = short in P1_IDS or short in P2_IDS or short in P3_IDS or short in STATEMENT_O
+    return {**r, "phase": ph, "priority": _prio(short, ph, r["priority"]),
+            "statement": STATEMENT_O.get(short, r["statement"]),
+            "revision": OWNER if (short in STATEMENT_O or ph != r["phase"]) else r.get("revision")}
+R = [_owner(r) for r in R] + [dict(id=n[0], category=n[1], priority=n[2], phase=n[3], statement=n[4], acceptance=n[5], charter=n[6],
+      design=list(n[7]), decisions=list(n[8]), verify=(n[9] if len(n) > 9 else "test"), status="proposed", revision=OWNER) for n in NEW_O]
+
+# Revision 2b (2026-11-26): independent challenge of the owner-directed scope (adv-E) dispositions.
+REVE = "TRN-REV-02"
+PHASE_E = {**{k: 2 for k in "PS-007 MP-003 ST-009 ST-010 VR-012 EX-012".split()}, **{k: 1 for k in ["MP-007"]}}
+PRIO_E = {"MP-007": "P1", "PS-007": "P1", "MP-003": "P1", "ST-009": "P1", "ST-010": "P1", "VR-012": "P1", "EX-012": "P1"}
+STATEMENT_E = {
+ "PS-007": "From phase 2 (trigger T2), predicates and computed fields MAY use the typed, total Transitus Expression Language; phase 1 uses the closed vocabulary of TRN-REQ-PS-012 instead.",
+ "EX-001": "Durable execution MUST be provided by Echelon.Execution, used in place until its shared contract is stable (owner resolution of OQ-01), and reached only through the TRN-REQ-ARC-011 port implemented by the host; Transitus MUST NOT implement a separate queue.",
+ "EX-003": "Phase 1 MUST support manual, host-triggered (including host-scheduled), dry-run and replay execution, batch and file-set incremental; scheduling materialization inside Transitus is phase 2 (EX-012).",
+ "EX-005": "Phase 1 MUST checkpoint at stage granularity (plus per-item intent and receipt in load, TRN-REQ-EX-008) so that resumption never repeats a committed stage or load item; chunk-level parallelism is phase 2.",
+ "VR-005": "In phase 1 blocking gates MUST NOT be overridable: a failed gate stops the execution, and remediation is a corrected mapping, reference data or source followed by a new execution. Evidenced elevated overrides may be introduced later only by decision record.",
+ "TX-009": "Phase 1 MUST provide exactly the operations the three demonstration pipelines need: text.trim, text.case (invariant), field.require, field.default (with acknowledgeDefault on financial fields), number.parse, money.parse (including an implied-decimal parameter), date.parse, enum.map, id.normalize (including a CUSIP kind), lookup against a pinned reference set, dedupe (reject-all), snapshot-diff by natural key, and privacy.hash (HMAC only); any further operation requires a consumer pipeline that uses it.",
+ "ARC-007": "Each phase MUST declare a maintenance budget and MUST NOT exceed it without a decision record. Phase-1 budget: at most seven code packages (Model including the definition validator, Formats, Transforms, Checks, Evidence, Engine, Storage.Postgres; a five-package variant merging Transforms, Checks and Evidence is acceptable), at most two third-party parser libraries, at most five basic mapping packages, at most thirteen operations, and two cross-repository ports (durable commands, domain destination).",
+ "ARC-009": "Capabilities beyond phase 1 MUST be gated by recorded triggers: T2 complex DAGs (routes, unions, joins), the expression language, bounded set operators, extensions, chunk parallelism and in-engine scheduling (a demonstrated scenario the phase-1 model cannot express); T3 advanced AI and vendor-specific turnkey packages (AI evaluation thresholds met; customer-authorized sample and licence clearance); T4 visual editing (non-engineer configuration required). Basic mapping packages are not gated.",
+ "PF-004": "The phase-1 approach MUST be measured against hand-written per-feed alternatives for the three demonstration scenarios within six months of phase-1 exit, using effort per feed, defect escape rate and change lead time; if the hand-written alternative is materially better on all three and no second consumer exists, the owner decides whether to retire or fold the engine. The measurement does not gate phase 1 (owner direction).",
+ "MP-007": "Package reuse MUST be measured from phase 1 (share of mappings reused unmodified per execution and per sponsor); vendor packages are retired if reuse stays below an agreed threshold after three migrations.",
+}
+NEW_E = [
+ ("TRN-REQ-PS-012","pipeline-spec","P0",1,"Phase-1 mappings, rules and approval conditions MUST use a closed vocabulary — field maps, the enumerated operations of TRN-REQ-TX-009, and Compare(field, operator, field-or-literal) combined with and/or over fields and execution facts — with no general expression language.","Validator rejects any predicate outside the vocabulary; the three demonstration pipelines need nothing more.","§6",["TRN-ARCH-01 §5","TRN-REV-02"],["DF-TRN-2026-0018"]),
+ ("TRN-REQ-ARC-011","architecture","P0",1,"The engine MUST depend only on a durable-command port and a domain-destination port implemented by the host; it MUST NOT reference or copy the Echelon.Execution assembly. A stable port contract is the precondition for extracting Echelon.Execution (OQ-01).","Dependency scan of Transitus packages finds no Echelon.Execution reference; a fake port drives the engine tests.","§11, §16",["TRN-ARCH-05 §2","TRN-REV-02"],["DF-TRN-2026-0021"],"review"),
+ ("TRN-REQ-SEC-020","security","P0",1,"Negative tenant-isolation tests MUST cover raw evidence, staging, exceptions, the evidence chain, reference sets, HMAC keys and the durable-command port (CNV-ARC-001).","Cross-tenant access attempts fail in every listed store.","§14",["TRN-SEC-01 T12","TRN-REV-02"],[]),
+ ("TRN-REQ-MIG-001","migration","P0",1,"Migration rehearsal MUST run the canonical historical migration pipeline end to end and load only into an isolated, disposable sponsor cell provided by the host (never the live sponsor schema), be repeatable from preserved raw input with identical idempotency keys, and produce a conservation table and per-fund balance reconciliation.","Rehearsal evidence package; repeat run yields identical keys and outputs; live schema untouched.","§10, §17",["examples/pipelines/migration-rehearsal.pipeline.json","TRN-REV-02"],["DF-TRN-2026-0018"]),
+ ("TRN-REQ-MIG-002","migration","P0",1,"The canonical-history package MUST stamp source system, source record identifier, import batch and imported_unverified on every imported standing-data and history record (RR-REQ-X-061-r1).","Validation rule fails any record lacking the stamps.","§10",["TRN-ARCH-09"],[]),
+ ("TRN-REQ-MIG-003","migration","P0",1,"Transitus executions MUST NOT change MigrationRun state; they supply evidence for the Reconciled and ParallelValidated transitions, and a load MUST be refused while the host reports the legacy-writer fence as Unknown (UNB-RCN-WF-020).","Load refused with fence Unknown; MigrationRun transitions only via Unbound.","§12, §21",["TRN-REV-02"],[]),
+ ("TRN-REQ-MIG-004","migration","P1",1,"Documents and acknowledgments in a predecessor export MUST be preserved as RawEvidence and handed unchanged to a host document-import operation, with hash verification on read-back; Transitus does not transform document content.","Document hash equality between raw evidence and destination read-back.","§10, §21",["TRN-REV-02"],[]),
+ ("TRN-REQ-OBS-001","observability","P0",1,"Execution state, stage durations, exception counts and OutcomeUnknown obligations MUST be emitted as OpenTelemetry through the host until the portfolio observability owner (GAP-05, OQ-03) is decided.","Telemetry present in host traces and metrics.","§13",["TRN-ARCH-08 §3","TRN-REV-02"],[]),
+ ("TRN-REQ-PF-005","performance","P0",1,"Before Unbound go-live the following MUST be measured: per-record domain-command cost on the RM-05 instance, staging insert rate under row-level security without COPY, and the longest stage handler time against the Echelon.Execution lease.","Benchmark report.","§18",["TRN-ARCH-12","TRN-REV-02"],[],"review"),
+]
+def _e(r):
+    short = r["id"].replace("TRN-REQ-", "")
+    hit = short in PHASE_E or short in STATEMENT_E
+    return {**r, "phase": PHASE_E.get(short, r["phase"]), "priority": PRIO_E.get(short, r["priority"]),
+            "statement": STATEMENT_E.get(short, r["statement"]), "revision": REVE if hit else r.get("revision")}
+R = [_e(r) for r in R] + [dict(id=n[0], category=n[1], priority=n[2], phase=n[3], statement=n[4], acceptance=n[5], charter=n[6],
+      design=list(n[7]), decisions=list(n[8]), verify=(n[9] if len(n) > 9 else "test"), status="proposed", revision=REVE) for n in NEW_E]

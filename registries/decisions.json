@@ -248,11 +248,27 @@
             "created"
           ],
           "reason": "Transitus phase-0 decision record after adversarial review TRN-REV-01"
+        },
+        "EXE-20261126T181704540Z-e41ec7a0": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-26T18:20:45.767Z",
+          "operations": [
+            "superseded"
+          ],
+          "reason": "Superseded by owner-directed decision"
         }
       }
     },
-    "status": "review",
-    "superseded_by": [],
+    "status": "superseded",
+    "superseded_by": [
+      "DF-TRN-2026-0021"
+    ],
     "supersedes": [],
     "tags": [
       "transitus"
@@ -334,11 +350,27 @@
             "created"
           ],
           "reason": "Transitus phase-0 decision record after adversarial review TRN-REV-01"
+        },
+        "EXE-20261126T181704540Z-e41ec7a0": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-26T18:20:45.485Z",
+          "operations": [
+            "superseded"
+          ],
+          "reason": "Superseded by owner-directed decision"
         }
       }
     },
-    "status": "review",
-    "superseded_by": [],
+    "status": "superseded",
+    "superseded_by": [
+      "DF-TRN-2026-0020"
+    ],
     "supersedes": [],
     "tags": [
       "transitus"
@@ -592,11 +624,27 @@
             "created"
           ],
           "reason": "Transitus phase-0 decision record after adversarial review TRN-REV-01"
+        },
+        "EXE-20261126T181704540Z-e41ec7a0": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-26T18:20:45.193Z",
+          "operations": [
+            "superseded"
+          ],
+          "reason": "Superseded by owner-directed decision"
         }
       }
     },
-    "status": "review",
-    "superseded_by": [],
+    "status": "superseded",
+    "superseded_by": [
+      "DF-TRN-2026-0019"
+    ],
     "supersedes": [],
     "tags": [
       "transitus"
@@ -678,11 +726,27 @@
             "created"
           ],
           "reason": "Transitus phase-0 decision record after adversarial review TRN-REV-01"
+        },
+        "EXE-20261126T181704540Z-e41ec7a0": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-26T18:20:44.907Z",
+          "operations": [
+            "superseded"
+          ],
+          "reason": "Superseded by owner-directed decision"
         }
       }
     },
-    "status": "review",
-    "superseded_by": [],
+    "status": "superseded",
+    "superseded_by": [
+      "DF-TRN-2026-0018"
+    ],
     "supersedes": [],
     "tags": [
       "transitus"
@@ -731,5 +795,185 @@
     "title": "The phase-0 requirements renderer is a small Python standard-library script because no .NET SDK was available in the authoring environment; it is to be ported to F# in phase 1",
     "updated": "2026-11-26",
     "work_item": "WI-0001"
+  },
+  {
+    "confidence": "high",
+    "created": "2026-11-26",
+    "created_by_agent": "claude",
+    "decided_by": "kemiller2002 (repository owner)",
+    "decision_type": "process",
+    "evidence": [
+      "https://github.com/kemiller2002/transitus/pull/1#issuecomment-7200249612"
+    ],
+    "id": "DF-TRN-2026-0018",
+    "path": "research/decisions/DF-TRN-2026-0018--owner-directed-phase1-minimal-declarative-pipeline.md",
+    "provenance": {
+      "contributions": {
+        "EXE-20261126T181704540Z-e41ec7a0": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-26T18:20:43.792Z",
+          "evidence": [
+            "https://github.com/kemiller2002/transitus/pull/1#issuecomment-7200249612"
+          ],
+          "operations": [
+            "created"
+          ],
+          "reason": "Owner-directed decision recorded from transitus#1 comment 7200249612"
+        }
+      }
+    },
+    "status": "accepted",
+    "superseded_by": [],
+    "supersedes": [
+      "DF-TRN-2026-0016"
+    ],
+    "tags": [
+      "transitus",
+      "owner-decision"
+    ],
+    "title": "Phase 1 is a minimal declarative typed linear pipeline with basic reusable mapping packages, checkpoints, replay, idempotency and dry runs, demonstrated on the IRS feed, a bank/custodian feed and canonical historical migration",
+    "updated": "2026-11-26",
+    "work_item": "WI-0002"
+  },
+  {
+    "confidence": "high",
+    "created": "2026-11-26",
+    "created_by_agent": "claude",
+    "decided_by": "kemiller2002 (repository owner)",
+    "decision_type": "architecture",
+    "evidence": [
+      "https://github.com/kemiller2002/transitus/pull/1#issuecomment-7200249612"
+    ],
+    "id": "DF-TRN-2026-0019",
+    "path": "research/decisions/DF-TRN-2026-0019--basic-mapping-packages-phase1.md",
+    "provenance": {
+      "contributions": {
+        "EXE-20261126T181704540Z-e41ec7a0": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-26T18:20:44.069Z",
+          "evidence": [
+            "https://github.com/kemiller2002/transitus/pull/1#issuecomment-7200249612"
+          ],
+          "operations": [
+            "created"
+          ],
+          "reason": "Owner-directed decision recorded from transitus#1 comment 7200249612"
+        }
+      }
+    },
+    "status": "accepted",
+    "superseded_by": [],
+    "supersedes": [
+      "DF-TRN-2026-0014"
+    ],
+    "tags": [
+      "transitus",
+      "owner-decision"
+    ],
+    "title": "Basic mapping packages (public-specification and target-side canonical) are phase-1 deliverables, reusable without a signed customer; vendor-specific turnkey packages follow at T3; redistribution rights are verified before publication",
+    "updated": "2026-11-26",
+    "work_item": "WI-0002"
+  },
+  {
+    "confidence": "high",
+    "created": "2026-11-26",
+    "created_by_agent": "claude",
+    "decided_by": "kemiller2002 (repository owner)",
+    "decision_type": "architecture",
+    "evidence": [
+      "https://github.com/kemiller2002/transitus/pull/1#issuecomment-7200249612"
+    ],
+    "id": "DF-TRN-2026-0020",
+    "path": "research/decisions/DF-TRN-2026-0020--isolated-temporary-staging-phase1.md",
+    "provenance": {
+      "contributions": {
+        "EXE-20261126T181704540Z-e41ec7a0": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-26T18:20:44.357Z",
+          "evidence": [
+            "https://github.com/kemiller2002/transitus/pull/1#issuecomment-7200249612"
+          ],
+          "operations": [
+            "created"
+          ],
+          "reason": "Owner-directed decision recorded from transitus#1 comment 7200249612"
+        }
+      }
+    },
+    "status": "accepted",
+    "superseded_by": [],
+    "supersedes": [
+      "DF-TRN-2026-0008"
+    ],
+    "tags": [
+      "transitus",
+      "owner-decision"
+    ],
+    "title": "Isolated temporary staging is a phase-1 capability, located in the consumer's tenant schema with Strata-governed DDL, without COPY into RLS tables, purged by DELETE or governed partition maintenance, and protected in backups by crypto-shredding; the raw blob store is a port with a database default subject to sizing",
+    "updated": "2026-11-26",
+    "work_item": "WI-0002"
+  },
+  {
+    "confidence": "high",
+    "created": "2026-11-26",
+    "created_by_agent": "claude",
+    "decided_by": "kemiller2002 (repository owner)",
+    "decision_type": "architecture",
+    "evidence": [
+      "https://github.com/kemiller2002/transitus/pull/1#issuecomment-7200249612"
+    ],
+    "id": "DF-TRN-2026-0021",
+    "path": "research/decisions/DF-TRN-2026-0021--owner-resolutions-open-questions.md",
+    "provenance": {
+      "contributions": {
+        "EXE-20261126T181704540Z-e41ec7a0": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-26T18:20:44.635Z",
+          "evidence": [
+            "https://github.com/kemiller2002/transitus/pull/1#issuecomment-7200249612"
+          ],
+          "operations": [
+            "created"
+          ],
+          "reason": "Owner-directed decision recorded from transitus#1 comment 7200249612"
+        }
+      }
+    },
+    "status": "accepted",
+    "superseded_by": [],
+    "supersedes": [
+      "DF-TRN-2026-0006"
+    ],
+    "tags": [
+      "transitus",
+      "owner-decision"
+    ],
+    "title": "Owner resolutions: defer Echelon.Execution extraction until its shared contract is stable; DIV virtualizes interactions while Transitus moves data; unknown outcomes are never blindly retried; AI is provider-independent with per-tenant/classification authorization; CDC deferred; retention from approved policy with no invented durations; FX domain-owned; authorized domain loading interfaces mandatory",
+    "updated": "2026-11-26",
+    "work_item": "WI-0002"
   }
 ]

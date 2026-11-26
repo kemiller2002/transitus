@@ -1,0 +1,226 @@
+{
+  "$schema": "../../schemas/pipeline-phase1.schema.json",
+  "kind": "transitus.pipeline",
+  "specVersion": "1.0",
+  "id": "unbound.migration.canonical-history.rehearsal",
+  "version": "0.2.0",
+  "title": "Canonical historical migration — rehearsal (dry run only)",
+  "description": "Demonstration scenario 3 of 3 (TRN-REQ-MP-009, TRN-REQ-MIG-001, Unbound UNB-TRN-012/013). A sponsor's predecessor-platform history, transformed by the migration engineer into the Unbound canonical historical import shape, runs end to end. Every gate, reconciliation and approval runs. The load and verify stages target an isolated, disposable rehearsal sponsor cell provisioned by the host (UNB-TRN-013), never the live sponsor schema. The run is repeatable from preserved raw input with identical idempotency keys. Its evidence package (conservation table, per-fund balance, grants-paid control totals) is the input to the Unbound-owned MigrationRun 'Reconciled' and 'ParallelValidated' transitions; Transitus never changes MigrationRun state (TRN-REQ-MIG-003). A dry run of this pipeline stops at the load plan.",
+  "tenant": "{{tenant}}",
+  "classification": "restricted-financial",
+  "packages": [
+    {
+      "id": "unbound.canonical-history",
+      "version": "^0.1.0"
+    }
+  ],
+  "defaults": {
+    "culture": "invariant",
+    "timeZone": "America/New_York",
+    "unicodeForm": "NFC"
+  },
+  "errorPolicy": {
+    "default": "quarantine",
+    "maxErrorRate": 0
+  },
+  "resources": {
+    "maxInputBytes": "256MiB",
+    "maxRecordBytes": "16KiB",
+    "maxNestingDepth": 64,
+    "memoryBudget": "256MiB",
+    "parallelism": 2
+  },
+  "sources": {
+    "export": {
+      "adapter": "upload@1",
+      "config": {
+        "accept": [
+          "text/csv",
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        ],
+        "maxArchiveEntries": 0
+      }
+    }
+  },
+  "destinations": {
+    "rehearsal": {
+      "adapter": "unbound.domain-api@1",
+      "operation": "migration.importHistoricalRecords",
+      "config": {
+        "target": "rehearsal-cell",
+        "cellRef": "{{param.rehearsalCell}}"
+      },
+      "classification": "derived"
+    }
+  },
+  "stages": [
+    {
+      "id": "ingest",
+      "kind": "ingest",
+      "source": "export"
+    },
+    {
+      "id": "raw",
+      "kind": "preserve",
+      "dependsOn": [
+        "ingest"
+      ]
+    },
+    {
+      "id": "parse",
+      "kind": "parse",
+      "dependsOn": [
+        "raw"
+      ],
+      "template": "unbound.canonical-history/parse@0",
+      "onError": "quarantine"
+    },
+    {
+      "id": "stage",
+      "kind": "stage",
+      "dependsOn": [
+        "parse"
+      ]
+    },
+    {
+      "id": "map",
+      "kind": "transform",
+      "dependsOn": [
+        "stage"
+      ],
+      "mapping": "unbound.canonical-history/to-unbound-historical-import@0"
+    },
+    {
+      "id": "check",
+      "kind": "validate",
+      "dependsOn": [
+        "map"
+      ],
+      "profile": "unbound.canonical-history/validation@0",
+      "gate": "blocking"
+    },
+    {
+      "id": "recon",
+      "kind": "reconcile",
+      "dependsOn": [
+        "check"
+      ],
+      "gate": "blocking",
+      "rules": [
+        {
+          "rule": "r.count@1",
+          "args": {
+            "compare": [
+              "predecessor.controlFile.recordCounts",
+              "parsed",
+              "staged",
+              "mapped"
+            ],
+            "tolerance": 0
+          }
+        },
+        {
+          "rule": "r.balance@1",
+          "args": {
+            "opening": "fund.openingBalance",
+            "movements": [
+              "contributions.amount",
+              "grants.amount",
+              "fees.amount",
+              "investmentChange.amount"
+            ],
+            "closing": "fund.closingBalancePerPredecessorStatement",
+            "per": [
+              "fund",
+              "currency"
+            ],
+            "tolerance": 0
+          }
+        },
+        {
+          "rule": "r.controlTotal@1",
+          "args": {
+            "measure": "grants.amount",
+            "control": "predecessor.controlFile.grantsPaidTotal",
+            "per": [
+              "fund",
+              "fiscalYear"
+            ],
+            "tolerance": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "approve",
+      "kind": "authorize",
+      "dependsOn": [
+        "recon"
+      ],
+      "policy": {
+        "approvers": [
+          "role:migration-lead",
+          "role:sponsor-finance-approver"
+        ],
+        "count": 2,
+        "separationOfDuties": true
+      }
+    },
+    {
+      "id": "load",
+      "kind": "load",
+      "dependsOn": [
+        "approve"
+      ],
+      "destination": "rehearsal",
+      "batchSize": 500,
+      "idempotencyKey": [
+        "sourceSystem",
+        "sourceRecordId",
+        "recordType"
+      ]
+    },
+    {
+      "id": "verify",
+      "kind": "verify",
+      "dependsOn": [
+        "load"
+      ],
+      "sample": {
+        "rate": 1.0
+      }
+    },
+    {
+      "id": "evidence",
+      "kind": "evidence",
+      "dependsOn": [
+        "verify"
+      ]
+    },
+    {
+      "id": "retain",
+      "kind": "retain",
+      "dependsOn": [
+        "evidence"
+      ]
+    }
+  ],
+  "retention": {
+    "raw": "policy:sponsor-retention/financial-raw",
+    "staging": "policy:sponsor-retention/staging-temporary",
+    "exceptions": "policy:sponsor-retention/operational-exceptions",
+    "lineage": "policy:sponsor-retention/financial-lineage",
+    "evidence": "policy:sponsor-retention/financial-evidence"
+  },
+  "allowedModes": [
+    "run",
+    "dry-run",
+    "replay"
+  ],
+  "parameters": {
+    "rehearsalCell": {
+      "type": "string",
+      "description": "Identifier of the disposable rehearsal sponsor cell provisioned by the host"
+    }
+  }
+}

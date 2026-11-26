@@ -72,7 +72,4 @@ records where Transitus would contribute.
 
 ## 3. Financial record-keeping (Unbound context)
 
-Retention defaults (raw P7Y, evidence P7Y) reflect common seven-year
-financial record practice; the binding retention schedule is an Unbound /
-sponsor policy decision, configured per pipeline, not decided by Transitus
-(OQ-10).
+Transitus ships no retention durations. Retention comes from approved classification and sponsor policy references (owner resolution of OQ-10, TRN-REQ-LN-010). The binding retention schedule is an Unbound and sponsor policy decision, configured per pipeline through policy references, and is not decided by Transitus.

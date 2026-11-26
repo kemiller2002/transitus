@@ -42,6 +42,12 @@ checkpointed, and how load effects are made effectively-once.
 | Pause tenant / pipeline | `PauseScope.Tenant` / `PauseScope.Operation` | — |
 | Stage completion → next stage | Outbox message → next command intake, in the same transaction as the stage's state write | — |
 
+Port boundary (TRN-REQ-ARC-011, TRN-REV-02). The engine depends only on two ports implemented by the host:
+- `IDurableCommands`: submit, await, receipts, OutcomeUnknown;
+- a domain-destination port.
+
+It neither references nor copies the Echelon.Execution assembly. A stable port contract is the precondition for extracting Echelon.Execution (owner resolution of OQ-01). Checkpoints in phase 1 are stage-granular, plus per-item intent and receipt in load (EX-005). Chunk parallelism is phase 2.
+
 Review constraints (TRN-REV-01 C8, C9):
 
 - Command payloads carry dataset/record references and hashes only, never personal values (TRN-REQ-EX-013), consistent with CNV-ARC-001 vault references.

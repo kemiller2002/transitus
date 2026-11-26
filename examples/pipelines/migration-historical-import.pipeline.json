@@ -1,0 +1,216 @@
+{
+  "$schema": "../../schemas/pipeline-phase1.schema.json",
+  "kind": "transitus.pipeline",
+  "specVersion": "1.0",
+  "id": "unbound.migration.canonical-history.import",
+  "version": "0.1.0",
+  "title": "Canonical historical migration — import (pre-go-live)",
+  "description": "Demonstration scenario 3 of 3, production run. Loads through Unbound's historical-import operation, permitted only before the sponsor programme is live (TRN-REQ-AD-012, UNB-TRN-006); records arrive marked imported_unverified (RR-REQ-X-061-r1). Same idempotency keys as the rehearsal, so a rehearsal-then-run sequence cannot double-load.",
+  "tenant": "{{tenant}}",
+  "classification": "restricted-financial",
+  "packages": [
+    {
+      "id": "unbound.canonical-history",
+      "version": "^0.1.0"
+    }
+  ],
+  "defaults": {
+    "culture": "invariant",
+    "timeZone": "America/New_York",
+    "unicodeForm": "NFC"
+  },
+  "errorPolicy": {
+    "default": "quarantine",
+    "maxErrorRate": 0
+  },
+  "resources": {
+    "maxInputBytes": "256MiB",
+    "maxRecordBytes": "16KiB",
+    "maxNestingDepth": 64,
+    "memoryBudget": "256MiB",
+    "parallelism": 2
+  },
+  "sources": {
+    "export": {
+      "adapter": "upload@1",
+      "config": {
+        "accept": [
+          "text/csv",
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        ],
+        "maxArchiveEntries": 0
+      }
+    }
+  },
+  "destinations": {
+    "history": {
+      "adapter": "unbound.domain-api@1",
+      "operation": "migration.importHistoricalRecords",
+      "classification": "system-of-record"
+    }
+  },
+  "stages": [
+    {
+      "id": "ingest",
+      "kind": "ingest",
+      "source": "export"
+    },
+    {
+      "id": "raw",
+      "kind": "preserve",
+      "dependsOn": [
+        "ingest"
+      ]
+    },
+    {
+      "id": "parse",
+      "kind": "parse",
+      "dependsOn": [
+        "raw"
+      ],
+      "template": "unbound.canonical-history/parse@0",
+      "onError": "quarantine"
+    },
+    {
+      "id": "stage",
+      "kind": "stage",
+      "dependsOn": [
+        "parse"
+      ]
+    },
+    {
+      "id": "map",
+      "kind": "transform",
+      "dependsOn": [
+        "stage"
+      ],
+      "mapping": "unbound.canonical-history/to-unbound-historical-import@0"
+    },
+    {
+      "id": "check",
+      "kind": "validate",
+      "dependsOn": [
+        "map"
+      ],
+      "profile": "unbound.canonical-history/validation@0",
+      "gate": "blocking"
+    },
+    {
+      "id": "recon",
+      "kind": "reconcile",
+      "dependsOn": [
+        "check"
+      ],
+      "gate": "blocking",
+      "rules": [
+        {
+          "rule": "r.count@1",
+          "args": {
+            "compare": [
+              "predecessor.controlFile.recordCounts",
+              "parsed",
+              "staged",
+              "mapped"
+            ],
+            "tolerance": 0
+          }
+        },
+        {
+          "rule": "r.balance@1",
+          "args": {
+            "opening": "fund.openingBalance",
+            "movements": [
+              "contributions.amount",
+              "grants.amount",
+              "fees.amount",
+              "investmentChange.amount"
+            ],
+            "closing": "fund.closingBalancePerPredecessorStatement",
+            "per": [
+              "fund",
+              "currency"
+            ],
+            "tolerance": 0
+          }
+        },
+        {
+          "rule": "r.controlTotal@1",
+          "args": {
+            "measure": "grants.amount",
+            "control": "predecessor.controlFile.grantsPaidTotal",
+            "per": [
+              "fund",
+              "fiscalYear"
+            ],
+            "tolerance": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "approve",
+      "kind": "authorize",
+      "dependsOn": [
+        "recon"
+      ],
+      "policy": {
+        "approvers": [
+          "role:migration-lead",
+          "role:sponsor-finance-approver"
+        ],
+        "count": 2,
+        "separationOfDuties": true
+      }
+    },
+    {
+      "id": "load",
+      "kind": "load",
+      "dependsOn": [
+        "approve"
+      ],
+      "destination": "history",
+      "batchSize": 500,
+      "idempotencyKey": [
+        "sourceSystem",
+        "sourceRecordId",
+        "recordType"
+      ]
+    },
+    {
+      "id": "verify",
+      "kind": "verify",
+      "dependsOn": [
+        "load"
+      ],
+      "sample": {
+        "rate": 1.0
+      }
+    },
+    {
+      "id": "evidence",
+      "kind": "evidence",
+      "dependsOn": [
+        "verify"
+      ]
+    },
+    {
+      "id": "retain",
+      "kind": "retain",
+      "dependsOn": [
+        "evidence"
+      ]
+    }
+  ],
+  "retention": {
+    "raw": "policy:sponsor-retention/financial-raw",
+    "staging": "policy:sponsor-retention/staging-temporary",
+    "exceptions": "policy:sponsor-retention/operational-exceptions",
+    "lineage": "policy:sponsor-retention/financial-lineage",
+    "evidence": "policy:sponsor-retention/financial-evidence"
+  },
+  "allowedModes": [
+    "run",
+    "dry-run",
+    "replay"
+  ]
+}

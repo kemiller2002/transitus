@@ -65,26 +65,28 @@ The original proposal had eleven code packages; its text miscounted them as
 eight. Review found that excessive for a single-owner portfolio (C11) and
 ahead of demand (C12). The revised boundaries are below.
 
-### Phase 1: three pure libraries, the maintenance budget (TRN-REQ-ARC-007)
+### Phase 1 (owner-directed, DF-TRN-2026-0018): minimal declarative pipeline
 
-| Package | Contents | Depends on |
+The owner superseded the three-library phase 1 (DF-TRN-2026-0016). Phase 1 delivers a minimal declarative typed linear pipeline built on the three pure libraries. The maintenance budget is set by TRN-REQ-ARC-007 (revised per TRN-REV-02): at most 7 code packages (a 5-package variant is acceptable), 2 third-party parser libraries, 5 basic mapping packages, 13 operations, and 2 cross-repository ports.
+
+| Package | Phase-1 contents | Depends on |
 |---|---|---|
-| `Transitus.Formats` | Strict, limit-enforcing parsers that yield typed record streams with locators. Port of `Unbound.Replay/Sources.fs` covering IRS EO BMF, Pub 78, auto-revocation and OFAC SDN. CSV/TSV, fixed-width, NACHA (returns, NOC), BAI2 or camt.053, XLSX (read-only, cached values) and one custodian format. | BCL + at most two vetted parser libraries (ADR each) |
-| `Transitus.Checks` | Validation and reconciliation primitives (TRN-ARCH-06) as pure functions over typed sequences; conservation-law accounting. | none |
-| `Transitus.Evidence` | Raw-evidence records aligned to Unbound's `RawEvidence` model (hash, locator, rights policy, retention), deterministic idempotency keys, L0–L2 lineage records, evidence package assembly with a hash chain. | none |
+| `Transitus.Model` | DU model for the phase-1 profile; canonical JSON (JCS) codec; publish-time definition validator (types, linearity, closed vocabulary, policy, authority-and-semantics diff); package manifest loader | none |
+| `Transitus.Transforms` | The 13 phase-1 operations (TRN-REQ-TX-009) | Model |
+| `Transitus.Formats` | Strict parsers with limits. Port of `Unbound.Replay/Sources.fs` (IRS, OFAC); CSV, fixed-width/NACHA, first bank format, Schwab format once documented, read-only XLSX | BCL + at most 2 vetted parser libraries |
+| `Transitus.Checks` | Validation and reconciliation primitives; conservation law | Model |
+| `Transitus.Evidence` | RawEvidence aligned to UNB-KNOW-023; idempotency keys; L0–L2 lineage; evidence package with hash chain | Model |
+| `Transitus.Engine` | Linear stage executor behind two host-implemented ports, durable commands and domain destination (TRN-REQ-ARC-011), so Echelon.Execution is used in place and never referenced. Provides stage checkpoints, replay, dry run, OutcomeUnknown handling, quota share | Model, Transforms, Formats, Checks, Evidence |
+| `Transitus.Storage.Postgres` | Raw metadata, tenant-schema staging, lineage and evidence stores; DDL as Strata-governed SQL | Engine, Npgsql |
+| Basic mapping packages | `irs.eo-bmf`, `nacha.ach` (rights pending), first bank format (illustrated by `iso20022.camt053`), `custodian.schwab` (placeholder), `unbound.canonical-history` | configuration only |
 
-Consumers write each feed as a short F# module that composes these
-libraries. Loading goes through the consumer's own Echelon.Execution
-operations, used in place inside Unbound; extraction is not required in
-phase 1 (DF-TRN-2026-0006 revised).
+### Later phases (each gated by a recorded trigger, TRN-REQ-ARC-009)
 
-### Later phases (each gated by a recorded trigger)
-
-| Phase | Packages | Trigger |
+| Phase | Adds | Trigger |
 |---|---|---|
-| 2 | `Transitus.Model` (DU + JSON), `Transitus.Validation.Definition`, `Transitus.Transforms` (catalogue incl. bounded set operators), `Transitus.Engine` (state machine on Echelon.Execution), `Transitus.Storage.Postgres` | **T2:** a second consumer is committed (Helix Note or Summa), *or* the phase-1 exit review shows per-feed modules duplicating orchestration in ≥3 feeds, *or* non-engineer authoring is required |
-| 3 | `Transitus.Assist` (AI proposals), mapping-package tooling | **T3:** a migration is contracted with a customer-authorized sample, and the AI-008 evaluation meets thresholds |
-| 4 | `Transitus.Admin` (Forma/Limen) | **T4:** operators other than engineers must configure pipelines, which is not in Unbound release 1 (SPR-CFG-002 rejected a no-code engine) |
+| 2 | Complex DAGs (routes, unions, joins), bounded set operators (TX-011), governed extensions (EXT-*), Folio evidence reports; extraction of Echelon.Execution once its shared contract is stable | **T2:** a demonstrated scenario the linear model cannot express |
+| 3 | `Transitus.Assist` (advanced AI, provider-independent), vendor-specific turnkey packages | **T3:** AI evaluation thresholds met; customer-authorized sample and licence clearance for vendor packages |
+| 4 | `Transitus.Admin` (Forma/Limen visual editing) | **T4:** operators other than engineers must configure pipelines |
 
 ## 3. Proposed requirements on other components (not applied here)
 
@@ -93,7 +95,7 @@ does **not** change their responsibilities.
 
 | ID | Target | Proposal | Filed where |
 |---|---|---|---|
-| DEP-EXEC-01 | Echelon.Execution (Unbound) | Extraction to a shared repository **when trigger T2 fires** (it is unbenchmarked, RM-05, so early extraction is not proposed); meanwhile Transitus phase 1 needs no extraction. At extraction, Transitus needs G1 lease renewal, G2 dependency resume, G3 payload protection/purge, G4 metrics | `unbound/requirements/discovery/2026-11-26-transitus-integration/` (this initiative) |
+| DEP-EXEC-01 | Echelon.Execution (Unbound) | Extraction deferred **until the shared contract is stable** (owner resolution of OQ-01); Transitus phase 1 uses it in place. Before Transitus relies on it, the module needs: Transitus needs G1 lease renewal, G2 dependency resume, G3 payload protection/purge, G4 metrics | `unbound/requirements/discovery/2026-11-26-transitus-integration/` (this initiative) |
 | DEP-STRATA-01 | Strata | Accept schema fragments contributed by an embedded library (staging/lineage DDL) under the host's governed migration path | recorded here; to be raised in Strata by its owner (read-only from this session) |
 | DEP-STRATA-02 | Strata DIV | Agree boundary between DIV interaction virtualization and Transitus source adapters | registry INIT-018 boundary review |
 | DEP-FORMA-01 | Forma workflow | Partition-routing node with mandatory `otherwise`; layout-as-annotation; mapping-table pattern with non-drag alternative | recorded here |

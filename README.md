@@ -6,15 +6,19 @@ Transitus is a proposed embeddable, AI-native data-integration engine for Echelo
 
 ## What Transitus is
 
-Transitus is a small set of F# libraries hosted inside the application that uses them:
+Transitus is a set of F# libraries hosted inside the application that uses them. It is not a separate service. Phase 1, as directed by the owner (DF-TRN-2026-0018), is a **minimal declarative typed linear pipeline** built from these stages:
+- ingest;
+- immutable raw evidence;
+- isolated temporary staging;
+- deterministic mapping;
+- validation and reconciliation;
+- authorization;
+- domain-API load;
+- post-load verification.
 
-- **Formats** parse files strictly, within resource limits.
-- **Checks** validate and reconcile the data.
-- **Evidence** preserves raw input, records lineage, derives idempotency keys and assembles an evidence package.
+The engine provides checkpoints, replay, idempotency, dry runs and migration rehearsal. It ships with basic reusable mapping packages, and is built on its Formats, Checks and Evidence libraries. Durable execution is reached through host ports backed by Echelon.Execution.
 
-It loads data only through the consuming application's domain operations, using the durable command path provided by Echelon.Execution.
-
-Later phases are each gated by a recorded trigger. They add a declarative pipeline model and engine, mapping packages, AI-assisted configuration, and a Forma-based administration UI. See [`docs/roadmap.md`](docs/roadmap.md).
+Complex DAGs, advanced AI and visual editing are later phases, each gated by a recorded trigger. See [`docs/roadmap.md`](docs/roadmap.md).
 
 ## What Transitus is not
 
@@ -35,10 +39,10 @@ Later phases are each gated by a recorded trigger. They add a declarative pipeli
 
 ## Machine-readable specifications
 
-- [`schemas/pipeline.schema.json`](schemas/pipeline.schema.json): the phase-2 pipeline definition. [Example](examples/pipelines/irs-eo-bmf-ingest.pipeline.json).
+- [`schemas/pipeline.schema.json`](schemas/pipeline.schema.json) and the phase-1 profile [`schemas/pipeline-phase1.schema.json`](schemas/pipeline-phase1.schema.json). There are three demonstration pipelines in [`examples/pipelines/`](examples/pipelines/) and five basic packages in [`examples/packages/`](examples/packages/).
 - [`schemas/adapter-descriptor.schema.json`](schemas/adapter-descriptor.schema.json)
 - [`schemas/mapping-package.schema.json`](schemas/mapping-package.schema.json)
-- [`requirements/requirements.json`](requirements/requirements.json): 136 proposed requirements.
+- [`requirements/requirements.json`](requirements/requirements.json): 152 proposed requirements.
 - [`docs/research/source-register.json`](docs/research/source-register.json)
 
 ## Validation
@@ -47,8 +51,9 @@ Later phases are each gated by a recorded trigger. They add a declarative pipeli
 ./praxis registry check
 ./praxis validate
 python3 -I tools/render_requirements.py --check
+python3 -I tools/validate_specs.py
 ```
 
 ## Licence
 
-MIT (see [LICENSE](LICENSE)), as the initiating brief directs for public repository content. The portfolio-level licence decision is open (OQ-12).
+MIT (see [LICENSE](LICENSE)), as the initiating brief directs. Per owner direction, this is to be resolved against the authoritative portfolio licensing policy before any release (OQ-12).

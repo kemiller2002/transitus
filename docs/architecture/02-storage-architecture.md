@@ -57,13 +57,11 @@ Isolated, temporary, typed working data.
 | **Temporary tables** (`CREATE TEMP TABLE`) | No WAL; auto-drop | Session-bound — incompatible with leased, resumable, multi-worker execution | **Rejected** for stage outputs; allowed inside one chunk handler |
 | **UNLOGGED tables** | ~2–3× faster writes, no WAL | Truncated on crash; not replicated | Acceptable for staging because raw input is preserved and stages are replayable — opt-in per pipeline |
 
-### Decision (DF-TRN-2026-0008, revised after TRN-REV-01 C5)
+### Decision (DF-TRN-2026-0020, which supersedes DF-TRN-2026-0008)
 
-**Phase 1: no Transitus-owned staging.** The phase-1 libraries stream typed
-chunks to the consumer. Unbound persists what it needs in its own schema, under
-its CNV-ARC-001 tenancy model (one schema and role per sponsor).
+**Owner direction: isolated temporary staging is a phase-1 capability.** The design below, derived from review C5, therefore applies from phase 1.
 
-**Phase 2 (trigger T2).** The originally proposed design, one shared
+**Rejected design.** The originally proposed design, one shared
 `transitus_staging` schema with LIST partitions per `(tenant, dataset_id)`,
 was rejected on review for five reasons:
 
@@ -73,10 +71,10 @@ was rejected on review for five reasons:
 4. A shared schema conflicts with Unbound's schema-per-sponsor model and its A/B/C tenancy profiles.
 5. Staging WAL would pass through the synchronous standby that CNV-ARC-001 requires.
 
-The phase-2 candidate design, to be confirmed by measurement (TRN-REQ-PF-001):
+The phase-1 design, to be confirmed by measurement (TRN-REQ-PF-001). The blob-store port defaults to the database, subject to sizing (owner resolution of OQ-04):
 
 - **Location.** Staging tables live in the consumer's tenant schema, one table per schema version. Strata-governed migrations create them at deployment.
-- **Loading.** Bulk load uses `COPY` into a per-sponsor, non-RLS **load table** owned by the sponsor's staging role, followed by `INSERT … SELECT`. Alternatively, it relies on schema-per-sponsor isolation instead of RLS for staging.
+- **Loading (revised per TRN-REV-02).** Unbound's CNV-ARC-001 requires row-level security on every tenant table, and PostgreSQL does not support `COPY FROM` into RLS tables. Phase 1 therefore writes staging with parameterized multi-row `INSERT` into RLS-protected tables. The cost is measured by TRN-REQ-PF-005. A `COPY` path through a transient non-RLS load table is used only if the Unbound architecture owner grants a documented exception (open-questions UC-9).
 - **Purge.** Either `DELETE` by `dataset_id` with measured vacuum cost, or RANGE partitions by expiry day. The partition option needs a governed partition-maintenance mechanism that Strata accepts (DEP-STRATA-01).
 - **Backups and WAL.** Per-dataset encryption keys (crypto-shredding) make purged data unreadable in WAL archives and backups. Where they are not used, the backup retention window is documented as the effective retention (TRN-REQ-SEC-018).
 - **Shared public reference data.** IRS EO BMF is staged once per deployment, not once per sponsor (TRN-REQ-ST-010).
@@ -90,7 +88,7 @@ The phase-2 candidate design, to be confirmed by measurement (TRN-REQ-PF-001):
   `chunk_no`, `ordinal`, `source_locator`.
 - Row-level security keyed on tenant (consistent with CNV-ARC-001 and
   UNB-TEN-009, which extend tenant isolation to queues and object storage).
-- TTL per pipeline (`retention.staging`, default P30D, maximum P180D without
+- TTL per pipeline (`retention.staging`, a reference to an approved policy class; Transitus ships no default duration (TRN-REQ-LN-010), and any limit above the policy needs
   elevated approval). A staged dataset is not readable by any API other than
   Transitus inspection/preview endpoints, which enforce classification.
 - Staging is **not** a system of record: it has no external consumers and is
@@ -122,12 +120,12 @@ business tables (TRN-REQ-AD-008).
 
 ## 5. Execution, exception, lineage and evidence stores
 
-| Store | Content | Retention default |
+| Store | Content | Retention |
 |---|---|---|
-| Execution state | owned by Echelon.Execution tables + `transitus.execution` | P2Y |
-| Exceptions | record-level errors with code, locator, masked value/hash | P2Y |
-| Lineage | see TRN-ARCH-08 | P7Y for financial |
-| Evidence packages | manifests, report hashes, approvals | P7Y (SOC 2 / financial record-keeping); configurable |
+| Execution state | owned by Echelon.Execution tables + `transitus.execution` | per approved policy class |
+| Exceptions | record-level errors with code, locator, masked value/hash | per approved policy class |
+| Lineage | see TRN-ARCH-08 | per approved policy class |
+| Evidence packages | manifests, report hashes, approvals | per approved policy class |
 
 ## 6. Preventing an uncontrolled secondary system of record
 

@@ -55,7 +55,7 @@ evidence_quality: theoretical — no measurements exist; nothing here is a bench
 | **Network** | Source download = raw size; domain API traffic ≈ 1–2× payload. Not a bottleneck below 10⁸ records on cloud networking. |
 | **Parallelism** | Parse/transform scale with cores until COPY saturates (~A5). Load parallelism is bounded by destination ordering keys and domain write capacity, not by Transitus. |
 | **Recovery time** | Logged staging: crash ⇒ lease expiry (configurable, e.g. 5 min) + re-run of at most one chunk per worker. **UNLOGGED staging is truncated on crash**, so recovery then re-runs every staged stage from preserved raw input (TRN-REQ-ST-009). Worst case for a 10⁷ run ≈ lease duration + seconds. Raw preservation means a corrupted staging can be rebuilt by replay (cost = core processing time). |
-| **Lineage storage** | L2 grows with loaded records: 10⁷ ⇒ 3 GB, retained P7Y for financial ⇒ consider partition-by-month and compression; L3-static is negligible. Storing per-field values would multiply by fields per record (×20–50) — rejected (DF-TRN-2026-0013). |
+| **Lineage storage** | L2 grows with loaded records: 10⁷ ⇒ 3 GB, retained for the approved policy period ⇒ consider partition-by-month and compression; L3-static is negligible. Storing per-field values would multiply by fields per record (×20–50) — rejected (DF-TRN-2026-0013). |
 
 ## 3. Where database-backed staging becomes inefficient
 
@@ -83,7 +83,7 @@ the host process against the host database. Incremental cost is:
 |---|---|---|
 | Compute | Absorbed by host app instance; ≈10 min/week BMF + ≈1 min/day custodian (A4–A7) | theoretical |
 | Staging storage | transient; peak ≈ 9 GB during migration (A2, A3) | theoretical |
-| Raw retention (P7Y) | BMF snapshots ≈ 600 MB/week raw — dedupe by hash only helps when unchanged; ≈ 30 GB/year; compress (CSV ≈ 5–8× gzip) ⇒ ≈ 5 GB/year | theoretical |
+| Raw retention (per approved policy; a multi-year period is assumed only for sizing) | BMF snapshots ≈ 600 MB/week raw — dedupe by hash only helps when unchanged; ≈ 30 GB/year; compress (CSV ≈ 5–8× gzip) ⇒ ≈ 5 GB/year | theoretical |
 | Lineage | **Revised (TRN-REV-01 C5/C8):** custodian rows alone ≈ 50k × 250 days × 300 B ≈ 3.75 GB/year; with BMF diffs and 400–600 B/record including indexes, ≈ 5–7 GB/year; plus Echelon.Execution rows (A12) ≈ 1.5–3 KB per loaded record unless purged | theoretical |
 | Engineering & maintenance | dominant cost; see §5 | estimate |
 
@@ -115,14 +115,31 @@ assurance", with a hypothesised $25–75k per project). The adversarial review
 
 ## 5a. Baseline the proposal must beat: hand-written per-feed F# (TRN-REV-01 C2)
 
-The cheapest alternative is neither a vendor tool nor Transitus. It is a short F# module per feed inside Unbound that uses existing .NET parsers and loads through Echelon.Execution. For the roughly six fixed release-1 feeds, the reviewer estimates 3–4 engineer-weeks. Transitus phase 1 is therefore scoped as the **shared libraries those modules would otherwise duplicate**: formats, checks and evidence (TRN-ARCH-11 §2). Before phase 2, TRN-REQ-PF-004 requires a recorded comparison. If per-feed modules prove cheaper and no second consumer is committed, the engine (phase 2) is not built.
+The cheapest alternative is neither a vendor tool nor Transitus. It is a short F# module per feed inside Unbound that uses existing .NET parsers and loads through Echelon.Execution. For the roughly six fixed release-1 feeds, the reviewer estimates 3–4 engineer-weeks. The owner directed a larger phase 1, a minimal declarative pipeline (DF-TRN-2026-0018). This baseline is therefore kept as the **later comparison** in TRN-REQ-PF-004, measured within six months of phase-1 exit. It does not gate phase 1.
 
 ## 6. Engineering cost estimate (theoretical)
 
-| Phase | Scope | Order of magnitude |
+Revised for the owner-directed phase 1 (DF-TRN-2026-0018) using the
+independent estimate in TRN-REV-02 (`../reviews/agent-reviews/adv-E.md` §3).
+The assumptions are:
+- one experienced F# engineer, agent-assisted;
+- logged staging;
+- no chunk parallelism;
+- fake ports until Unbound domain operations exist.
+
+| Phase | Scope | Engineer-weeks |
 |---|---|---|
-| 1 (revised) | Three libraries: Formats (port Unbound.Replay parsers; CSV, NACHA, BAI2/camt.053, XLSX read, one custodian format), Checks (validation + reconciliation primitives), Evidence (raw preservation records, hashes, idempotency keys, L0–L2 lineage, evidence package) | 4–6 engineer-weeks |
-| 2 (trigger T2) | Declarative model + validator, engine state machine, staging, chunking | 8–12 engineer-weeks |
-| 3 | AI assistance, mapping package tooling, upgrade diffs | 4–6 engineer-weeks |
-| 4 | Forma admin UI; optional file-backed staging; OpenLineage export | 8–12 engineer-weeks |
-| Ongoing | parser/library updates, package maintenance, security patches | ≈0.1–0.2 FTE |
+| 1 | Minimal declarative linear pipeline, 13 operations, checks, evidence, engine behind ports, Postgres staging, basic packages, three demonstrations | ≈15–24 |
+| 1 (prerequisites, not Transitus) | Unbound domain operations with read-back, canonical shape, rehearsal cell, Echelon.Execution G2/G3, quota share, queue-limit fix, RM-05 benchmark | ≈6–12 |
+| 2 (T2) | DAGs, TEL, set operators, extensions, chunk parallelism, scheduling, overlays | ≈6–10 |
+| 3 (T3) | Advanced AI, vendor-turnkey packages | 4–6 |
+| 4 (T4) | Visual editing | 8–12 |
+| Ongoing | Format drift (BMF layout, bank and Schwab specification versions), parser updates, security patches | ≈0.15–0.2 FTE |
+
+Superseded estimates are kept for comparison:
+- 4–6 weeks for the three-library phase 1;
+- 6–10 weeks for the original phase 1;
+- 3–4 weeks for the hand-written per-feed baseline (§5a).
+
+Phase 1 is roughly 2–3× the three-library plan. Its critical path runs
+through Unbound and partner prerequisites, not through Transitus.

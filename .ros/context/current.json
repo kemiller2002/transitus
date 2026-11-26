@@ -4,7 +4,7 @@
   "repository": "transitus",
   "actor": "ros-bootstrap",
   "startedAt": "2026-11-26T15:17:03.787Z",
-  "updatedAt": "2026-11-26T15:45:11.000Z",
+  "updatedAt": "2026-11-26T18:17:04.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -62,6 +62,17 @@
       },
       "completedAt": "2026-11-26T15:45:11.000Z",
       "conclusion": "Phase-0 research, architecture and requirements complete; minimal phase-1 scope established; owner questions recorded"
+    },
+    {
+      "id": "WI-0002",
+      "type": "research",
+      "state": "active",
+      "semanticState": "active",
+      "evidence": [],
+      "updatedAt": "2026-11-26T18:17:04.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20261126T181704540Z-e41ec7a0"
+      ]
     }
   ]
 }

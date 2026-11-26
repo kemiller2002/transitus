@@ -5,161 +5,644 @@
   "description": "Declarative, versioned pipeline definition. Semantics: docs/architecture/01-lifecycle-and-pipeline-specification.md. No field accepts executable code, SQL or script.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["kind", "specVersion", "id", "version", "classification", "defaults", "sources", "destinations", "stages", "errorPolicy", "resources", "retention"],
+  "required": [
+    "kind",
+    "specVersion",
+    "id",
+    "version",
+    "classification",
+    "defaults",
+    "sources",
+    "destinations",
+    "stages",
+    "errorPolicy",
+    "resources",
+    "retention"
+  ],
   "properties": {
-    "$schema": { "type": "string" },
-    "kind": { "const": "transitus.pipeline" },
-    "specVersion": { "const": "1.0" },
-    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$", "description": "Stable pipeline identifier." },
-    "version": { "$ref": "#/$defs/semver" },
-    "title": { "type": "string" },
-    "description": { "type": "string", "description": "AI-readable purpose statement." },
-    "tenant": { "type": "string", "description": "Tenant binding; a template placeholder `{{tenant}}` in packages, a concrete id in instantiated pipelines." },
-    "classification": { "$ref": "#/$defs/classification" },
+    "$schema": {
+      "type": "string"
+    },
+    "kind": {
+      "const": "transitus.pipeline"
+    },
+    "specVersion": {
+      "const": "1.0"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+      "description": "Stable pipeline identifier."
+    },
+    "version": {
+      "$ref": "#/$defs/semver"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "description": "AI-readable purpose statement."
+    },
+    "tenant": {
+      "type": "string",
+      "description": "Tenant binding; a template placeholder `{{tenant}}` in packages, a concrete id in instantiated pipelines."
+    },
+    "classification": {
+      "$ref": "#/$defs/classification"
+    },
     "packages": {
       "type": "array",
       "items": {
-        "type": "object", "additionalProperties": false, "required": ["id", "version"],
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "version"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "version": { "type": "string", "description": "Semver range at authoring; pinned exact version at publish." },
-          "hash": { "$ref": "#/$defs/hash" }
+          "id": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string",
+            "description": "Semver range at authoring; pinned exact version at publish."
+          },
+          "hash": {
+            "$ref": "#/$defs/hash"
+          }
         }
       }
     },
     "defaults": {
-      "type": "object", "additionalProperties": false, "required": ["culture", "timeZone", "unicodeForm"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "culture",
+        "timeZone",
+        "unicodeForm"
+      ],
       "properties": {
-        "culture": { "type": "string", "description": "`invariant` or a BCP 47 tag. Host culture is never used." },
-        "timeZone": { "type": "string", "description": "IANA time zone id." },
-        "unicodeForm": { "enum": ["NFC", "NFD", "none"] }
+        "culture": {
+          "type": "string",
+          "description": "`invariant` or a BCP 47 tag. Host culture is never used."
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time zone id."
+        },
+        "unicodeForm": {
+          "enum": [
+            "NFC",
+            "NFD",
+            "none"
+          ]
+        }
       }
     },
     "parameters": {
       "type": "object",
       "additionalProperties": {
-        "type": "object", "additionalProperties": false, "required": ["type"],
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type"
+        ],
         "properties": {
-          "type": { "enum": ["string", "integer", "decimal", "boolean", "date", "enum"] },
-          "values": { "type": "array" },
+          "type": {
+            "enum": [
+              "string",
+              "integer",
+              "decimal",
+              "boolean",
+              "date",
+              "enum"
+            ]
+          },
+          "values": {
+            "type": "array"
+          },
           "default": {},
-          "description": { "type": "string" }
+          "description": {
+            "type": "string"
+          }
         }
       }
     },
-    "sources": { "type": "object", "minProperties": 1, "additionalProperties": { "$ref": "#/$defs/endpoint" } },
-    "destinations": {
-      "type": "object", "minProperties": 1,
+    "sources": {
+      "type": "object",
+      "minProperties": 1,
       "additionalProperties": {
-        "allOf": [ { "$ref": "#/$defs/endpoint" } ],
-        "properties": {
-          "operation": { "type": "string", "description": "Domain operation name exposed by the destination adapter." },
-          "classification": { "enum": ["system-of-record", "staging-only", "derived"] }
-        },
-        "required": ["classification"]
+        "$ref": "#/$defs/endpoint"
       }
     },
-    "schemas": { "type": "object", "additionalProperties": { "type": "object" } },
-    "stages": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/stage" } },
+    "destinations": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/endpoint"
+          }
+        ],
+        "properties": {
+          "operation": {
+            "type": "string",
+            "description": "Domain operation name exposed by the destination adapter."
+          },
+          "classification": {
+            "enum": [
+              "system-of-record",
+              "staging-only",
+              "derived"
+            ]
+          }
+        },
+        "required": [
+          "classification"
+        ]
+      }
+    },
+    "schemas": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "stages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/stage"
+      }
+    },
     "errorPolicy": {
-      "type": "object", "additionalProperties": false, "required": ["default"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "default"
+      ],
       "properties": {
-        "default": { "enum": ["fail", "quarantine", "skipWithCount"] },
-        "maxErrors": { "type": "integer", "minimum": 0 },
-        "maxErrorRate": { "type": "number", "minimum": 0, "maximum": 1 }
+        "default": {
+          "enum": [
+            "fail",
+            "quarantine",
+            "skipWithCount"
+          ]
+        },
+        "maxErrors": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxErrorRate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
       }
     },
     "resources": {
-      "type": "object", "additionalProperties": false,
-      "required": ["maxInputBytes", "maxRecordBytes", "memoryBudget", "parallelism"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maxInputBytes",
+        "maxRecordBytes",
+        "memoryBudget",
+        "parallelism"
+      ],
       "properties": {
-        "maxInputBytes": { "$ref": "#/$defs/size" },
-        "maxRecordBytes": { "$ref": "#/$defs/size" },
-        "maxRecords": { "type": "integer", "minimum": 1 },
-        "maxNestingDepth": { "type": "integer", "minimum": 1, "maximum": 256 },
-        "maxArchiveEntries": { "type": "integer", "minimum": 0 },
-        "maxCompressionRatio": { "type": "number", "minimum": 1 },
-        "memoryBudget": { "$ref": "#/$defs/size" },
-        "parallelism": { "type": "integer", "minimum": 1, "maximum": 64 },
-        "cpuTimeBudget": { "$ref": "#/$defs/duration" }
+        "maxInputBytes": {
+          "$ref": "#/$defs/size"
+        },
+        "maxRecordBytes": {
+          "$ref": "#/$defs/size"
+        },
+        "maxRecords": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxNestingDepth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        },
+        "maxArchiveEntries": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxCompressionRatio": {
+          "type": "number",
+          "minimum": 1
+        },
+        "memoryBudget": {
+          "$ref": "#/$defs/size"
+        },
+        "parallelism": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        },
+        "cpuTimeBudget": {
+          "$ref": "#/$defs/duration"
+        }
       }
     },
     "retention": {
-      "type": "object", "additionalProperties": false, "required": ["raw", "staging"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "raw",
+        "staging"
+      ],
       "properties": {
-        "raw": { "$ref": "#/$defs/duration" },
-        "staging": { "$ref": "#/$defs/duration" },
-        "exceptions": { "$ref": "#/$defs/duration" },
-        "lineage": { "$ref": "#/$defs/duration" },
-        "evidence": { "$ref": "#/$defs/duration" }
+        "raw": {
+          "$ref": "#/$defs/retentionRef"
+        },
+        "staging": {
+          "$ref": "#/$defs/retentionRef"
+        },
+        "exceptions": {
+          "$ref": "#/$defs/retentionRef"
+        },
+        "lineage": {
+          "$ref": "#/$defs/retentionRef"
+        },
+        "evidence": {
+          "$ref": "#/$defs/retentionRef"
+        }
       }
     },
     "schedule": {
-      "type": "object", "additionalProperties": false, "required": ["cron", "timeZone"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cron",
+        "timeZone"
+      ],
       "properties": {
-        "cron": { "type": "string" },
-        "timeZone": { "type": "string" },
-        "misfire": { "enum": ["skip", "runOnce"] }
+        "cron": {
+          "type": "string"
+        },
+        "timeZone": {
+          "type": "string"
+        },
+        "misfire": {
+          "enum": [
+            "skip",
+            "runOnce"
+          ]
+        }
       }
     },
-    "annotations": { "type": "object", "description": "Non-semantic data (e.g. editor layout). Excluded from the content hash." }
+    "annotations": {
+      "type": "object",
+      "description": "Non-semantic data (e.g. editor layout). Excluded from the content hash."
+    },
+    "allowedModes": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "run",
+          "dry-run",
+          "replay"
+        ]
+      },
+      "description": "Execution modes this pipeline permits. A migration rehearsal pipeline permits only dry-run (TRN-REQ-MP-009)."
+    }
   },
   "$defs": {
-    "semver": { "type": "string", "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?$" },
-    "hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$|^sha256:…$" },
-    "size": { "type": "string", "pattern": "^[0-9]+(B|KiB|MiB|GiB|TiB)$" },
-    "duration": { "type": "string", "pattern": "^P(?:\\d+Y)?(?:\\d+M)?(?:\\d+W)?(?:\\d+D)?(?:T(?:\\d+H)?(?:\\d+M)?(?:\\d+S)?)?$" },
-    "classification": { "enum": ["public", "internal", "restricted-personal", "restricted-financial", "phi", "secret"] },
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$|^sha256:…$"
+    },
+    "size": {
+      "type": "string",
+      "pattern": "^[0-9]+(B|KiB|MiB|GiB|TiB)$"
+    },
+    "duration": {
+      "type": "string",
+      "pattern": "^P(?:\\d+Y)?(?:\\d+M)?(?:\\d+W)?(?:\\d+D)?(?:T(?:\\d+H)?(?:\\d+M)?(?:\\d+S)?)?$"
+    },
+    "classification": {
+      "enum": [
+        "public",
+        "internal",
+        "restricted-personal",
+        "restricted-financial",
+        "phi",
+        "secret"
+      ]
+    },
     "endpoint": {
-      "type": "object", "required": ["adapter"],
+      "type": "object",
+      "required": [
+        "adapter"
+      ],
       "properties": {
-        "adapter": { "type": "string", "pattern": "^[a-z0-9.-]+@[0-9]+$" },
-        "config": { "type": "object", "description": "Validated against the adapter's config schema. Must not contain secret values." },
-        "secrets": { "type": "object", "additionalProperties": { "type": "string", "pattern": "^secretRef:[A-Za-z0-9/_.-]+$" } }
+        "adapter": {
+          "type": "string",
+          "pattern": "^[a-z0-9.-]+@[0-9]+$"
+        },
+        "config": {
+          "type": "object",
+          "description": "Validated against the adapter's config schema. Must not contain secret values."
+        },
+        "secrets": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^secretRef:(?:[A-Za-z0-9/_.-]|\\{\\{[a-z.]+\\}\\})+$"
+          }
+        }
       }
     },
-    "stageId": { "type": "string", "pattern": "^[a-z][a-zA-Z0-9-]*$" },
+    "stageId": {
+      "type": "string",
+      "pattern": "^[a-z][a-zA-Z0-9-]*$"
+    },
     "retry": {
-      "type": "object", "additionalProperties": false, "required": ["attempts"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attempts"
+      ],
       "properties": {
-        "attempts": { "type": "integer", "minimum": 0, "maximum": 20 },
-        "backoff": { "type": "object", "properties": { "base": { "$ref": "#/$defs/duration" }, "cap": { "$ref": "#/$defs/duration" } } },
-        "jitter": { "type": "boolean" },
-        "on": { "type": "array", "items": { "enum": ["Transient", "RateLimited"] } }
+        "attempts": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 20
+        },
+        "backoff": {
+          "type": "object",
+          "properties": {
+            "base": {
+              "$ref": "#/$defs/duration"
+            },
+            "cap": {
+              "$ref": "#/$defs/duration"
+            }
+          }
+        },
+        "jitter": {
+          "type": "boolean"
+        },
+        "on": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "Transient",
+              "RateLimited"
+            ]
+          }
+        }
       }
     },
     "stage": {
       "type": "object",
-      "required": ["id", "kind"],
+      "required": [
+        "id",
+        "kind"
+      ],
       "properties": {
-        "id": { "$ref": "#/$defs/stageId" },
-        "kind": { "enum": ["discover", "ingest", "preserve", "parse", "stage", "profile", "transform", "route", "union", "validate", "reconcile", "authorize", "load", "verify", "evidence", "retain"] },
-        "dependsOn": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
-        "runIf": { "type": "string", "description": "TEL predicate over execution facts and parameters only." },
-        "template": { "type": "string", "description": "package/template@major" },
-        "source": { "type": "string" },
-        "destination": { "type": "string" },
-        "mapping": { "type": "string" },
-        "profile": { "type": "string" },
-        "rules": { "type": "array", "items": { "type": "object", "required": ["rule"], "properties": { "rule": { "type": "string", "pattern": "^[a-z0-9.]+@[0-9]+$" }, "args": { "type": "object" } } } },
-        "operations": { "type": "array", "items": { "type": "object", "required": ["op"], "properties": { "op": { "type": "string", "pattern": "^[a-zA-Z0-9./-]+@[0-9]+$" }, "acknowledgeLoss": { "type": "object", "required": ["reason"], "properties": { "reason": { "type": "string" }, "approvalRef": { "type": "string" } } } } } },
-        "routes": { "type": "array", "items": { "type": "object", "required": ["name", "when"], "properties": { "name": { "type": "string" }, "when": { "type": "string" } } } },
-        "otherwise": { "type": "string" },
-        "gate": { "enum": ["blocking", "advisory"] },
-        "policy": { "type": "object" },
-        "onError": { "enum": ["fail", "quarantine", "skipWithCount"] },
-        "retry": { "$ref": "#/$defs/retry" },
-        "chunkParallel": { "type": "boolean" },
-        "batchSize": { "type": "integer", "minimum": 1, "maximum": 10000 },
-        "idempotencyKey": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
-        "sample": { "type": "object" },
-        "retention": { "$ref": "#/$defs/duration" }
+        "id": {
+          "$ref": "#/$defs/stageId"
+        },
+        "kind": {
+          "enum": [
+            "discover",
+            "ingest",
+            "preserve",
+            "parse",
+            "stage",
+            "profile",
+            "transform",
+            "route",
+            "union",
+            "validate",
+            "reconcile",
+            "authorize",
+            "load",
+            "verify",
+            "evidence",
+            "retain"
+          ]
+        },
+        "dependsOn": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "runIf": {
+          "type": "string",
+          "description": "TEL predicate over execution facts and parameters only."
+        },
+        "template": {
+          "type": "string",
+          "description": "package/template@major"
+        },
+        "source": {
+          "type": "string"
+        },
+        "destination": {
+          "type": "string"
+        },
+        "mapping": {
+          "type": "string"
+        },
+        "profile": {
+          "type": "string"
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "rule"
+            ],
+            "properties": {
+              "rule": {
+                "type": "string",
+                "pattern": "^[a-z][a-zA-Z0-9.]*@[0-9]+$"
+              },
+              "args": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "op"
+            ],
+            "properties": {
+              "op": {
+                "type": "string",
+                "pattern": "^[a-zA-Z0-9./-]+@[0-9]+$"
+              },
+              "acknowledgeLoss": {
+                "type": "object",
+                "required": [
+                  "reason"
+                ],
+                "properties": {
+                  "reason": {
+                    "type": "string"
+                  },
+                  "approvalRef": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "routes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "when"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "when": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "otherwise": {
+          "type": "string"
+        },
+        "gate": {
+          "enum": [
+            "blocking",
+            "advisory"
+          ]
+        },
+        "policy": {
+          "type": "object"
+        },
+        "onError": {
+          "enum": [
+            "fail",
+            "quarantine",
+            "skipWithCount"
+          ]
+        },
+        "retry": {
+          "$ref": "#/$defs/retry"
+        },
+        "chunkParallel": {
+          "type": "boolean"
+        },
+        "batchSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "idempotencyKey": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "sample": {
+          "type": "object"
+        },
+        "retention": {
+          "$ref": "#/$defs/retentionRef"
+        }
       },
       "allOf": [
-        { "if": { "properties": { "kind": { "const": "route" } } }, "then": { "required": ["routes", "otherwise"] } },
-        { "if": { "properties": { "kind": { "const": "load" } } }, "then": { "required": ["destination", "idempotencyKey"] } },
-        { "if": { "properties": { "kind": { "enum": ["validate", "reconcile"] } } }, "then": { "required": ["gate"] } },
-        { "if": { "properties": { "kind": { "const": "authorize" } } }, "then": { "required": ["policy"] } }
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "route"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "routes",
+              "otherwise"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "load"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "destination",
+              "idempotencyKey"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "validate",
+                  "reconcile"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "gate"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "authorize"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "policy"
+            ]
+          }
+        }
+      ]
+    },
+    "retentionRef": {
+      "description": "Retention MUST come from approved classification/sponsor policy (TRN-REQ-LN-010). Preferred form: 'policy:<policy-id>'. An ISO 8601 duration is accepted only for illustrative examples and non-binding test fixtures.",
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^policy:[A-Za-z0-9._/-]+$"
+        },
+        {
+          "$ref": "#/$defs/duration"
+        }
       ]
     }
   }

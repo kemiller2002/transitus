@@ -33,7 +33,14 @@ save; YAML is never stored or hashed (avoids YAML 1.1/1.2 ambiguity such as
 
 ## 2. Lifecycle stages
 
-> **Revised after TRN-REV-01.** The declarative pipeline document described here is a **phase-2** deliverable (trigger T2, `docs/roadmap.md`). In phase 1, consumers compose the same stage functions directly in F#; the DU model is the phase-2 serialization target, so phase-1 code migrates without semantic change.
+> **Owner-directed revision (DF-TRN-2026-0018), which supersedes the TRN-REV-01 deferral.** A **minimal** declarative typed pipeline is a phase-1 deliverable (TRN-REQ-PS-011). Phase 1 conforms to the profile `schemas/pipeline-phase1.schema.json`:
+> - a linear stage sequence, where each stage depends on at most the previous one;
+> - no `route` or `union` stages;
+> - blocking validation and reconciliation gates;
+> - retention as `policy:` references;
+> - declared `allowedModes` (`run`, `dry-run`, `replay`).
+>
+> Complex DAG constructs (§3 routes and merges, and the bounded set operators) are phase 2 (trigger T2). The three demonstration pipelines are in `examples/pipelines/`.
 
 The fourteen lifecycle stages from the charter are **stage kinds**; the schema adds two structural kinds (`route`, `union`), for sixteen in total. A pipeline is a DAG
 of stage instances; the engine enforces ordering constraints between kinds.
@@ -109,7 +116,7 @@ Expressiveness analysis and escape hatch: TRN-REV-01 challenge C4.
   "schemas": { "bmfRow": { "$ref": "package:irs.eo-bmf/schemas/eo-bmf-row@2" } },
   "stages": [
     { "id": "ingest",   "kind": "ingest",   "source": "bmf" },
-    { "id": "raw",      "kind": "preserve", "dependsOn": ["ingest"], "retention": "P7Y" },
+    { "id": "raw",      "kind": "preserve", "dependsOn": ["ingest"], "retention": "policy:sponsor-retention/public-source-raw" },
     { "id": "parse",    "kind": "parse",    "dependsOn": ["raw"], "template": "irs.eo-bmf/parse@2" },
     { "id": "map",      "kind": "transform","dependsOn": ["parse"], "mapping": "irs.eo-bmf/to-unbound-charity@2" },
     { "id": "check",    "kind": "validate", "dependsOn": ["map"], "profile": "irs.eo-bmf/validation@2", "gate": "blocking" },
@@ -121,7 +128,7 @@ Expressiveness analysis and escape hatch: TRN-REV-01 challenge C4.
   ],
   "errorPolicy": { "default": "quarantine", "maxErrorRate": 0.001 },
   "resources": { "maxInputBytes": "2GiB", "maxRecordBytes": "64KiB", "memoryBudget": "256MiB", "parallelism": 4 },
-  "retention": { "raw": "P7Y", "staging": "P30D", "exceptions": "P2Y", "lineage": "P7Y" },
+  "retention": { "raw": "policy:…", "staging": "policy:…", "exceptions": "policy:…", "lineage": "policy:…" },   // approved policy references only (TRN-REQ-LN-010)
   "schedule": { "cron": "0 6 * * 2", "timeZone": "America/New_York", "misfire": "runOnce" }
 }
 ```
@@ -129,6 +136,13 @@ Expressiveness analysis and escape hatch: TRN-REV-01 challenge C4.
 Full schema: `schemas/pipeline.schema.json`.
 
 ## 5. Expression language (TEL — Transitus Expression Language)
+
+> **Phase 2 (trigger T2).** Phase 1 uses a closed vocabulary instead (TRN-REQ-PS-012):
+> - field maps;
+> - the 13 enumerated operations;
+> - `Compare(field, operator, field-or-literal)` combined with and/or over fields and execution facts.
+>
+> The approval conditions in `examples/pipelines/`, such as `recon.status = 'balanced'`, are within that vocabulary.
 
 A small, typed, total expression language for predicates and computed
 fields, represented as a typed expression tree (JSON AST); a textual surface

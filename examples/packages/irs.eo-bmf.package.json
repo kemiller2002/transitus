@@ -1,0 +1,49 @@
+{
+  "kind": "transitus.mapping-package",
+  "id": "irs.eo-bmf",
+  "version": "0.1.0",
+  "title": "IRS Exempt Organizations Business Master File extract",
+  "description": "Parse the EO BMF regional CSV extracts, compute snapshot diffs by EIN and map to Unbound registry observations. Prior art: Unbound.Replay/Sources.fs.",
+  "basis": [
+    {
+      "kind": "public-specification",
+      "reference": "https://www.irs.gov/charities-non-profits/exempt-organizations-business-master-file-extract-eo-bmf",
+      "retrieved": "2026-11-26"
+    }
+  ],
+  "licence": "MIT (package configuration); format specification subject to rights field",
+  "engine": {
+    "specVersion": "1.0"
+  },
+  "scope": "basic",
+  "rights": {
+    "status": "not-required",
+    "notes": "US federal government publication; verify no restrictions at publication time."
+  },
+  "contents": {
+    "schemas": [
+      "schemas/eo-bmf-row@1.json"
+    ],
+    "templates": [
+      "templates/parse-csv@1.json",
+      "templates/snapshot-diff-by-ein@1.json"
+    ],
+    "mappings": [
+      "mappings/to-unbound-registry-observation@1.json"
+    ],
+    "reference": [
+      "reference/subsection-codes@1.json",
+      "reference/foundation-codes@1.json",
+      "reference/deductibility-codes@1.json"
+    ],
+    "validationProfiles": [
+      "validation@1.json"
+    ],
+    "fixtures": [
+      "fixtures/synthetic-eo1-sample.csv"
+    ],
+    "docs": [
+      "docs/semantics.md"
+    ]
+  }
+}

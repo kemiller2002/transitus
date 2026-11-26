@@ -59,6 +59,15 @@ confirms no public export schemas for these vendors.
 
 ## 3. Unbound package catalogue (proposed)
 
+> **Owner direction (DF-TRN-2026-0019).** Basic packages are phase-1 deliverables and are reusable without a signed customer. Basic means public-specification or target-side canonical. The phase-1 set is in `examples/packages/`:
+> - `irs.eo-bmf`;
+> - `nacha.ach` (rights pending);
+> - `iso20022.camt053` (illustrating the first bank partner's format);
+> - `custodian.schwab` (placeholder until its documentation is obtained);
+> - `unbound.canonical-history`.
+>
+> Vendor-specific turnkey packages follow at T3. Every manifest declares `scope` and `rights` (TRN-REQ-MP-008).
+
 | Package | Basis available today | Status |
 |---|---|---|
 | `irs.eo-bmf` | public-specification (IRS EO BMF extract) | buildable now; Unbound.Replay/Sources.fs parser is prior art |

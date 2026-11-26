@@ -37,12 +37,12 @@ applications) need it.
 | U14 | **State charity registry ingestion (e.g. California AG Registry)** | HTTPS → CSV | snapshot diff by state registration id; identifier assertions | registration-status consequences | Unbound charity knowledge model (added after TRN-REV-01 C12) |
 | U15 | **Positive-pay issue file (outbound)** | domain export API → bank-specified fixed-width/CSV → SFTP | one-directional outbound pipeline; deterministic file id; `r.count` and `r.controlTotal` against issued payments; destination guarantee `none` ⇒ single attempt, OutcomeUnknown on ambiguity | payment issuance | CNV-PAY-002 (added after TRN-REV-01 C12) |
 
-**Release-1 scope note (TRN-REV-01 C12).** Unbound's own records conflict on migration. The adopted convergence clause CNV-EXP-002 (`release_scope: initial-implementation`) requires importing each donor's full fund history from the predecessor platform. The simplification discovery (`requirements/discovery/2026-11-24-simplification-economics/01-REVERSE-REQUIREMENTS-ANALYSIS.md:571`) proposes "no migration in R1" for REQ-X-061. OD-M-14 records no design partner. Which one governs is an Unbound owner decision (OQ-13). Transitus phase 1 serves the uncontested feeds U2, U3, U4, U7, U8, U13, U14 and U15, and serves U1/U10 only if the owner keeps CNV-EXP-002 in release 1.
+**Release-1 scope note (TRN-REV-01 C12).** Unbound's own records conflict on migration. The adopted convergence clause CNV-EXP-002 (`release_scope: initial-implementation`) requires importing each donor's full fund history from the predecessor platform. The simplification discovery (`requirements/discovery/2026-11-24-simplification-economics/01-REVERSE-REQUIREMENTS-ANALYSIS.md:571`) proposes "no migration in R1" for REQ-X-061. OD-M-14 records no design partner. **Owner resolution (2026-11-26, OQ-13):** canonical historical import and migration rehearsal are required in Unbound release 1. U1/U10 are therefore in scope through the Unbound canonical historical import package. Vendor-specific turnkey packages may follow later (T3). The demonstration pipelines are `examples/pipelines/migration-rehearsal.pipeline.json` and `migration-historical-import.pipeline.json`.
 
 ### Worked example: U8 ACH returns
 
 1. `discover` SFTP folder `/returns/` (cursor: files seen by hash).
-2. `ingest` + `preserve` (raw NACHA retained 7 years).
+2. `ingest` + `preserve` (raw NACHA retained per the approved financial-records policy class).
 3. `parse` with `nacha.ach/parse-returns@1` (fixed-width; file/batch/entry/addenda records; blocking-factor padding validated).
 4. `reconcile` blocking: `r.count` entries vs batch control; `r.hashTotal` entry hash; `r.controlTotal` debit/credit totals.
 5. `transform`: `enum.map(nacha.return-reasons@2026)`; `relationship.resolve` original trace → Unbound contribution id via domain lookup API.

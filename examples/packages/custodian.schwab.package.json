@@ -1,0 +1,27 @@
+{
+  "kind": "transitus.mapping-package",
+  "id": "custodian.schwab",
+  "version": "0.1.0",
+  "title": "Schwab custodian files (placeholder)",
+  "description": "Placeholder: declares the package identity, intended templates and the evidence required before content is added.",
+  "basis": [
+    {
+      "kind": "synthetic-representation",
+      "reference": "synthetic — placeholder pending Schwab documentation (OQ-07)"
+    }
+  ],
+  "licence": "MIT (package configuration); format specification subject to rights field",
+  "engine": {
+    "specVersion": "1.0"
+  },
+  "scope": "basic",
+  "rights": {
+    "status": "pending",
+    "notes": "Owner direction: prioritize Schwab's documented format. Contents are added only from Schwab documentation obtained under acceptable terms; nothing is inferred or invented."
+  },
+  "contents": {
+    "docs": [
+      "docs/README.md"
+    ]
+  }
+}

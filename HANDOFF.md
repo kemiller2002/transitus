@@ -19,9 +19,21 @@ Phase 0 of Transitus covers research, architecture and requirements only (WI-000
   - unbound: UNB-TRN discovery requirements;
   - daf-landscape: migration-tooling findings.
 
-## Decisions and assumptions
+## Owner-directed revision (WI-0002, 2026-11-26)
 
-- **Phase 1** is three pure libraries (Formats, Checks, Evidence) that serve the Unbound release-1 feeds (DF-TRN-2026-0016).
+The owner's comment on transitus#1 resolved OQ-13 (migration in release 1) and OQ-14 (independent repository), set the phase-1 scope, and resolved OQ-01/02/04/05/08/09/10/11/15. Applied:
+- **Decisions:** DF-0018..0021 accepted, superseding DF-0016, 0014, 0008 and 0006.
+- **Requirements:** revision passes OWNER-2026-11-26 and TRN-REV-02.
+- **Schemas:** `pipeline-phase1.schema.json`, `policy:` retention, and package `scope` and `rights` fields.
+- **Examples:** three demonstration pipelines and five basic packages.
+- **Validator:** `tools/validate_specs.py`.
+- **Challenge:** independent review TRN-REV-02.
+- **Planning:** roadmap and estimates revised; unresolved conflicts UC-1..UC-16 recorded.
+- **Cross-repository:** Unbound #20, daf-landscape #89 and registry #123 updated.
+
+## Decisions and assumptions (phase 0, as first delivered)
+
+- ~~Phase 1 is three pure libraries (DF-TRN-2026-0016)~~. Superseded by DF-TRN-2026-0018: a minimal declarative pipeline.
 - **The engine, declarative model, packages, AI and UI** wait for triggers T2, T3 and T4.
 - **Echelon.Execution** is used in place inside Unbound. Extraction happens at T2 (DF-TRN-2026-0006).
 - **Licence:** MIT, per the brief. The portfolio-level decision is open (OQ-12).
@@ -31,6 +43,7 @@ Phase 0 of Transitus covers research, architecture and requirements only (WI-000
 - `./praxis validate`: passed.
 - `./praxis registry check`: passed.
 - `python3 -I tools/render_requirements.py --check`: passed.
+- `python3 -I tools/validate_specs.py`: passed (10 examples valid; 7 negative cases rejected).
 - The JSON Schemas pass the Draft 2020-12 metaschema check, and the example pipeline validates against `schemas/pipeline.schema.json`.
 - Not run: no .NET SDK was available here. No F# code exists in phase 0; the requirements renderer is Python by recorded deviation (DF-TRN-2026-0017).
 
@@ -38,8 +51,9 @@ Phase 0 of Transitus covers research, architecture and requirements only (WI-000
 
 The questions needing the owner are OQ-01, 02, 03, 08, 12, 13 and 14 (`docs/open-questions.md`). Two of them block the start of phase 1:
 
-- **OQ-13:** is migration in Unbound release 1?
-- **OQ-14:** should Transitus live in this repository or inside Unbound?
+- OQ-13 and OQ-14 were **resolved by the owner** (2026-11-26).
+- Still open, pending evidence: OQ-03, 06, 07, 12, 16.
+- Unresolved conflicts: UC-1..UC-16.
 
 ## Risks
 
@@ -50,7 +64,7 @@ The questions needing the owner are OQ-01, 02, 03, 08, 12, 13 and 14 (`docs/open
 
 ## Next recommended action
 
-1. The owner answers OQ-13 and OQ-14 and reviews the DF-TRN records.
+1. The owner reviews the `review`-status DF records and UC-1..UC-16. Unbound records the migration decision (UC-3, UC-7) and defines the canonical shape and rehearsal cell (UNB-TRN-013/014).
 2. Phase-1 work item 1: port the requirements renderer to F#.
 3. Phase-1 work item 4: move the `Unbound.Replay` parsers into `Transitus.Formats`.
 

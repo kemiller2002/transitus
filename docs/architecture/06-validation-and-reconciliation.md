@@ -85,6 +85,7 @@ in evidence.
   classified `restricted-financial` must have at least one blocking count
   reconciliation and one blocking control-total or balance reconciliation
   (validator rule PV-12).
+- **Phase 1: no overrides** (TRN-REQ-VR-005, revised). A failed gate stops the execution. Remediation is a corrected mapping, reference data or source, followed by a new execution. Later phases may allow the following only by decision record:
 - Overriding a blocking gate is an **authorization** with elevated approval;
   the override, its justification and the unresolved differences become part
   of evidence. Overrides never change the data.

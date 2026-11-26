@@ -94,6 +94,16 @@ Rules (normative):
 
 ## 3. Standard operation catalogue (v1 proposal)
 
+> **Phase-1 subset (TRN-REQ-TX-009, revised per TRN-REV-02).** Phase 1 implements exactly the 13 operations the three demonstration pipelines need:
+> - `text.trim`, `text.case` (invariant);
+> - `field.require`, `field.default`;
+> - `number.parse`, `money.parse` (with `impliedDecimals`), `date.parse`;
+> - `enum.map`, `id.normalize` (with `cusip`);
+> - `lookup`, `dedupe` (reject-all), snapshot-diff by natural key;
+> - `privacy.hash` (HMAC only).
+>
+> The rest of the catalogue below is the later-phase specification. Each further operation needs a consumer pipeline that uses it.
+
 `R` = reversible, `K` = reversible with key, `I` = irreversible. "Loss" means
 `MayLoseInformation`.
 
@@ -116,7 +126,7 @@ Rules (normative):
 | Operation | Rev | Loss | Semantics |
 |---|---|---|---|
 | `number.parse@1` (`culture`, `groupSeparator`, `decimalSeparator`, `allowExponent=false`, `negative: minus\|parentheses\|trailing-minus`) | I (value-preserving; source formatting not retained) | no | Exact parse to `Decimal`; rejects ambiguous inputs like `1,234` when culture is not declared. |
-| `money.parse@1` (`currency` fixed or from field, `scale`) | I (value-preserving; source formatting not retained) | no | Rejects more fractional digits than scale (`PRECISION_LOSS`). Currency symbols are not interpreted unless a symbol→ISO map is declared. |
+| `money.parse@1` (`currency` fixed or from field, `scale`, `impliedDecimals` for formats such as BAI2 that carry amounts without a decimal point) | I (value-preserving; source formatting not retained) | no | Rejects more fractional digits than scale (`PRECISION_LOSS`). Currency symbols are not interpreted unless a symbol→ISO map is declared. |
 | `decimal.round@1` (`scale`, `mode: half-even\|half-up\|half-down\|floor\|ceiling\|truncate`) | I | yes | Only way to reduce scale. `acknowledgeLoss` mandatory; financial fields need approval reference. |
 | `decimal.rescale@1` (increase only) | R | no | Adds trailing zeros. Decrease → error. |
 | `math.eval@1` (expression over + − × ÷, min, max, abs, with declared result scale and rounding) | I | when rounding | Division always requires a declared scale and rounding mode; divide-by-zero → `DIVIDE_BY_ZERO`. No exponentiation, no floats. |
@@ -139,7 +149,7 @@ Rules (normative):
 | Operation | Rev | Loss | Semantics |
 |---|---|---|---|
 | `enum.map@1` (`codeSet@v`, `onUnknown: error\|quarantine\|default(value)`) | R if bijective | no | Many-to-one mapping flagged `I` automatically by the validator. |
-| `id.normalize@1` (`kind: ein\|routing-number\|iban\|npi\|ssn-last4\|uuid\|custom(setId)`) | I | no | Removes formatting, validates check digits (ABA routing checksum, IBAN mod-97, NPI Luhn). Invalid → error, never "fixed". |
+| `id.normalize@1` (`kind: ein\|routing-number\|iban\|npi\|cusip\|ssn-last4\|uuid\|custom(setId)`; CUSIP check digit validated) | I | no | Removes formatting, validates check digits (ABA routing checksum, IBAN mod-97, NPI Luhn). Invalid → error, never "fixed". |
 | `address.normalize@1` (`country`, `ruleset@v`) | I | yes | Structural normalization only (casing, abbreviations from a pinned ruleset such as USPS Publication 28 suffixes). Postal *validation* (CASS) is an adapter-level, optional, external service and is never implicit. |
 | `name.parse@1` | I | yes | Optional; heuristic, so outputs are **suggestions** that must be approved when used for matching. |
 
