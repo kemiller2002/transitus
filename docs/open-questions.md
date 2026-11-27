@@ -42,6 +42,17 @@ provenance:
         runtime: claude-code
       reason: "Stage I review fixes S1-06/07/08/15 and OD-P3-04 note (WI-0005)"
       evidence: [docs/research/03-daf-phase3-dispositions.md]
+    EXE-20261127T023211757Z-766c3a85:
+      operations: [modified]
+      at: 2026-11-27T02:33:57.000Z
+      actor:
+        kind: agent
+        id: anthropic/claude-code
+        provider: anthropic
+        model: unknown
+        runtime: claude-code
+      reason: "Owner ratification of DAF-P3 requirement rows (transitus#2 comment 7208145101, 2026-11-27)"
+      evidence: [https://github.com/kemiller2002/transitus/pull/2#issuecomment-7208145101]
 ---
 
 # Open questions
@@ -85,9 +96,9 @@ See `docs/research/03-daf-phase3-dispositions.md` §6. OD-TRN-P3-01 and OQ-17 re
 
 | ID | Question | Evidence | Blocks |
 |---|---|---|---|
-| OD-TRN-P3-01 | Owner decision: which legal-basis and approval preconditions bind each assessment tier — Phase II revision 2 (T1 after sponsor IT approval; T2+ under MSA + DPA) or daf-landscape charity-network report 13 and Unbound UNB-ONB-003 (T0-T1 NDA; T2 NDA/DPA)? Counsel input needed. | daf-landscape `competitive-displacement/08` §3; `charity-network-and-onboarding/13` §2-§3; Unbound UNB-ONB-003 | ASM-001 parameters (trigger TA) |
+| OD-TRN-P3-01 | Owner decision: which legal-basis and approval preconditions bind each assessment tier — Phase II revision 2 (T1 after sponsor IT approval; T2+ under MSA + DPA) or daf-landscape charity-network report 13 and Unbound UNB-ONB-003 (T0-T1 NDA; T2 NDA/DPA)? Counsel input needed. | daf-landscape `competitive-displacement/08` §3; `charity-network-and-onboarding/13` §2-§3; Unbound UNB-ONB-003 | ASM-001 parameters (trigger TA). **Proposal (2026-11-27):** option C in `docs/research/04-assessment-legal-basis-and-disclosure-proposals.md` §1, for owner decision and counsel review. The stricter default (option A) stays in force. |
 | OD-TRN-P3-02 | Owner decision: does the DEC-008 kill rule (no named partner by month 6; no referenceable pilot by month 24) pause Transitus work beyond phase 1, given that TRN-REQ-PF-004 is non-gating? | DF-TRN-2026-0025; daf-landscape `22` kill rule | **Resolved 2026-11-26 by the owner:** "Kill rule doesn't stop Transitus." The DEC-008 kill rule does not pause Transitus work, including work beyond phase 1 (DF-TRN-2026-0026). No expenditure or implementation is authorized; scope stays DEC-011 phase 1. Owner decision OD-P3-04 ("Significant is when it becomes its own cost center") defines when the DEC-008 no-named-partner clock starts. |
-| OQ-17 | What disclosure-control thresholds apply to T1 profiles (minimum contributor count, minimum population, dominance share)? Research proposes k = 10; no binding default is adopted. | `charity-network-and-onboarding/13` §2; TRN-REQ-PRF-001 | ASM-003 |
+| OQ-17 | What disclosure-control thresholds apply to T1 profiles (minimum contributor count, minimum population, dominance share)? Research proposes k = 10; no binding default is adopted. | `charity-network-and-onboarding/13` §2; TRN-REQ-PRF-001 | ASM-003. **Proposal (2026-11-27):** k = 11, a minimum population of 11 funds, an (n,k) dominance rule with values set after a synthetic utility test, and mandatory secondary suppression (`docs/research/04-...` §2). No binding default is shipped meanwhile. |
 
 ## Unresolved conflicts
 

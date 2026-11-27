@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "transitus",
-  "nextSeq": 6,
+  "nextSeq": 7,
   "items": [
     {
       "id": "WI-0001",
@@ -97,6 +97,27 @@
       "attachments": [],
       "createdAt": "2026-11-26T21:00:15.984Z",
       "updatedAt": "2026-11-26T21:01:38.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0006",
+      "title": "Ratify DAF-P3 requirement rows per owner direction on transitus#2 (2026-11-27); proposals for OD-TRN-P3-01 and OQ-17",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "ready",
+      "attachments": [],
+      "createdAt": "2026-11-27T02:32:10.315Z",
+      "updatedAt": "2026-11-27T02:32:10.000Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",

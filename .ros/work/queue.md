@@ -8,3 +8,4 @@
 | WI-0003 | DAF Landscape Phase III Stage I: record owner approval of DEC-007/008/010/011/012, process XRI-009..014, pre-contract assessment requirements (no production code) | complete |  | medium |
 | WI-0004 | Record owner resolution of OD-TRN-P3-02: DEC-008 kill rule does not gate Transitus | complete |  | medium |
 | WI-0005 | Address Stage I review findings S1-06/07/08/15 and OD-P3-04 note | complete |  | medium |
+| WI-0006 | Ratify DAF-P3 requirement rows per owner direction on transitus#2 (2026-11-27); proposals for OD-TRN-P3-01 and OQ-17 | ready |  | medium |

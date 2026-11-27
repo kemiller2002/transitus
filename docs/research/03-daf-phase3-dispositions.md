@@ -42,6 +42,17 @@ provenance:
         runtime: claude-code
       reason: "Stage I review fixes S1-06/07/08/15 and OD-P3-04 note (WI-0005)"
       evidence: [docs/research/03-daf-phase3-dispositions.md]
+    EXE-20261127T023211757Z-766c3a85:
+      operations: [modified]
+      at: 2026-11-27T02:33:57.000Z
+      actor:
+        kind: agent
+        id: anthropic/claude-code
+        provider: anthropic
+        model: unknown
+        runtime: claude-code
+      reason: "Owner ratification of DAF-P3 requirement rows (transitus#2 comment 7208145101, 2026-11-27)"
+      evidence: [https://github.com/kemiller2002/transitus/pull/2#issuecomment-7208145101]
 ---
 
 # DAF Landscape Phase III: dispositions for Transitus
@@ -325,3 +336,29 @@ DEC-005 (owner-approved 2026-11-26) says AI assessments and inferred records are
 - Future implementation tests are named in each requirement's acceptance
   criteria. None can run yet: there is no code, and implementation is not
   authorized.
+
+## 9. Ratification and preservation confirmation (2026-11-27, WI-0006)
+
+The owner ratified the requirement rows of revisions `DAF-P3-2026-11-26` and
+`DAF-P3-REV-S1`, subject to existing gates. The direction was given on
+transitus#2, comment 7208145101, and confirmed in session on 2026-11-27.
+Twenty-three rows are now `accepted`, with `approval` set to "owner
+2026-11-27 (PR #2 direction ...)":
+- the 19 new rows;
+- the refined VR-010, MP-004, MIG-001 and ARC-009.
+
+Phase, priority, trigger TA, T3, the DEC-010 / V-4 gate and phase gating are
+unchanged. Ratification is not implementation authorization. The owner also
+said to preserve exact monetary reconciliation and authorized data access.
+The ratified set preserves both, as follows; no new requirement was needed.
+
+| Property | Preserved by |
+|---|---|
+| Exact monetary reconciliation | VR-002 and VR-003 (zero default tolerance); VR-010 (counts and monetary totals exact over the full population); VR-014 refuses to sample monetary amounts, unit quantities and counts; VR-013 (financial gates blocking in every phase); VR-005 (no overrides in phase 1); VR-009 (no plugs); MIG-005 (round-trip totals exact) |
+| Authorized data access | AD-008 (no direct business-table credentials; domain APIs only); SEC-009, SEC-011 and SEC-020 (secrets by reference; tenant isolation and negative tests); ST-001 (rights policy governs raw retention); AI-007 (minimized AI exposure); ASM-001 (tier-exceeding input rejected before persistence; T1 needs a recorded sponsor IT approval; T2+ needs a recorded MSA and DPA); ASM-003 (no row-level values leave at T1); ASM-004 (isolated cell, purge by policy, no reuse for development or AI training) |
+
+The remaining open questions OD-TRN-P3-01 and OQ-17 have evidence-based
+proposals in `docs/research/04-assessment-legal-basis-and-disclosure-proposals.md`.
+That document draws no legal conclusion. The stricter defaults stay in force
+until the owner decides.
+

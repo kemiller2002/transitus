@@ -1,7 +1,7 @@
 ---
 id: TRN-REQ-TRACE
 title: Transitus Requirements Traceability
-status: proposed
+status: mixed
 version: 0.1.0
 created: 2026-11-26
 updated: 2026-11-26

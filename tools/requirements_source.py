@@ -400,3 +400,20 @@ def _p3b(r):
     return {**r, "statement": STATEMENT_P3B[short], "acceptance": ACC_P3B.get(short, r["acceptance"]), "revision": P3B,
             "design": r["design"] + [d for d in DESIGN_P3B.get(short, []) if d not in r["design"]]}
 R = [_p3b(r) for r in R]
+
+# ---------------------------------------------------------------------------
+# Revision 4 (2026-11-27): owner ratification, WI-0006. Owner direction on transitus#2
+# (https://github.com/kemiller2002/transitus/pull/2#issuecomment-7208145101, confirmed in session 2026-11-27):
+# "Owner approves proposed requirement rows for ratification subject to existing gates."
+# Ratified = every row whose current text comes from revision DAF-P3-2026-11-26 or DAF-P3-REV-S1
+# (19 new rows plus the refinements of VR-010, MP-004, MIG-001, ARC-009 and the S1 revision of MP-010).
+# Status becomes "accepted"; phase, priority, triggers (TA, T3), the DEC-010/V-4 gate and phase gating are
+# unchanged. Ratification is NOT implementation authorization and authorizes no expenditure.
+RATIFIED_BY = "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)"
+RATIFIED_REVISIONS = {"DAF-P3-2026-11-26", "DAF-P3-REV-S1"}
+def _ratify(r):
+    if r.get("revision") not in RATIFIED_REVISIONS:
+        return r
+    return {**r, "status": "accepted", "approval": RATIFIED_BY,
+            "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"}
+R = [_ratify(r) for r in R]

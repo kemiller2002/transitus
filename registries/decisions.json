@@ -977,7 +977,12 @@
     "work_item": "WI-0002"
   },
   {
-    "approval_stage": "strategically-approved",
+    "approval_stage": "requirements-incorporated",
+    "approval_stage_history": [
+      "strategically-approved 2026-11-26 (DAF Landscape Phase III owner approval)",
+      "requirements-incorporated 2026-11-27 (owner ratification",
+      "transitus#2 comment 7208145101)"
+    ],
     "confidence": "high",
     "created": "2026-11-26",
     "created_by_agent": "claude",
@@ -1025,6 +1030,23 @@
             "modified"
           ],
           "reason": "Stage I review fixes S1-06/07/08/15 and OD-P3-04 note (WI-0005)"
+        },
+        "EXE-20261127T023211757Z-766c3a85": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-27T02:33:54.000Z",
+          "evidence": [
+            "https://github.com/kemiller2002/transitus/pull/2#issuecomment-7208145101"
+          ],
+          "operations": [
+            "modified"
+          ],
+          "reason": "Owner ratification of DAF-P3 requirement rows (transitus#2 comment 7208145101, 2026-11-27)"
         }
       }
     },
@@ -1038,11 +1060,16 @@
       "strategic-approval"
     ],
     "title": "Owner strategic approval of DAF Landscape DEC-011 (Transitus scope discipline): keep the approved phase-1 scope, develop public-specification and canonical migration capabilities, and defer customer-specific proprietary vendor packages until authorized source data exists",
-    "updated": "2026-11-26",
+    "updated": "2026-11-27",
     "work_item": "WI-0003"
   },
   {
-    "approval_stage": "strategically-approved",
+    "approval_stage": "requirements-incorporated",
+    "approval_stage_history": [
+      "strategically-approved 2026-11-26 (DAF Landscape Phase III owner approval)",
+      "requirements-incorporated 2026-11-27 (owner ratification",
+      "transitus#2 comment 7208145101)"
+    ],
     "confidence": "medium",
     "created": "2026-11-26",
     "created_by_agent": "claude",
@@ -1073,6 +1100,23 @@
             "created"
           ],
           "reason": "Record owner strategic approval of DAF Landscape Phase II decisions (2026-11-26)"
+        },
+        "EXE-20261127T023211757Z-766c3a85": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-27T02:33:55.000Z",
+          "evidence": [
+            "https://github.com/kemiller2002/transitus/pull/2#issuecomment-7208145101"
+          ],
+          "operations": [
+            "modified"
+          ],
+          "reason": "Owner ratification of DAF-P3 requirement rows (transitus#2 comment 7208145101, 2026-11-27)"
         }
       }
     },
@@ -1086,11 +1130,16 @@
       "strategic-approval"
     ],
     "title": "Owner strategic approval of DAF Landscape DEC-007 (concentrated migration strategy): the first vendor-specific source package targets one incumbent source cluster selected on recorded evidence, never arbitrarily",
-    "updated": "2026-11-26",
+    "updated": "2026-11-27",
     "work_item": "WI-0003"
   },
   {
-    "approval_stage": "strategically-approved",
+    "approval_stage": "requirements-incorporated",
+    "approval_stage_history": [
+      "strategically-approved 2026-11-26 (DAF Landscape Phase III owner approval)",
+      "requirements-incorporated 2026-11-27 (owner ratification",
+      "transitus#2 comment 7208145101)"
+    ],
     "confidence": "high",
     "created": "2026-11-26",
     "created_by_agent": "claude",
@@ -1122,6 +1171,23 @@
             "created"
           ],
           "reason": "Record owner strategic approval of DAF Landscape Phase II decisions (2026-11-26)"
+        },
+        "EXE-20261127T023211757Z-766c3a85": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-27T02:33:55.000Z",
+          "evidence": [
+            "https://github.com/kemiller2002/transitus/pull/2#issuecomment-7208145101"
+          ],
+          "operations": [
+            "modified"
+          ],
+          "reason": "Owner ratification of DAF-P3 requirement rows (transitus#2 comment 7208145101, 2026-11-27)"
         }
       }
     },
@@ -1135,11 +1201,16 @@
       "strategic-approval"
     ],
     "title": "Owner strategic approval of DAF Landscape DEC-010 (evidence-based process SLAs): Transitus measures migration timing and onboarding maturity as targets only; no SLA or maturity level is claimed or committed before successful rehearsal and validation (V-4) and contractual review",
-    "updated": "2026-11-26",
+    "updated": "2026-11-27",
     "work_item": "WI-0003"
   },
   {
-    "approval_stage": "strategically-approved",
+    "approval_stage": "requirements-incorporated",
+    "approval_stage_history": [
+      "strategically-approved 2026-11-26 (DAF Landscape Phase III owner approval)",
+      "requirements-incorporated 2026-11-27 (owner ratification",
+      "transitus#2 comment 7208145101)"
+    ],
     "confidence": "medium",
     "created": "2026-11-26",
     "created_by_agent": "claude",
@@ -1204,6 +1275,23 @@
             "modified"
           ],
           "reason": "Stage I review fixes S1-06/07/08/15 and OD-P3-04 note (WI-0005)"
+        },
+        "EXE-20261127T023211757Z-766c3a85": {
+          "actor": {
+            "id": "anthropic/claude-code",
+            "kind": "agent",
+            "model": "unknown",
+            "provider": "anthropic",
+            "runtime": "claude-code"
+          },
+          "at": "2026-11-27T02:33:56.000Z",
+          "evidence": [
+            "https://github.com/kemiller2002/transitus/pull/2#issuecomment-7208145101"
+          ],
+          "operations": [
+            "modified"
+          ],
+          "reason": "Owner ratification of DAF-P3 requirement rows (transitus#2 comment 7208145101, 2026-11-27)"
         }
       }
     },
@@ -1217,7 +1305,7 @@
       "strategic-approval"
     ],
     "title": "Owner strategic approval of DAF Landscape DEC-012 (commercial validation plan) and DEC-008 (gated capital deployment) as constraints on Transitus: V-4 is the Transitus evidence gate, synthetic rehearsal is a lower-cost precursor that cannot satisfy it, and Transitus effort estimates are not approved expenditure",
-    "updated": "2026-11-26",
+    "updated": "2026-11-27",
     "work_item": "WI-0003"
   },
   {

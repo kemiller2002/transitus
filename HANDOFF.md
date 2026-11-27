@@ -45,6 +45,7 @@ The owner strategically approved DAF Landscape DEC-001..012 on 2026-11-26. For T
   - S1-06: phase-1 scope-impact statement in the roadmap and DF-0025/DF-0022 annotations; ARC-009 names the gated phase-1 rows.
   - S1-07: MP-010 consumes Unbound UNB-CDD-ONB-002.
   - S1-15: DEC-005 trace in the dispositions doc §7a.
+- **Ratification (WI-0006, 2026-11-27):** the owner ratified the 23 DAF-P3 rows on transitus#2, subject to existing gates. Status is `accepted` with an `approval` field. DF-0022..0025 are now `approval_stage: requirements-incorporated`; DF-0026 stays strategically approved. Proposals for OD-TRN-P3-01 and OQ-17 are in `docs/research/04-assessment-legal-basis-and-disclosure-proposals.md`. The PRF-001 secondary-suppression refinement is proposed, not applied. Nothing is implemented, and nothing is merged by the agent.
 - **IP note (S1-08):** owner decision OD-P3-01 / OD-DAF-IP-001 ("EF owns all property we make"). `LICENSE` names an individual as copyright holder. **TODO for counsel**; `LICENSE` is not edited (see `docs/open-questions.md`, OQ-12 note).
 - **Tooling:** `tools/render_requirements.py` now preserves the Praxis provenance block of `requirements/REQUIREMENTS.md` across re-renders. Previously, re-rendering dropped it.
 - **Not authorized:** expenditure, commitments, implementation. The V-4 gate is not satisfied.

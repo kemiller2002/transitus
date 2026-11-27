@@ -1,7 +1,11 @@
 {
  "schema": "transitus.requirements/v1",
- "status": "proposed",
+ "status": "mixed",
  "count": 171,
+ "statusCounts": {
+  "accepted": 23,
+  "proposed": 148
+ },
  "requirements": [
   {
    "id": "TRN-REQ-PS-001",
@@ -1022,8 +1026,10 @@
     "DF-TRN-2026-0025"
    ],
    "verify": "test",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-VR-011",
@@ -1263,8 +1269,10 @@
     "DF-TRN-2026-0023"
    ],
    "verify": "test",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-MP-005",
@@ -2014,8 +2022,10 @@
     "DF-TRN-2026-0023"
    ],
    "verify": "review",
-   "status": "proposed",
-   "revision": "DAF-P3-REV-S1"
+   "status": "accepted",
+   "revision": "DAF-P3-REV-S1",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-EX-013",
@@ -2508,8 +2518,10 @@
     "DF-TRN-2026-0025"
    ],
    "verify": "test",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-MIG-002",
@@ -2609,8 +2621,10 @@
     "DF-TRN-2026-0022"
    ],
    "verify": "test",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-PRF-002",
@@ -2628,8 +2642,10 @@
     "DF-TRN-2026-0022"
    ],
    "verify": "test",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-PRF-003",
@@ -2647,8 +2663,10 @@
     "DF-TRN-2026-0022"
    ],
    "verify": "test",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-VR-014",
@@ -2667,8 +2685,10 @@
     "DF-TRN-2026-0025"
    ],
    "verify": "test",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-MIG-005",
@@ -2686,8 +2706,10 @@
     "DF-TRN-2026-0011"
    ],
    "verify": "test",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-MIG-006",
@@ -2705,8 +2727,10 @@
     "DF-TRN-2026-0022"
    ],
    "verify": "test",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-MIG-007",
@@ -2724,8 +2748,10 @@
     "DF-TRN-2026-0007"
    ],
    "verify": "test",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-MP-010",
@@ -2745,8 +2771,10 @@
     "DF-TRN-2026-0019"
    ],
    "verify": "review",
-   "status": "proposed",
-   "revision": "DAF-P3-REV-S1"
+   "status": "accepted",
+   "revision": "DAF-P3-REV-S1",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-MET-001",
@@ -2763,8 +2791,10 @@
     "DF-TRN-2026-0024"
    ],
    "verify": "test",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-MET-002",
@@ -2781,8 +2811,10 @@
     "DF-TRN-2026-0024"
    ],
    "verify": "review",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-MET-003",
@@ -2799,8 +2831,10 @@
     "DF-TRN-2026-0024"
    ],
    "verify": "test",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-ASM-001",
@@ -2818,8 +2852,10 @@
     "DF-TRN-2026-0022"
    ],
    "verify": "review",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-ASM-002",
@@ -2836,8 +2872,10 @@
     "DF-TRN-2026-0022"
    ],
    "verify": "review",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-ASM-003",
@@ -2855,8 +2893,10 @@
     "DF-TRN-2026-0022"
    ],
    "verify": "review",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-ASM-004",
@@ -2873,8 +2913,10 @@
     "DF-TRN-2026-0022"
    ],
    "verify": "review",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-ASM-005",
@@ -2892,8 +2934,10 @@
     "DF-TRN-2026-0025"
    ],
    "verify": "test",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-ASM-006",
@@ -2912,8 +2956,10 @@
     "DF-TRN-2026-0024"
    ],
    "verify": "review",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-ASM-007",
@@ -2930,8 +2976,10 @@
     "DF-TRN-2026-0022"
    ],
    "verify": "test",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-ASM-008",
@@ -2948,8 +2996,10 @@
     "DF-TRN-2026-0022"
    ],
    "verify": "test",
-   "status": "proposed",
-   "revision": "DAF-P3-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   }
  ]
 }
