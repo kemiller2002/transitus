@@ -2,11 +2,36 @@
 id: TRN-ROADMAP
 title: Phased Implementation Roadmap
 status: proposed
-version: 0.3.0
+version: 0.4.0
 created: 2026-11-26
 updated: 2026-11-26
 work_item: WI-0002
-decisions: [DF-TRN-2026-0018, DF-TRN-2026-0019, DF-TRN-2026-0020, DF-TRN-2026-0021]
+decisions: [DF-TRN-2026-0018, DF-TRN-2026-0019, DF-TRN-2026-0020, DF-TRN-2026-0021, DF-TRN-2026-0022, DF-TRN-2026-0023, DF-TRN-2026-0024, DF-TRN-2026-0025]
+revision_note: "WI-0003 (2026-11-26): DAF Landscape Phase III owner strategic approvals; see docs/research/03-daf-phase3-dispositions.md"
+provenance:
+  contributions:
+    EXE-20261126T203508536Z-de9f55a7:
+      operations: [modified]
+      at: 2026-11-26T20:42:23.000Z
+      actor:
+        kind: agent
+        id: anthropic/claude-code
+        provider: anthropic
+        model: unknown
+        runtime: claude-code
+      reason: "DAF Landscape Phase III revision: trigger TA, DEC-007 ordering, new owner decisions and conflicts"
+      evidence: [docs/research/03-daf-phase3-dispositions.md]
+    EXE-20261126T210016939Z-536fe55b:
+      operations: [modified]
+      at: 2026-11-26T21:01:23.000Z
+      actor:
+        kind: agent
+        id: anthropic/claude-code
+        provider: anthropic
+        model: unknown
+        runtime: claude-code
+      reason: "Stage I review fixes S1-06/07/08/15 and OD-P3-04 note (WI-0005)"
+      evidence: [docs/research/03-daf-phase3-dispositions.md]
 ---
 
 # Phased implementation roadmap
@@ -21,6 +46,24 @@ document.** The owner reserved both until the Praxis gates pass.
 
 Phase 0 is complete when the owner has accepted or revised the remaining
 `review`-status decision records and the Praxis gates pass.
+
+## DAF Landscape Phase III revision (WI-0003, 2026-11-26)
+
+The owner strategically approved DEC-007, DEC-008, DEC-010, DEC-011 and DEC-012 (DF-TRN-2026-0022..0025). For this roadmap:
+- **Phase-1 scope and budget are unchanged** (DEC-011). The revision adds
+  requirements that reuse existing stages:
+
+  > **Correction (2026-11-26, WI-0005, review finding S1-06; the statement above is kept for history):** "unchanged" is inaccurate. revision DAF-P3-2026-11-26 added 18 phase-1 requirement rows (phase-1 total 121 → 139; P0 106 → 108: MIG-006 and MIG-007). Eight are gated and excluded from phase-1 exit (TA: ASM-001..004/006, PRF-003; DEC-010: MET-002/003, see TRN-REQ-ARC-009). Ten are ungated: PRF-001/002, VR-014, MIG-005/006/007, MET-001 and the constraints ASM-005/007/008. Their statements name no new code package, third-party parser, mapping package, transformation operation (of the 13) or port, so the ARC-007 *counts* are not exceeded on the text; they do add work inside existing packages (Formats: PRF-002; Checks: PRF-001, VR-014, MIG-005; Model: MIG-006; Engine/Evidence: MIG-007, MET-001) that is **not estimated**. Phase-1 scope therefore grows; these are proposed additions pending owner acceptance, not an unchanged scope.
+
+  - profile and schema discovery (PRF-001/002);
+  - non-money sampling (VR-014);
+  - the mapping-test harness (MIG-005);
+  - typed absence reasons (MIG-006);
+  - the effects manifest (MIG-007);
+  - measurement facts (MET-001).
+- **Trigger TA** gates the pre-contract assessment (ASM-001..004/006, PRF-003) and the gated measurement outputs (MET-002/003 commercial use waits for DEC-010).
+- **V-4 is the Transitus evidence gate** (DF-0025). Synthetic rehearsal is a cheaper precursor that cannot satisfy it.
+- The effort figures below are theoretical and are **not approved expenditure** (DEC-008).
 
 ## Phase 1: minimal declarative typed pipeline (owner-directed)
 
@@ -123,6 +166,23 @@ For comparison, earlier estimates were:
 **Scope:**
 - `Transitus.Assist`, provider-independent (AI-010);
 - vendor packages, built only on two independent samples (MP-005).
+
+**Ordering rule (DEC-007, MP-010).** The first vendor-specific package targets one incumbent source cluster, chosen by a recorded decision. That decision cites V-5 evidence and a customer-authorized sample. No incumbent is selected yet. Report-style sources are versioned per report version, with a drift test (MP-004).
+
+## Pre-contract migration assessment (trigger TA)
+
+**Trigger TA:** a recorded owner authorization naming the consumer requirement that needs the assessment. Unbound UNB-ONB-003 is `commercial-availability`.
+
+**Scope:**
+- T0 template (ASM-002);
+- T1 offline profiler with disclosure controls (ASM-003, PRF-001);
+- T2+ assessment in an isolated cell (ASM-004);
+- deterministic mapping suggestions (PRF-003);
+- the assessment report (ASM-006).
+
+**Built from:** synthetic data and public specifications only, until customer-authorized data exists (ASM-008).
+
+**Blocked on:** OD-TRN-P3-01 (tier legal basis) and OQ-17 (thresholds). No estimate is given; none is approved.
 
 ## Phase 4: visual editing (trigger T4)
 

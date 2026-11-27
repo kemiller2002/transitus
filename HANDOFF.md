@@ -31,6 +31,25 @@ The owner's comment on transitus#1 resolved OQ-13 (migration in release 1) and O
 - **Planning:** roadmap and estimates revised; unresolved conflicts UC-1..UC-16 recorded.
 - **Cross-repository:** Unbound #20, daf-landscape #89 and registry #123 updated.
 
+## DAF Landscape Phase III revision (WI-0003, 2026-11-26)
+
+The owner strategically approved DAF Landscape DEC-001..012 on 2026-11-26. For Transitus:
+
+- **Decisions:** DF-TRN-2026-0022..0025 record DEC-011, DEC-007, DEC-010 and DEC-012/DEC-008. Their `status` is `accepted` with `approval_stage: strategically-approved`, because Praxis allows no other DF status. No record is superseded.
+- **Requirements:** revision `DAF-P3-2026-11-26` adds 19 proposed requirements (PRF-001..003, VR-014, MIG-005..007, MP-010, MET-001..003, ASM-001..008) and refines VR-010, MP-004, MIG-001 and ARC-009. The register now holds 171 requirements.
+- **Trigger TA:** gates the pre-contract assessment.
+- **XRI-009..014 dispositions, capability coverage and the generic/Unbound boundary:** `docs/research/03-daf-phase3-dispositions.md`.
+- **Open:** OD-TRN-P3-01, OQ-17 and UC-17..19 (`docs/open-questions.md`).
+- **OD-TRN-P3-02 resolved by the owner (2026-11-26, WI-0004):** the DEC-008 kill rule does not stop Transitus (DF-TRN-2026-0026).
+- **Stage I review fixes (WI-0005):**
+  - S1-06: phase-1 scope-impact statement in the roadmap and DF-0025/DF-0022 annotations; ARC-009 names the gated phase-1 rows.
+  - S1-07: MP-010 consumes Unbound UNB-CDD-ONB-002.
+  - S1-15: DEC-005 trace in the dispositions doc §7a.
+- **Ratification (WI-0006, 2026-11-27):** the owner ratified the 23 DAF-P3 rows on transitus#2, subject to existing gates. Status is `accepted` with an `approval` field. DF-0022..0025 are now `approval_stage: requirements-incorporated`; DF-0026 stays strategically approved. Proposals for OD-TRN-P3-01 and OQ-17 are in `docs/research/04-assessment-legal-basis-and-disclosure-proposals.md`. The PRF-001 secondary-suppression refinement is proposed, not applied. Nothing is implemented, and nothing is merged by the agent.
+- **IP note (S1-08):** owner decision OD-P3-01 / OD-DAF-IP-001 ("EF owns all property we make"). `LICENSE` names an individual as copyright holder. **TODO for counsel**; `LICENSE` is not edited (see `docs/open-questions.md`, OQ-12 note).
+- **Tooling:** `tools/render_requirements.py` now preserves the Praxis provenance block of `requirements/REQUIREMENTS.md` across re-renders. Previously, re-rendering dropped it.
+- **Not authorized:** expenditure, commitments, implementation. The V-4 gate is not satisfied.
+
 ## Decisions and assumptions (phase 0, as first delivered)
 
 - ~~Phase 1 is three pure libraries (DF-TRN-2026-0016)~~. Superseded by DF-TRN-2026-0018: a minimal declarative pipeline.

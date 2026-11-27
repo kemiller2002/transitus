@@ -8,6 +8,8 @@ Phase 0 (research, architecture and requirements), revised per owner direction o
 | Competitive research | [`research/01-competitive-research.md`](research/01-competitive-research.md) |
 | Source register | [`research/source-register.md`](research/source-register.md) · [JSON](research/source-register.json) |
 | Cross-industry use cases | [`research/02-use-cases.md`](research/02-use-cases.md) |
+| DAF Landscape Phase III dispositions (XRI-009..014, pre-contract assessment, boundary) | [`research/03-daf-phase3-dispositions.md`](research/03-daf-phase3-dispositions.md) |
+| Proposals: assessment tier legal basis (OD-TRN-P3-01) and T1 disclosure thresholds (OQ-17) | [`research/04-assessment-legal-basis-and-disclosure-proposals.md`](research/04-assessment-legal-basis-and-disclosure-proposals.md) |
 | Architectural principles | [`architecture/00-principles.md`](architecture/00-principles.md) |
 | Pipeline specification proposal | [`architecture/01-lifecycle-and-pipeline-specification.md`](architecture/01-lifecycle-and-pipeline-specification.md) · [`../schemas/pipeline.schema.json`](../schemas/pipeline.schema.json) · phase-1 profile [`../schemas/pipeline-phase1.schema.json`](../schemas/pipeline-phase1.schema.json) · [demonstration pipelines](../examples/pipelines/) |
 | Storage architecture | [`architecture/02-storage-architecture.md`](architecture/02-storage-architecture.md) |

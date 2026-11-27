@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "transitus",
-  "nextSeq": 3,
+  "nextSeq": 7,
   "items": [
     {
       "id": "WI-0001",
@@ -34,6 +34,90 @@
       "attachments": [],
       "createdAt": "2026-11-26T18:17:01.457Z",
       "updatedAt": "2026-11-26T18:27:54.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0003",
+      "title": "DAF Landscape Phase III Stage I: record owner approval of DEC-007/008/010/011/012, process XRI-009..014, pre-contract assessment requirements (no production code)",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-11-26T20:35:01.629Z",
+      "updatedAt": "2026-11-26T20:42:43.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0004",
+      "title": "Record owner resolution of OD-TRN-P3-02: DEC-008 kill rule does not gate Transitus",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-11-26T20:51:07.723Z",
+      "updatedAt": "2026-11-26T20:51:51.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0005",
+      "title": "Address Stage I review findings S1-06/07/08/15 and OD-P3-04 note",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-11-26T21:00:15.984Z",
+      "updatedAt": "2026-11-26T21:01:38.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0006",
+      "title": "Ratify DAF-P3 requirement rows per owner direction on transitus#2 (2026-11-27); proposals for OD-TRN-P3-01 and OQ-17",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-11-27T02:32:10.315Z",
+      "updatedAt": "2026-11-27T02:34:14.000Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",

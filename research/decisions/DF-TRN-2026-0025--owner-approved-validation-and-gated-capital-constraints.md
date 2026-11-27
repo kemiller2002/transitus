@@ -1,0 +1,143 @@
+---
+id: DF-TRN-2026-0025
+title: "Owner strategic approval of DAF Landscape DEC-012 (commercial validation plan) and DEC-008 (gated capital deployment) as constraints on Transitus: V-4 is the Transitus evidence gate, synthetic rehearsal is a lower-cost precursor that cannot satisfy it, and Transitus effort estimates are not approved expenditure"
+status: accepted
+approval_stage: requirements-incorporated
+approval_stage_history: ["strategically-approved 2026-11-26 (DAF Landscape Phase III owner approval)", "requirements-incorporated 2026-11-27 (owner ratification, transitus#2 comment 7208145101)"]
+decision_type: strategy
+created: 2026-11-26
+updated: 2026-11-27
+created_by_agent: claude
+decided_by: kemiller2002 (repository owner), DAF Landscape Phase III owner approval of DEC-001..DEC-012 dated 2026-11-26
+confidence: medium
+supersedes: []
+superseded_by: []
+evidence: ["kemiller2002/daf-landscape:research/competitive-displacement/data/registers/decisions.csv#DEC-012", "kemiller2002/daf-landscape:research/competitive-displacement/data/registers/decisions.csv#DEC-008", "kemiller2002/daf-landscape:research/competitive-displacement/22-commercial-validation-plan.md"]
+tags: [transitus, owner-decision, daf-landscape-phase-3, strategic-approval]
+work_item: WI-0003
+provenance:
+  contributions:
+    EXE-20261126T203508536Z-de9f55a7:
+      operations: [created]
+      at: 2026-11-26T20:37:31.000Z
+      actor:
+        kind: agent
+        id: anthropic/claude-code
+        provider: anthropic
+        model: unknown
+        runtime: claude-code
+      reason: "Record owner strategic approval of DAF Landscape Phase II decisions (2026-11-26)"
+      evidence: [kemiller2002/daf-landscape:research/competitive-displacement/data/registers/decisions.csv]
+    EXE-20261126T205108633Z-a4de7b2b:
+      operations: [modified]
+      at: 2026-11-26T20:51:38.000Z
+      actor:
+        kind: agent
+        id: anthropic/claude-code
+        provider: anthropic
+        model: unknown
+        runtime: claude-code
+      reason: "Owner resolution of OD-TRN-P3-02 (2026-11-26): DEC-008 kill rule does not gate Transitus (annotation)"
+      evidence: [DF-TRN-2026-0026]
+    EXE-20261126T210016939Z-536fe55b:
+      operations: [modified]
+      at: 2026-11-26T21:01:25.000Z
+      actor:
+        kind: agent
+        id: anthropic/claude-code
+        provider: anthropic
+        model: unknown
+        runtime: claude-code
+      reason: "Stage I review fixes S1-06/07/08/15 and OD-P3-04 note (WI-0005)"
+      evidence: [docs/research/03-daf-phase3-dispositions.md]
+    EXE-20261127T023211757Z-766c3a85:
+      operations: [modified]
+      at: 2026-11-27T02:33:56.000Z
+      actor:
+        kind: agent
+        id: anthropic/claude-code
+        provider: anthropic
+        model: unknown
+        runtime: claude-code
+      reason: "Owner ratification of DAF-P3 requirement rows (transitus#2 comment 7208145101, 2026-11-27)"
+      evidence: [https://github.com/kemiller2002/transitus/pull/2#issuecomment-7208145101]
+---
+
+# Decision Record
+
+## Decision
+
+The owner approved, on 2026-11-26:
+
+- **DEC-012**: *adopt the existing validation plan and its gates; where
+  possible develop lower-cost methods of satisfying them;*
+- **DEC-008**: *staged investment, measurable milestones, explicit
+  termination criteria; modeled funding amounts are not approved
+  expenditures; challenge and minimize them.*
+
+Constraints on Transitus:
+
+1. **V-4 is the Transitus evidence gate** (authorised incumbent export
+   through Transitus phase 1 with full per-fund reconciliation; pass rule
+   100% money tie-out, history depth documented, freeze plan ≤5 business
+   days). It informs DEC-010 and is a precondition of any migration SLA or
+   maturity claim (DF-TRN-2026-0024).
+2. **Lower-cost precursor, not a substitute.** The synthetic canonical
+   rehearsal (TRN-REQ-MIG-001 on fixtures) and the T0 template and T1
+   profiler (TRN-REQ-ASM-002/003) can de-risk V-4 and reduce its cost, but
+   synthetic runs are conformance checks only (TRN-REQ-ASM-005) and cannot
+   satisfy V-4.
+3. **No expenditure.** The Transitus effort figures in `docs/roadmap.md`
+   (≈15-24 engineer-weeks plus ≈6-12 outside Transitus) are theoretical
+   estimates, not approved spend. Nothing here authorizes paid research,
+   outreach, contracts, production deployment or implementation.
+4. **Minimization.** This revision adds no package, adapter or operation to
+   the phase-1 budget (TRN-REQ-ARC-007); new requirements reuse the
+   existing profile, validate, reconcile, verify and evidence stages.
+
+   > **Correction (2026-11-26, WI-0005, review finding S1-06; text above
+   > kept):** "adds no package, adapter or operation" holds only for the
+   > ARC-007 counts. The phase-1 scope itself grows. revision DAF-P3-2026-11-26 added 18 phase-1 requirement rows (phase-1 total 121 → 139; P0 106 → 108: MIG-006 and MIG-007). Eight are gated and excluded from phase-1 exit (TA: ASM-001..004/006, PRF-003; DEC-010: MET-002/003, see TRN-REQ-ARC-009). Ten are ungated: PRF-001/002, VR-014, MIG-005/006/007, MET-001 and the constraints ASM-005/007/008. Their statements name no new code package, third-party parser, mapping package, transformation operation (of the 13) or port, so the ARC-007 *counts* are not exceeded on the text; they do add work inside existing packages (Formats: PRF-002; Checks: PRF-001, VR-014, MIG-005; Model: MIG-006; Engine/Evidence: MIG-007, MET-001) that is **not estimated**. Phase-1 scope therefore grows; these are proposed additions pending owner acceptance, not an unchanged scope.
+5. **Termination criteria.** Transitus's only standing retirement rule is
+   TRN-REQ-PF-004, which the owner made non-gating for phase 1. Whether the
+   DEC-008 kill rule (no named partner by month 6; no referenceable pilot by
+   month 24) should also pause Transitus work beyond phase 1 is raised as
+   owner decision **OD-TRN-P3-02** (`docs/open-questions.md`); it is not
+   assumed here.
+
+   > **Resolution (2026-11-26, annotation; original text above kept):** the
+   > owner resolved OD-TRN-P3-02: "Kill rule doesn't stop Transitus." The
+   > DEC-008 kill rule does not pause or gate Transitus work, including
+   > work beyond phase 1. See DF-TRN-2026-0026. This authorizes no
+   > expenditure or implementation, and the scope stays DEC-011 phase 1.
+
+## Status
+
+**Strategically approved** only (`approval_stage: strategically-approved`). Praxis restricts the DF `status` field to draft, review, accepted, superseded or withdrawn, so `status: accepted` records only that the owner decided; in this repository `accepted` has never authorized implementation (`docs/decisions/README.md`). The ladder is: strategically approved → requirements incorporated → evidence gate satisfied → implementation authorized → implemented → validated. No later rung is advanced by this record; the requirement rows it motivates are `proposed`. Approval authorizes strategic direction, requirements refinement, research and planning; it does **not** authorize expenditure, contractual commitments, production deployment, removal of mandatory controls or implementation.
+
+
+## Approval stage update (2026-11-27, WI-0006)
+
+The owner ratified the requirement rows this record motivates. The direction
+was posted on transitus#2 (comment 7208145101) and confirmed in session on
+2026-11-27: *"Owner approves proposed requirement rows for ratification
+subject to existing gates."*
+
+`approval_stage` therefore moves from `strategically-approved` to
+`requirements-incorporated`. The earlier stage is kept in
+`approval_stage_history`, and the Status text above is kept for history.
+
+No later rung is reached: the evidence gate is **not** satisfied, implementation is
+**not** authorized, and nothing is implemented or validated. Every gate stays
+in force: trigger TA, T3, the DEC-010 / V-4 gate and phase gating. No
+expenditure is authorized.
+
+## Rationale and evidence
+
+daf-landscape `22-commercial-validation-plan.md` (V-1..V-9, budgets,
+kill rule); `decisions.csv` DEC-008 and DEC-012.
+
+## Alternatives considered
+
+Treat synthetic rehearsal as satisfying V-4 (rejected: it cannot predict
+record-level defects; Phase II CHL-017/069/070).

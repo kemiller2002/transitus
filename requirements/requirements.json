@@ -1,7 +1,11 @@
 {
  "schema": "transitus.requirements/v1",
- "status": "proposed",
- "count": 152,
+ "status": "mixed",
+ "count": 171,
+ "statusCounts": {
+  "accepted": 23,
+  "proposed": 148
+ },
  "requirements": [
   {
    "id": "TRN-REQ-PS-001",
@@ -1010,17 +1014,22 @@
    "category": "validation-reconciliation",
    "priority": "P0",
    "phase": 1,
-   "statement": "Post-load verification MUST reconcile planned, loaded and read-back counts and totals.",
+   "statement": "Post-load verification MUST reconcile planned, loaded and read-back record counts and monetary totals exactly over the full population (zero tolerance unless declared under TRN-REQ-VR-003); non-monetary attributes MAY additionally be verified by the statistical sampling primitive of TRN-REQ-VR-014, which MUST NOT be applied to monetary amounts, unit quantities or counts.",
    "acceptance": "Verify stage report present in evidence for every system-of-record load.",
    "charter": "§11, §12",
    "design": [
     "TRN-ARCH-05 §6",
-    "TRN-ARCH-06 §3"
+    "TRN-ARCH-06 §3",
+    "docs/research/03-daf-phase3-dispositions.md"
    ],
-   "decisions": [],
+   "decisions": [
+    "DF-TRN-2026-0025"
+   ],
    "verify": "test",
-   "status": "proposed",
-   "revision": "TRN-REV-01"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-VR-011",
@@ -1249,16 +1258,21 @@
    "category": "mapping-packages",
    "priority": "P1",
    "phase": 1,
-   "statement": "Packages MUST declare accepted source format versions with detectors and provide a dry-run upgrade diff against fixtures and recent raw inputs.",
+   "statement": "Packages MUST declare accepted source format versions with detectors — for report-style incumbent sources, one declared version per incumbent report version — and MUST provide a drift test that fails when an input matches no declared version, plus a dry-run upgrade diff against fixtures and recent raw inputs.",
    "acceptance": "Upgrade command produces deterministic output diff.",
    "charter": "§10",
    "design": [
-    "TRN-ARCH-09 §4"
+    "TRN-ARCH-09 §4",
+    "docs/research/03-daf-phase3-dispositions.md"
    ],
-   "decisions": [],
+   "decisions": [
+    "DF-TRN-2026-0023"
+   ],
    "verify": "test",
-   "status": "proposed",
-   "revision": "OWNER-2026-11-26"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-MP-005",
@@ -1995,18 +2009,23 @@
    "category": "architecture",
    "priority": "P0",
    "phase": 1,
-   "statement": "Capabilities beyond phase 1 MUST be gated by recorded triggers: T2 complex DAGs (routes, unions, joins), the expression language, bounded set operators, extensions, chunk parallelism and in-engine scheduling (a demonstrated scenario the phase-1 model cannot express); T3 advanced AI and vendor-specific turnkey packages (AI evaluation thresholds met; customer-authorized sample and licence clearance); T4 visual editing (non-engineer configuration required). Basic mapping packages are not gated.",
+   "statement": "Capabilities beyond phase 1 MUST be gated by recorded triggers: T2 complex DAGs (routes, unions, joins), the expression language, bounded set operators, extensions, chunk parallelism and in-engine scheduling (a demonstrated scenario the phase-1 model cannot express); T3 advanced AI and vendor-specific turnkey packages (AI evaluation thresholds met; customer-authorized sample and licence clearance; the first vendor package also needs the single-source selection of TRN-REQ-MP-010); TA the pre-contract assessment capabilities TRN-REQ-ASM-001..004/006 and TRN-REQ-PRF-003 (a recorded owner authorization naming the consumer requirement that needs them); T4 visual editing (non-engineer configuration required). Basic mapping packages are not gated. Until its trigger is recorded a gated capability is specification only. The following rows carry phase 1 but are gated and are excluded from phase-1 exit criteria until their gate is recorded: trigger TA — TRN-REQ-ASM-001, ASM-002, ASM-003, ASM-004, ASM-006 and PRF-003; the DEC-010 gate (DF-TRN-2026-0024) for any use beyond internal measurement — TRN-REQ-MET-002 and MET-003.",
    "acceptance": "Decision record per phase gate.",
    "charter": "§19",
    "design": [
-    "docs/roadmap.md"
+    "docs/roadmap.md",
+    "docs/research/03-daf-phase3-dispositions.md"
    ],
    "decisions": [
-    "DF-TRN-2026-0016"
+    "DF-TRN-2026-0016",
+    "DF-TRN-2026-0022",
+    "DF-TRN-2026-0023"
    ],
    "verify": "review",
-   "status": "proposed",
-   "revision": "TRN-REV-02"
+   "status": "accepted",
+   "revision": "DAF-P3-REV-S1",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-EX-013",
@@ -2486,19 +2505,23 @@
    "category": "migration",
    "priority": "P0",
    "phase": 1,
-   "statement": "Migration rehearsal MUST run the canonical historical migration pipeline end to end and load only into an isolated, disposable sponsor cell provided by the host (never the live sponsor schema), be repeatable from preserved raw input with identical idempotency keys, and produce a conservation table and per-fund balance reconciliation.",
+   "statement": "Migration rehearsal MUST run the canonical historical migration pipeline end to end and load only into an isolated, disposable sponsor cell provided by the host (never the live sponsor schema), be repeatable from preserved raw input with identical idempotency keys, and produce a conservation table, per-fund balance reconciliation and the measurement facts of TRN-REQ-MET-001. A rehearsal on synthetic fixtures MUST be labelled a conformance rehearsal and MUST NOT be presented as evidence for the V-4 gate or DEC-010 (DF-TRN-2026-0025).",
    "acceptance": "Rehearsal evidence package; repeat run yields identical keys and outputs; live schema untouched.",
    "charter": "§10, §17",
    "design": [
     "examples/pipelines/migration-rehearsal.pipeline.json",
-    "TRN-REV-02"
+    "TRN-REV-02",
+    "docs/research/03-daf-phase3-dispositions.md"
    ],
    "decisions": [
-    "DF-TRN-2026-0018"
+    "DF-TRN-2026-0018",
+    "DF-TRN-2026-0025"
    ],
    "verify": "test",
-   "status": "proposed",
-   "revision": "TRN-REV-02"
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   },
   {
    "id": "TRN-REQ-MIG-002",
@@ -2581,6 +2604,402 @@
    "verify": "review",
    "status": "proposed",
    "revision": "TRN-REV-02"
+  },
+  {
+   "id": "TRN-REQ-PRF-001",
+   "category": "profiling",
+   "priority": "P1",
+   "phase": 1,
+   "statement": "The optional profile stage MUST compute deterministic structural statistics over a parsed or staged dataset — row counts per entity, missing / explicit-null / present rates, distinct counts, min/max, value-pattern classes, date ranges and control totals per declared grouping — each inheriting its field's classification (TRN-REQ-AI-007). It MUST support declared disclosure controls: a minimum contributor count below which a cell is suppressed, a minimum population below which no aggregates are emitted, and dominance suppression for monetary cells. Parameter values come from host policy; Transitus MUST NOT ship binding default thresholds.",
+   "acceptance": "Given a policy with minimum contributor count k and a grouping with fewer than k contributors, When the profile stage runs, Then that cell is emitted as suppressed with its reason and no value. Given a monetary cell in which one contributor exceeds the declared dominance share, When the profile runs, Then the cell is suppressed. Given identical input and policy, When the profile runs twice, Then the profile document hashes are identical.",
+   "charter": "§4, §12",
+   "design": [
+    "TRN-ARCH-01 §2 (profile)",
+    "docs/research/03-daf-phase3-dispositions.md"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0022"
+   ],
+   "verify": "test",
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
+  },
+  {
+   "id": "TRN-REQ-PRF-002",
+   "category": "profiling",
+   "priority": "P1",
+   "phase": 1,
+   "statement": "Format adapters MUST provide deterministic schema discovery (Sniff/Infer, TRN-ARCH-03): an inferred schema with encoding, delimiter, header, field names, inferred types with the value counts supporting each inference, and a column-set fingerprint; and a deterministic match of that fingerprint against the format-version detectors of available packages that reports every candidate with its score. Discovery MUST NOT publish, select or alter a pipeline or mapping.",
+   "acceptance": "Given a file whose fingerprint matches two package detectors, When discovery runs, Then both candidates and their scores are reported and no pipeline is selected. Given the same bytes, When discovery runs twice, Then the inferred-schema hashes are identical. Given a file matching no detector, Then the result is 'no candidate' with the inferred schema.",
+   "charter": "§8",
+   "design": [
+    "TRN-ARCH-03 §1",
+    "docs/research/03-daf-phase3-dispositions.md"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0022"
+   ],
+   "verify": "test",
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
+  },
+  {
+   "id": "TRN-REQ-PRF-003",
+   "category": "profiling",
+   "priority": "P2",
+   "phase": 1,
+   "statement": "Mapping suggestions MUST be emitted as PipelineDiff proposals (the TRN-REQ-AI-001 form) by a deterministic rule-based suggester — target-package name and alias tables, type and pattern compatibility from TRN-REQ-PRF-001/002 — before any AI suggester exists (AI remains phase 3, TRN-REQ-AI-009). Each suggestion records its rule and supporting statistics and is in the proposed state; no suggestion may be used by a load, rehearsal or assessment report as a mapping until accepted through the publish path for human changes (TRN-REQ-PS-004, PS-008). Gated by trigger TA.",
+   "acceptance": "Given a source field whose name matches a target alias and whose profiled values match the target type, When the suggester runs, Then a proposed PipelineDiff naming the rule is emitted. Given an unaccepted suggestion, When a rehearsal is started, Then the suggestion is not part of the executed mapping version.",
+   "charter": "§9, §10",
+   "design": [
+    "TRN-ARCH-07 §1",
+    "docs/research/03-daf-phase3-dispositions.md"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0022"
+   ],
+   "verify": "test",
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
+  },
+  {
+   "id": "TRN-REQ-VR-014",
+   "category": "validation-reconciliation",
+   "priority": "P1",
+   "phase": 1,
+   "statement": "Transitus MUST provide a statistical-sampling verification primitive for non-monetary attributes (XRI-012): a stratified sample drawn deterministically from a seed recorded in the execution manifest over consumer-declared strata (for example record type × status × classification), with per-stratum sizes from a declared method (a fixed minimum per stratum, or attribute acceptance sampling with consumer-declared confidence and tolerable deviation), comparing each sampled attribute from source to staged or canonical form to destination read-back, and recording frame, seed, sizes, deviations and the decision in evidence. It MUST refuse to sample monetary amounts, unit quantities and record counts, which reconcile exactly over the full population (TRN-REQ-VR-002, VR-003). Transitus MUST NOT ship default confidence, deviation or sample-size values.",
+   "acceptance": "Given a profile that declares a sampled check on a money field, When it is published, Then validation rejects it. Given the same seed and data, When sampling runs twice, Then the same records are selected. Given one deviation in a stratum whose declared tolerable deviation count is zero, When the gate runs, Then it fails and the deviation is itemized with source, canonical and read-back values classified per TRN-REQ-LN-008.",
+   "charter": "§12, §13",
+   "design": [
+    "TRN-ARCH-06 §3",
+    "docs/research/03-daf-phase3-dispositions.md"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0011",
+    "DF-TRN-2026-0025"
+   ],
+   "verify": "test",
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
+  },
+  {
+   "id": "TRN-REQ-MIG-005",
+   "category": "migration",
+   "priority": "P1",
+   "phase": 1,
+   "statement": "Transitus MUST provide a deterministic mapping-test harness that, for a mapping version and a dataset, produces (a) a round-trip control-total comparison (Σsource = Σtarget per declared grouping, exact for monetary measures), (b) results of consumer-declared semantic invariant rules, and (c) a mutation run that injects declared total-preserving swaps (for example two coded attributes exchanged between records of equal amount) and reports which check detected each mutation. The harness produces evidence only; mapping lifecycle states and approvals (Proposed, Tested, Confirmed, Approved/Pinned) are owned by the consumer (Unbound UNB-ONB-005).",
+   "acceptance": "Given a mapping that swaps two restriction codes between equal-amount records, When the harness runs, Then the round-trip totals pass, an invariant or mutation check fails, and the evidence names the detecting check. Given an unchanged mapping and dataset, When the harness runs twice, Then results are identical.",
+   "charter": "§10, §12",
+   "design": [
+    "TRN-ARCH-06",
+    "docs/research/03-daf-phase3-dispositions.md"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0011"
+   ],
+   "verify": "test",
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
+  },
+  {
+   "id": "TRN-REQ-MIG-006",
+   "category": "migration",
+   "priority": "P0",
+   "phase": 1,
+   "statement": "Canonical data contracts MUST be able to declare per field a closed set of typed absence reasons distinct from missing and explicit null (for the Unbound canonical history: Value, Zero, Unknown, NotProvidedBySource, NotApplicable — the enumeration is consumer-owned, UNB-ONB-006); operations MUST preserve the reason, field.default MUST NOT replace a declared absence reason on a field whose contract forbids defaults, and validation MUST reject an unmarked null in such a field. No transformation may fabricate a value for an absent one.",
+   "acceptance": "Given a legacy grant without a payment date and a contract declaring NotProvidedBySource, When transformed, Then the field carries NotProvidedBySource and the source-row hash link. Given a pipeline applying field.default to that field, When published, Then validation rejects it.",
+   "charter": "§7, §10",
+   "design": [
+    "TRN-ARCH-04 §1",
+    "docs/research/03-daf-phase3-dispositions.md"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0022"
+   ],
+   "verify": "test",
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
+  },
+  {
+   "id": "TRN-REQ-MIG-007",
+   "category": "migration",
+   "priority": "P0",
+   "phase": 1,
+   "statement": "Every execution with a destination MUST produce an effects manifest listing each external effect attempted — idempotency key, destination operation, intent time, receipt, outcome (Succeeded, Failed, OutcomeUnknown) and the irreversibility class declared by the destination adapter — so the host can determine its rollback boundary (Unbound UNB-ONB-017: the earlier of first live posting and first irreversible external effect). Transitus MUST NOT execute rollback, reversal or compensation (TRN-REQ-EX-009); an execution abandoned before its first load intent MUST leave zero destination effects and purgeable staging with purge evidence.",
+   "acceptance": "Given a load whose third item ends OutcomeUnknown, When the effects manifest is produced, Then every attempted item appears with its outcome and the unknown item is flagged for host resolution. Given cancellation before the first load intent, When the execution ends, Then the manifest is empty and staging purge evidence exists.",
+   "charter": "§11, §13",
+   "design": [
+    "TRN-ARCH-05 §6-§8",
+    "docs/research/03-daf-phase3-dispositions.md"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0007"
+   ],
+   "verify": "test",
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
+  },
+  {
+   "id": "TRN-REQ-MP-010",
+   "category": "mapping-packages",
+   "priority": "P1",
+   "phase": 3,
+   "statement": "When trigger T3 is met for vendor-specific packages, the first such package MUST target the single incumbent source cluster named in the consumer's recorded selection decision — for Unbound, the record required by UNB-CDD-ONB-002, which cites V-5 evidence and customer-authorized sample availability. Transitus MUST consume that record (by identifier and version) rather than keep its own selection, MUST refuse to publish a vendor-specific package whose source is not named in a consumer selection record, and each further incumbent needs a further consumer record (DEC-007).",
+   "acceptance": "Given no consumer selection record (Unbound UNB-CDD-ONB-002) naming source A, When a vendor-specific package for A is proposed for publication, Then publication is refused. Given a recorded selection naming source A, When a package for source B is proposed, Then publication is refused until a further consumer record names B. Given a package for A, When it is published, Then its manifest cites the selection record identifier and version.",
+   "charter": "§10",
+   "design": [
+    "TRN-ARCH-09 §3",
+    "docs/research/03-daf-phase3-dispositions.md",
+    "Unbound requirements/discovery/2026-11-26-competitive-displacement-decisions (UNB-CDD-ONB-002)"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0023",
+    "DF-TRN-2026-0019"
+   ],
+   "verify": "review",
+   "status": "accepted",
+   "revision": "DAF-P3-REV-S1",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
+  },
+  {
+   "id": "TRN-REQ-MET-001",
+   "category": "measurement",
+   "priority": "P1",
+   "phase": 1,
+   "statement": "Every rehearsal and migration execution MUST record in its evidence package the measurement facts needed for onboarding-maturity metrics (XRI-009) and migration timing (XRI-011): share of target fields mapped by unmodified package defaults versus overlays; count and identifiers of package or overlay changes made for the migration; exceptions per 1,000 source records by class; control-total deltas between successive rehearsals and between the final rehearsal and the live load; stage durations; and host-supplied timestamps for conforming-extract receipt and go-live. Facts are observations: a fact Transitus cannot observe MUST be recorded as unavailable, never inferred or zero.",
+   "acceptance": "Given a rehearsal for which the host supplies no go-live time, When evidence is produced, Then the go-live fact is 'unavailable', not zero. Given two rehearsals of the same source, When the second completes, Then its evidence contains the control-total delta against the first.",
+   "charter": "§13, §18",
+   "design": [
+    "docs/research/03-daf-phase3-dispositions.md"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0024"
+   ],
+   "verify": "test",
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
+  },
+  {
+   "id": "TRN-REQ-MET-002",
+   "category": "measurement",
+   "priority": "P2",
+   "phase": 1,
+   "statement": "Onboarding maturity levels 0-5 (daf-landscape competitive-displacement 08 §5) MAY be computed only as measurement targets from TRN-REQ-MET-001 facts, using metric definitions that state numerator, denominator, window and minimum sample; a level MUST be reported 'not evidenced' when the minimum sample is not met, and no level may be presented outside internal measurement until the DEC-010 gate is recorded: V-4 passed, recorded by the owner as evidence-gate satisfied, and contractual review complete (DF-TRN-2026-0024).",
+   "acceptance": "Given two measured migrations and a metric whose minimum sample is three, When the level is computed, Then it reads 'not evidenced'. Given no recorded DEC-010 gate, When an external report is generated, Then maturity levels are omitted.",
+   "charter": "§18, §19",
+   "design": [
+    "docs/research/03-daf-phase3-dispositions.md"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0024"
+   ],
+   "verify": "review",
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
+  },
+  {
+   "id": "TRN-REQ-MET-003",
+   "category": "measurement",
+   "priority": "P2",
+   "phase": 1,
+   "statement": "Transitus MUST determine deterministically whether a received extract is conforming — it matches a declared package format version, passes structural validation and carries its declared control file or totals — and record the determination time as the measurement clock start, together with a host-supplied, versioned exclusions list and a sponsor validation summary (counts, control totals, exceptions by class, sampling results) for host-side approval. This is measurement only: Transitus defines no SLA duration, remedy or commitment, and any commercial use is gated on DEC-010 (DF-TRN-2026-0024).",
+   "acceptance": "Given an extract without its declared control file, When conformance runs, Then it is non-conforming with reasons and no clock start is recorded. Given a conforming extract, When conformance runs, Then the clock start equals the determination time and a validation summary is produced for approval.",
+   "charter": "§12, §18",
+   "design": [
+    "docs/research/03-daf-phase3-dispositions.md"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0024"
+   ],
+   "verify": "test",
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
+  },
+  {
+   "id": "TRN-REQ-ASM-001",
+   "category": "assessment",
+   "priority": "P2",
+   "phase": 1,
+   "statement": "Transitus MUST support a pre-contract migration assessment mode with exposure tiers: T0 (no install, no data: sponsor-completed template), T1 (profiler installed in the sponsor's environment only after a recorded sponsor IT approval; emits only disclosure-controlled structural aggregates) and T2+ (record-level data only under a recorded executed MSA and DPA). Each assessment execution MUST declare its tier and carry the host-supplied approval and legal-basis references for it; tiers are monotonic per engagement; and an input whose content exceeds its tier (for example record-level rows at T1) MUST be rejected before it is persisted. Legal sufficiency is decided by the host and counsel, not Transitus. Gated by trigger TA.",
+   "acceptance": "Given a T1 engagement, When a record-level file is submitted, Then it is rejected before persistence and the rejection is recorded. Given a T2 request without MSA and DPA references, When it is started, Then the execution does not start. Given an engagement at T2, When a T1 run is requested, Then it is refused as non-monotonic.",
+   "charter": "§14, §17",
+   "design": [
+    "docs/research/03-daf-phase3-dispositions.md",
+    "daf-landscape competitive-displacement 08 §3"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0022"
+   ],
+   "verify": "review",
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
+  },
+  {
+   "id": "TRN-REQ-ASM-002",
+   "category": "assessment",
+   "priority": "P2",
+   "phase": 1,
+   "statement": "For T0, Transitus MUST publish, from the target canonical package and the public-specification packages, a machine-readable assessment template that the sponsor completes without installing software or transmitting records (source platform and version, report inventory and export methods, entity counts, history years per entity, control totals the sponsor can obtain, known custom behaviours), and MUST validate a completed template deterministically, producing the T0 sections of the assessment report and listing every unassessable item. Gated by trigger TA.",
+   "acceptance": "Given a completed template that omits history years for grants, When it is validated, Then the report lists grant history depth as 'not provided' and names the tier that would resolve it. Given the same template twice, Then identical output.",
+   "charter": "§10, §17",
+   "design": [
+    "docs/research/03-daf-phase3-dispositions.md"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0022"
+   ],
+   "verify": "review",
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
+  },
+  {
+   "id": "TRN-REQ-ASM-003",
+   "category": "assessment",
+   "priority": "P2",
+   "phase": 1,
+   "statement": "The T1 profiler MUST run offline in the sponsor's environment over files the sponsor already obtains (standard reports or exports), apply TRN-REQ-PRF-001 with disclosure controls from host policy (minimum contributor count, minimum population below which no aggregates leave, dominance suppression on monetary cells), scan its own output for direct-identifier patterns and refuse to emit a profile containing any, and produce a hashed, signed profile document with no row-level values. Gated by trigger TA.",
+   "acceptance": "Given a book below the minimum population, When the profiler runs, Then it emits schema and coverage only and no aggregates. Given an output cell matching an email or SSN pattern, When emission is attempted, Then it is refused and the reason recorded locally. Given network egress disabled, When the profiler runs, Then it completes.",
+   "charter": "§14, §17",
+   "design": [
+    "docs/research/03-daf-phase3-dispositions.md",
+    "daf-landscape charity-network-and-onboarding 13 §2"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0022"
+   ],
+   "verify": "review",
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
+  },
+  {
+   "id": "TRN-REQ-ASM-004",
+   "category": "assessment",
+   "priority": "P2",
+   "phase": 1,
+   "statement": "T2+ assessment MUST run in an isolated assessment cell provided by the host (no connection to live sponsor data or external rails), reuse the dry-run and rehearsal path (TRN-REQ-EX-004, MIG-001) with no system-of-record effect, treat all data as restricted production-class data, and purge it by the deadline taken from host retention policy with purge evidence; assessment data MUST NOT be used for package development, fixtures or AI training. Gated by trigger TA.",
+   "acceptance": "Given a T2 assessment, When it completes, Then zero destination effects are recorded. Given the retention deadline passes, When the sweeper runs, Then raw and staged assessment data are purged and purge evidence is produced.",
+   "charter": "§5, §14",
+   "design": [
+    "docs/research/03-daf-phase3-dispositions.md"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0022"
+   ],
+   "verify": "review",
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
+  },
+  {
+   "id": "TRN-REQ-ASM-005",
+   "category": "assessment",
+   "priority": "P1",
+   "phase": 1,
+   "statement": "Runs on synthetic datasets MUST be labelled conformance checks: they MAY report parser, layout and mapping conformance and MUST NOT report data-quality ratings, exception rates, effort, price or timeline for any real sponsor.",
+   "acceptance": "Given a synthetic run, When the assessment report is rendered, Then the data-quality, effort and timeline sections read 'not assessable from synthetic data' and the report is marked conformance-only.",
+   "charter": "§10, §17",
+   "design": [
+    "docs/research/03-daf-phase3-dispositions.md"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0022",
+    "DF-TRN-2026-0025"
+   ],
+   "verify": "test",
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
+  },
+  {
+   "id": "TRN-REQ-ASM-006",
+   "category": "assessment",
+   "priority": "P2",
+   "phase": 1,
+   "statement": "Each assessment MUST produce a deterministic, versioned report identifying for the tier reached: source data quality (profile and rule results); mapping complexity (fields covered by package defaults, fields needing overlays or sponsor decisions, unsupported behaviours detected); missing information (absent entities; history depth per entity as Full, Partial, BalancesOnly, NotProvided or NotAssessable); reconciliation risks (which blocking gates can and cannot be dry-run, unavailable control totals); estimated effort as driver counts × labelled assumptions with ranges, with no point estimate and no currency amount; required customer participation (named sponsor tasks and decisions); and a potential timeline as ranges with dependencies, marking incumbent-dependent steps. Every finding cites its tier, evidence and basis; a finding not assessable at the tier reached MUST say so and name the tier that would resolve it. Pricing and commercial terms are outside Transitus (Unbound UNB-ONB-004). Gated by trigger TA.",
+   "acceptance": "Given a T1-only engagement, When the report is produced, Then record-level matching reads 'not assessable at T1; resolved by T2+'. Given identical inputs twice, Then identical report hashes. Given any report, Then the effort section contains no currency figure and every assumption is labelled.",
+   "charter": "§13, §17",
+   "design": [
+    "docs/research/03-daf-phase3-dispositions.md",
+    "daf-landscape charity-network-and-onboarding 13 §6-§7"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0022",
+    "DF-TRN-2026-0024"
+   ],
+   "verify": "review",
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
+  },
+  {
+   "id": "TRN-REQ-ASM-007",
+   "category": "assessment",
+   "priority": "P1",
+   "phase": 1,
+   "statement": "Every assessment finding, mapping suggestion or package element that depends on an incumbent-vendor format assumption not backed by a public specification or a customer-authorized sample MUST carry the basis flag vendor-assumption-unverified (TRN-REQ-MP-002 basis vocabulary), be shown as such in reports, and be excluded from any total or estimate presented as evidenced.",
+   "acceptance": "Given a mapping element derived from a vendor screenshot description, When the report is rendered, Then the element is flagged vendor-assumption-unverified and excluded from evidenced totals.",
+   "charter": "§10",
+   "design": [
+    "docs/research/03-daf-phase3-dispositions.md"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0022"
+   ],
+   "verify": "test",
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
+  },
+  {
+   "id": "TRN-REQ-ASM-008",
+   "category": "assessment",
+   "priority": "P1",
+   "phase": 1,
+   "statement": "Until customer-authorized data exists for a source, assessment and package development, fixtures and tests MUST use synthetic datasets and public specifications only; repository fixtures MUST be marked synthetic and package lint MUST reject a fixture without that mark (TRN-REQ-MP-001).",
+   "acceptance": "Given a fixture without a synthetic mark, When package lint runs, Then it fails. Given no customer-authorized sample for a source, When a package for that source is linted, Then its basis is synthetic-representation or public-specification only.",
+   "charter": "§10",
+   "design": [
+    "docs/research/03-daf-phase3-dispositions.md"
+   ],
+   "decisions": [
+    "DF-TRN-2026-0022"
+   ],
+   "verify": "test",
+   "status": "accepted",
+   "revision": "DAF-P3-2026-11-26",
+   "approval": "owner 2026-11-27 (PR #2 direction; transitus#2 comment 7208145101)",
+   "approval_scope": "requirement text ratified subject to existing gates; not implementation authorization"
   }
  ]
 }

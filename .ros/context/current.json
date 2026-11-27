@@ -4,7 +4,7 @@
   "repository": "transitus",
   "actor": "ros-bootstrap",
   "startedAt": "2026-11-26T15:17:03.787Z",
-  "updatedAt": "2026-11-26T18:27:54.000Z",
+  "updatedAt": "2026-11-27T02:34:14.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -108,6 +108,158 @@
       },
       "completedAt": "2026-11-26T18:27:54.000Z",
       "conclusion": "Owner-directed phase-1 scope reconciled across requirements, schemas, decisions, roadmap and related repositories; independent challenge recorded"
+    },
+    {
+      "id": "WI-0003",
+      "type": "research",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "research-record",
+          "path": "docs/research/03-daf-phase3-dispositions.md"
+        }
+      ],
+      "updatedAt": "2026-11-26T20:42:43.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20261126T203508536Z-de9f55a7"
+      ],
+      "latestCheckpoint": {
+        "id": "1b5abfa054c1537b9b38b10f",
+        "recordedAt": "2026-11-26T20:42:40.000Z",
+        "executionId": "EXE-20261126T203508536Z-de9f55a7",
+        "repository": "transitus",
+        "branch": "claude/fervent-galileo-bj4yk0",
+        "commit": "2b3149c7aa16053ce312a3a68d9eaeaf1e9623ac",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/transitus"
+        },
+        "remoteBranch": "claude/fervent-galileo-bj4yk0",
+        "remoteCommit": "2b3149c7aa16053ce312a3a68d9eaeaf1e9623ac",
+        "summary": "DF-TRN-2026-0022..0025 recorded (strategically approved); requirements revision DAF-P3 (19 new, 4 refined); XRI-009..014 dispositions, coverage and boundary in docs/research/03-daf-phase3-dispositions.md",
+        "nextAction": "Owner: accept or revise DAF-P3 requirement rows; resolve OD-TRN-P3-01/02 and OQ-17; daf-landscape owner: correct DF-0014/DF-0016 citations (UC-19)",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-11-26T20:42:43.000Z",
+      "conclusion": "Owner strategic approvals recorded; XRI-009..014 dispositioned; pre-contract assessment specified; requirements proposed only"
+    },
+    {
+      "id": "WI-0004",
+      "type": "research",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "research-record",
+          "path": "research/decisions/DF-TRN-2026-0026--dec-008-kill-rule-does-not-gate-transitus.md"
+        }
+      ],
+      "updatedAt": "2026-11-26T20:51:51.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20261126T205108633Z-a4de7b2b"
+      ],
+      "latestCheckpoint": {
+        "id": "afab02e94c45c32ed6acceda",
+        "recordedAt": "2026-11-26T20:51:50.000Z",
+        "executionId": "EXE-20261126T205108633Z-a4de7b2b",
+        "repository": "transitus",
+        "branch": "claude/fervent-galileo-bj4yk0",
+        "commit": "fa1009e8b00aad81ec53a60c7daa935fd185431b",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/transitus"
+        },
+        "remoteBranch": "claude/fervent-galileo-bj4yk0",
+        "remoteCommit": "fa1009e8b00aad81ec53a60c7daa935fd185431b",
+        "summary": "DF-TRN-2026-0026 recorded; OD-TRN-P3-02 resolved; DF-0025/UC-19 annotated",
+        "nextAction": "None for OD-TRN-P3-02; OD-TRN-P3-01 and OQ-17 remain open",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-11-26T20:51:51.000Z",
+      "conclusion": "inconclusive"
+    },
+    {
+      "id": "WI-0005",
+      "type": "research",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "research-record",
+          "path": "docs/research/03-daf-phase3-dispositions.md"
+        }
+      ],
+      "updatedAt": "2026-11-26T21:01:38.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20261126T210016939Z-536fe55b"
+      ],
+      "latestCheckpoint": {
+        "id": "c23c825245277ec223531d37",
+        "recordedAt": "2026-11-26T21:01:37.000Z",
+        "executionId": "EXE-20261126T210016939Z-536fe55b",
+        "repository": "transitus",
+        "branch": "claude/fervent-galileo-bj4yk0",
+        "commit": "dda213458fc2968f720af99ba7ad7485463c3c21",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/transitus"
+        },
+        "remoteBranch": "claude/fervent-galileo-bj4yk0",
+        "remoteCommit": "dda213458fc2968f720af99ba7ad7485463c3c21",
+        "summary": "Stage I review fixes S1-06/07/08/15 and OD-P3-04 note applied",
+        "nextAction": "Counsel: LICENSE copyright holder (OQ-12 note); owner: accept DAF-P3 rows",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-11-26T21:01:38.000Z",
+      "conclusion": "inconclusive"
+    },
+    {
+      "id": "WI-0006",
+      "type": "research",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "research-record",
+          "path": "docs/research/04-assessment-legal-basis-and-disclosure-proposals.md"
+        }
+      ],
+      "updatedAt": "2026-11-27T02:34:14.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20261127T023211757Z-766c3a85"
+      ],
+      "latestCheckpoint": {
+        "id": "02e77dad39dbef5b4eb50472",
+        "recordedAt": "2026-11-27T02:34:13.000Z",
+        "executionId": "EXE-20261127T023211757Z-766c3a85",
+        "repository": "transitus",
+        "branch": "claude/fervent-galileo-bj4yk0",
+        "commit": "49c6af404ca143fa988768960f14d4fc44963607",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/transitus"
+        },
+        "remoteBranch": "claude/fervent-galileo-bj4yk0",
+        "remoteCommit": "49c6af404ca143fa988768960f14d4fc44963607",
+        "summary": "23 DAF-P3 rows ratified (accepted, gates kept); DF-0022..0025 requirements-incorporated; OD-TRN-P3-01/OQ-17 proposals written",
+        "nextAction": "Owner/counsel: decide OD-TRN-P3-01 and OQ-17 proposals; owner merges PR #2 when checks pass",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-11-27T02:34:14.000Z",
+      "conclusion": "inconclusive"
     }
   ]
 }
