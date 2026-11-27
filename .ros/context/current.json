@@ -4,7 +4,7 @@
   "repository": "transitus",
   "actor": "ros-bootstrap",
   "startedAt": "2026-11-26T15:17:03.787Z",
-  "updatedAt": "2026-11-27T02:32:10.000Z",
+  "updatedAt": "2026-11-27T02:34:14.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -226,13 +226,40 @@
     {
       "id": "WI-0006",
       "type": "research",
-      "state": "active",
-      "semanticState": "active",
-      "evidence": [],
-      "updatedAt": "2026-11-27T02:32:10.000Z",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "research-record",
+          "path": "docs/research/04-assessment-legal-basis-and-disclosure-proposals.md"
+        }
+      ],
+      "updatedAt": "2026-11-27T02:34:14.000Z",
       "telemetryExecutionIds": [
         "EXE-20261127T023211757Z-766c3a85"
-      ]
+      ],
+      "latestCheckpoint": {
+        "id": "02e77dad39dbef5b4eb50472",
+        "recordedAt": "2026-11-27T02:34:13.000Z",
+        "executionId": "EXE-20261127T023211757Z-766c3a85",
+        "repository": "transitus",
+        "branch": "claude/fervent-galileo-bj4yk0",
+        "commit": "49c6af404ca143fa988768960f14d4fc44963607",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/transitus"
+        },
+        "remoteBranch": "claude/fervent-galileo-bj4yk0",
+        "remoteCommit": "49c6af404ca143fa988768960f14d4fc44963607",
+        "summary": "23 DAF-P3 rows ratified (accepted, gates kept); DF-0022..0025 requirements-incorporated; OD-TRN-P3-01/OQ-17 proposals written",
+        "nextAction": "Owner/counsel: decide OD-TRN-P3-01 and OQ-17 proposals; owner merges PR #2 when checks pass",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-11-27T02:34:14.000Z",
+      "conclusion": "inconclusive"
     }
   ]
 }
